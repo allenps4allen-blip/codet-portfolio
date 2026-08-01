@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 import { motion } from "framer-motion";
 import FadeIn from "@/components/FadeIn";
+import ProjectIllustration from "@/components/ProjectIllustration";
 
 const services = [
   {
@@ -117,8 +118,11 @@ export default function HomePage() {
           <div className="mt-16 grid gap-6 sm:grid-cols-2">
             <FadeIn delay={0.1}>
               <Link href="/work" className="group block overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] transition-colors hover:border-white/20">
-                <div className="aspect-[16/10] bg-gradient-to-br from-purple-500/20 via-blue-500/10 to-transparent p-8 sm:p-12">
-                  <div className="flex h-full items-end">
+                <div className="relative aspect-[16/10] bg-gradient-to-br from-purple-500/20 via-blue-500/10 to-transparent">
+                  <div className="absolute inset-0" aria-hidden="true">
+                    <ProjectIllustration index={0} />
+                  </div>
+                  <div className="relative flex h-full items-end p-8 sm:p-12">
                     <div>
                       <p className="text-xs font-medium uppercase tracking-wider text-foreground/50">
                         {t("portfolio.project1.category")}
@@ -133,8 +137,11 @@ export default function HomePage() {
             </FadeIn>
             <FadeIn delay={0.25}>
               <Link href="/work" className="group block overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] transition-colors hover:border-white/20">
-                <div className="aspect-[16/10] bg-gradient-to-br from-cyan-500/20 via-emerald-500/10 to-transparent p-8 sm:p-12">
-                  <div className="flex h-full items-end">
+                <div className="relative aspect-[16/10] bg-gradient-to-br from-cyan-500/20 via-emerald-500/10 to-transparent">
+                  <div className="absolute inset-0" aria-hidden="true">
+                    <ProjectIllustration index={1} />
+                  </div>
+                  <div className="relative flex h-full items-end p-8 sm:p-12">
                     <div>
                       <p className="text-xs font-medium uppercase tracking-wider text-foreground/50">
                         {t("portfolio.project2.category")}

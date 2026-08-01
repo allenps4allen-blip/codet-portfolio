@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 import { motion } from "framer-motion";
 import FadeIn from "@/components/FadeIn";
+import ProjectIllustration from "@/components/ProjectIllustration";
 
 const projectIds = ["1", "2", "3", "4", "5", "6"] as const;
 
@@ -50,9 +51,12 @@ export default function WorkPage() {
             {projectIds.map((id, i) => (
               <FadeIn key={id} delay={i % 2 === 0 ? 0 : 0.15}>
                 <div className="group overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] transition-colors hover:border-white/20">
-                  <div className={`aspect-[16/10] bg-gradient-to-br ${gradients[i]} p-8 sm:p-10`}>
-                    <div className="flex h-full flex-col justify-between">
-                      <span className="inline-block self-start rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-medium">
+                  <div className={`relative aspect-[16/10] bg-gradient-to-br ${gradients[i]}`}>
+                    <div className="absolute inset-0" aria-hidden="true">
+                      <ProjectIllustration index={i} />
+                    </div>
+                    <div className="relative flex h-full flex-col justify-between p-8 sm:p-10">
+                      <span className="inline-block self-start rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-medium backdrop-blur-sm">
                         {t(`projects.${id}.category`)}
                       </span>
                       <div>
