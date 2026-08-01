@@ -23,7 +23,7 @@ export async function POST(request: Request) {
 
     await resend.emails.send({
       from: "CODET Contact Form <onboarding@resend.dev>",
-      to: "allenmathew66@gmail.com",
+      to: "codet.kuwait@gmail.com",
       replyTo: email,
       subject: `New inquiry from ${name} — ${serviceLabels[service] || service}`,
       html: `
