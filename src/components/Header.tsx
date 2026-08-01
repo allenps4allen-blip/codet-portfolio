@@ -32,12 +32,19 @@ export default function Header() {
     setMobileOpen(false);
   }, [pathname]);
 
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [mobileOpen]);
+
   return (
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
-        scrolled
+        scrolled && !mobileOpen
           ? "border-b border-white/10 bg-background/60 backdrop-blur-xl"
-          : "bg-transparent"
+          : mobileOpen
+            ? "bg-transparent"
+            : "bg-transparent"
       }`}
     >
       <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:h-20">
@@ -111,43 +118,63 @@ export default function Header() {
         </button>
       </nav>
 
-      {/* Mobile menu */}
+      {/* Mobile menu — full screen overlay */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
-            className="overflow-hidden border-t border-white/10 bg-background/95 backdrop-blur-xl md:hidden"
+            className="fixed inset-0 top-0 z-[49] flex flex-col bg-background md:hidden"
           >
-            <div className="mx-auto max-w-7xl space-y-1 px-6 pb-6 pt-4">
-              {navLinks.map(({ href, key }) => {
+            <div className="flex flex-1 flex-col items-center justify-center gap-2 px-6">
+              {navLinks.map(({ href, key }, i) => {
                 const isActive =
                   href === "/" ? pathname === "/" : pathname.startsWith(href);
                 return (
-                  <Link
+                  <motion.div
                     key={key}
-                    href={href}
-                    className={`block rounded-lg px-4 py-3 text-sm transition-colors ${
-                      isActive
-                        ? "bg-white/10 text-foreground"
-                        : "text-foreground/70 hover:bg-white/5 hover:text-foreground"
-                    }`}
+                    initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
+                    animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{
+                      duration: 0.4,
+                      delay: i * 0.06,
+                      ease: [0.16, 1, 0.3, 1],
+                    }}
                   >
-                    {t(key)}
-                  </Link>
+                    <Link
+                      href={href}
+                      className={`block px-4 py-3 text-center text-2xl font-medium transition-colors ${
+                        isActive
+                          ? "text-foreground"
+                          : "text-foreground/50 hover:text-foreground"
+                      }`}
+                    >
+                      {t(key)}
+                    </Link>
+                  </motion.div>
                 );
               })}
-              <div className="flex items-center justify-between pt-4">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.4,
+                  delay: navLinks.length * 0.06,
+                  ease: [0.16, 1, 0.3, 1],
+                }}
+                className="mt-8 flex flex-col items-center gap-6"
+              >
                 <LanguageToggle />
                 <Link
                   href="/contact"
-                  className="rounded-full bg-foreground px-5 py-2 text-sm font-medium text-background"
+                  className="rounded-full bg-foreground px-8 py-3.5 text-sm font-medium text-background transition-opacity hover:opacity-90"
                 >
                   {t("bookConsultation")}
                 </Link>
-              </div>
+              </motion.div>
             </div>
           </motion.div>
         )}

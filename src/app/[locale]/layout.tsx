@@ -9,6 +9,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "../globals.css";
 
 const inter = Inter({
@@ -106,6 +107,7 @@ export default async function LocaleLayout({
           <Footer />
           <WhatsAppButton />
           <Analytics />
+          <SpeedInsights />
         </NextIntlClientProvider>
       </body>
     </html>
