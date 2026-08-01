@@ -1,0 +1,234 @@
+{
+  "metadata": {
+    "title": "CODET",
+    "description": "We digitalize your business — websites, AI agents, automations, and workflows."
+  },
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "work": "Work",
+    "about": "About",
+    "contact": "Contact",
+    "bookConsultation": "Book Consultation"
+  },
+  "home": {
+    "title": "Home",
+    "heading": "We digitalize your business",
+    "subtext": "We build high-performance websites, intelligent AI agents, seamless automations, and optimized workflows that transform how your business operates.",
+    "cta": "Book a Free Consultation",
+    "whatWeDo": "What We Do",
+    "services": {
+      "websites": {
+        "title": "Websites",
+        "description": "Lightning-fast, beautifully designed websites and web apps built with modern frameworks that convert visitors into customers."
+      },
+      "aiAgents": {
+        "title": "AI Agents",
+        "description": "Custom AI-powered agents that automate customer support, lead generation, and internal operations — 24/7."
+      },
+      "automations": {
+        "title": "Automations",
+        "description": "End-to-end workflow automations that eliminate repetitive tasks, reduce errors, and free your team to focus on what matters."
+      }
+    },
+    "portfolio": {
+      "title": "Selected Work",
+      "project1": {
+        "title": "SaaS Dashboard",
+        "category": "Web Application"
+      },
+      "project2": {
+        "title": "AI Chatbot Platform",
+        "category": "AI Agent"
+      },
+      "viewAll": "View All Projects"
+    },
+    "ctaSection": {
+      "heading": "Ready to digitalize?",
+      "subtext": "Let's discuss how we can transform your business with the right technology.",
+      "button": "Start Your Project"
+    }
+  },
+  "services": {
+    "title": "Services",
+    "heading": "Our Services",
+    "subheading": "Tailored digital solutions to grow your business",
+    "cta": "Book Free Consultation",
+    "startingFrom": "Starting from",
+    "perMonth": "/month",
+    "customPricing": "Custom pricing",
+    "pricingNote": "Pricing varies based on requirements — book a free consultation for an accurate quote.",
+    "website": {
+      "title": "Website Development",
+      "price": "80 KD",
+      "priceLabel": "setup",
+      "description": "We design and develop high-performance, responsive websites tailored to your brand. From landing pages to full-scale web applications, every project is built with clean code, SEO best practices, and conversion-focused design.",
+      "features": {
+        "1": "Custom responsive design",
+        "2": "SEO optimization & performance tuning",
+        "3": "CMS integration (WordPress, headless)",
+        "4": "E-commerce & payment integration",
+        "5": "Analytics & conversion tracking"
+      }
+    },
+    "aiAgents": {
+      "title": "AI Agents & Chatbots",
+      "price": "50 KD",
+      "priceLabel": "/month",
+      "description": "Deploy intelligent AI agents that handle customer inquiries, qualify leads, and automate support — around the clock. Built with the latest language models and trained on your business data for accurate, on-brand responses.",
+      "features": {
+        "1": "Custom-trained on your business data",
+        "2": "Multi-channel deployment (web, WhatsApp, Telegram)",
+        "3": "Lead qualification & CRM integration",
+        "4": "Multilingual support (English & Arabic)",
+        "5": "Analytics dashboard & conversation logs"
+      }
+    },
+    "automations": {
+      "title": "Automations & Workflows",
+      "price": "",
+      "priceLabel": "",
+      "description": "Streamline your operations with end-to-end workflow automations. We connect your tools, eliminate manual data entry, and build systems that scale — so your team can focus on high-value work instead of repetitive tasks.",
+      "features": {
+        "1": "Business process mapping & optimization",
+        "2": "Tool integration (Zapier, Make, custom APIs)",
+        "3": "Automated reporting & notifications",
+        "4": "Data pipeline & ETL workflows",
+        "5": "Ongoing maintenance & support"
+      }
+    }
+  },
+  "work": {
+    "title": "Work",
+    "heading": "Our Work",
+    "subheading": "A selection of projects we've delivered",
+    "projects": {
+      "1": {
+        "title": "SaaS Analytics Dashboard",
+        "category": "Web Application",
+        "description": "Full-stack analytics platform with real-time data visualization, user management, and automated reporting for a fintech startup."
+      },
+      "2": {
+        "title": "AI Customer Support Agent",
+        "category": "AI Agent",
+        "description": "Multilingual chatbot trained on 10,000+ support tickets, deployed across web and WhatsApp with 85% resolution rate."
+      },
+      "3": {
+        "title": "E-Commerce Platform",
+        "category": "Website",
+        "description": "High-conversion online store with custom product configurator, payment gateway integration, and inventory automation."
+      },
+      "4": {
+        "title": "Lead Generation Workflow",
+        "category": "Automation",
+        "description": "End-to-end automation connecting LinkedIn, CRM, and email sequences — generating 3x more qualified leads per month."
+      },
+      "5": {
+        "title": "Restaurant Ordering System",
+        "category": "Web Application",
+        "description": "Multi-tenant ordering platform with real-time kitchen display, delivery tracking, and POS integration."
+      },
+      "6": {
+        "title": "Document Processing Pipeline",
+        "category": "AI Agent",
+        "description": "AI-powered document extraction and classification system processing 5,000+ invoices monthly with 98% accuracy."
+      }
+    },
+    "cta": {
+      "heading": "Have a project in mind?",
+      "subtext": "Let's build something great together.",
+      "button": "Start a Conversation"
+    }
+  },
+  "about": {
+    "title": "About",
+    "heading": "About CODET",
+    "subheading": "We're a digital agency based in the Gulf, helping businesses modernize through technology.",
+    "story": {
+      "title": "Our Story",
+      "p1": "CODET was founded with a simple belief: every business deserves access to modern digital tools. We saw companies struggling with outdated processes, manual workflows, and generic websites that didn't convert.",
+      "p2": "So we built a team that bridges the gap between business needs and technical solutions — delivering websites, AI agents, and automations that actually move the needle."
+    },
+    "values": {
+      "title": "What Drives Us",
+      "1": {
+        "title": "Results First",
+        "description": "We measure success by your ROI, not by lines of code. Every project starts with your business goals."
+      },
+      "2": {
+        "title": "Built to Last",
+        "description": "Clean architecture, modern frameworks, and scalable infrastructure — so your investment keeps paying off."
+      },
+      "3": {
+        "title": "Transparent Process",
+        "description": "No black boxes. You'll always know what we're building, why, and what's next."
+      },
+      "4": {
+        "title": "Continuous Support",
+        "description": "We don't disappear after launch. Ongoing maintenance, updates, and optimization are part of the deal."
+      }
+    },
+    "stats": {
+      "projects": "50+",
+      "projectsLabel": "Projects Delivered",
+      "clients": "30+",
+      "clientsLabel": "Happy Clients",
+      "countries": "6",
+      "countriesLabel": "Countries Served"
+    },
+    "cta": {
+      "heading": "Ready to work together?",
+      "button": "Get in Touch"
+    }
+  },
+  "contact": {
+    "title": "Contact",
+    "heading": "Get in Touch",
+    "subheading": "Have a project in mind? We'd love to hear about it.",
+    "form": {
+      "name": "Full Name",
+      "email": "Email Address",
+      "service": "Service Interested In",
+      "serviceOptions": {
+        "website": "Website Development",
+        "ai": "AI Agents & Chatbots",
+        "automation": "Automations & Workflows",
+        "other": "Other"
+      },
+      "message": "Tell us about your project",
+      "submit": "Send Message",
+      "sending": "Sending...",
+      "success": "Message sent! We'll get back to you within 24 hours.",
+      "namePlaceholder": "Your name",
+      "emailPlaceholder": "you@company.com",
+      "messagePlaceholder": "Describe your project, goals, and timeline..."
+    },
+    "info": {
+      "title": "Contact Info",
+      "emailLabel": "Email",
+      "phoneLabel": "Phone",
+      "locationLabel": "Location",
+      "hoursLabel": "Working Hours",
+      "hours": "Sun — Thu, 9AM — 6PM (GST)"
+    },
+    "whatsapp": {
+      "title": "Prefer WhatsApp?",
+      "description": "Chat with us directly for a faster response.",
+      "button": "Open WhatsApp"
+    }
+  },
+  "footer": {
+    "navigationTitle": "Navigation",
+    "socialTitle": "Social",
+    "email": "hello@codet.dev",
+    "phone": "+971 50 123 4567",
+    "location": "Dubai, UAE",
+    "copyright": "© {year} CODET. All rights reserved.",
+    "social": {
+      "twitter": "Twitter",
+      "linkedin": "LinkedIn",
+      "instagram": "Instagram",
+      "github": "GitHub"
+    }
+  }
+}
