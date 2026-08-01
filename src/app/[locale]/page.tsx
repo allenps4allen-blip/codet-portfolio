@@ -4,6 +4,8 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 import { motion } from "framer-motion";
 import FadeIn from "@/components/FadeIn";
+import ParallaxHero from "@/components/ParallaxHero";
+import ScrollReveal from "@/components/ScrollReveal";
 import ProjectIllustration from "@/components/ProjectIllustration";
 
 const services = [
@@ -41,42 +43,44 @@ export default function HomePage() {
       {/* Hero */}
       <section className="relative flex min-h-screen items-center justify-center overflow-hidden pt-20">
         <div className="hero-gradient noise absolute inset-0" />
-        <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="text-balance text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl"
-          >
-            {t("heading")}
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.15, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="mx-auto mt-6 max-w-2xl text-base text-foreground/70 sm:text-lg md:text-xl"
-          >
-            {t("subtext")}
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3, ease: [0.25, 0.46, 0.45, 0.94] }}
-            className="mt-10"
-          >
-            <a
-              href="https://wa.me/96566565517"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-full bg-foreground px-8 py-3.5 text-sm font-medium text-background transition-opacity hover:opacity-90 sm:text-base"
+        <ParallaxHero>
+          <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
+            <motion.h1
+              initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="text-balance text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl"
             >
-              {t("cta")}
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="h-4 w-4 rtl:rotate-180" aria-hidden="true">
-                <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-              </svg>
-            </a>
-          </motion.div>
-        </div>
+              {t("heading")}
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+              className="mx-auto mt-6 max-w-2xl text-base text-foreground/70 sm:text-lg md:text-xl"
+            >
+              {t("subtext")}
+            </motion.p>
+            <motion.div
+              initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              className="mt-10"
+            >
+              <a
+                href="https://wa.me/96566565517"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 rounded-full bg-foreground px-8 py-3.5 text-sm font-medium text-background transition-opacity hover:opacity-90 sm:text-base"
+              >
+                {t("cta")}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="h-4 w-4 rtl:rotate-180" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                </svg>
+              </a>
+            </motion.div>
+          </div>
+        </ParallaxHero>
       </section>
 
       {/* What We Do */}
@@ -89,7 +93,7 @@ export default function HomePage() {
           </FadeIn>
           <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {services.map(({ key, icon }, i) => (
-              <FadeIn key={key} delay={i * 0.15}>
+              <FadeIn key={key} delay={i * 0.12} scale>
                 <div className="group rounded-2xl border border-white/10 bg-white/[0.03] p-8 transition-colors hover:border-white/20 hover:bg-white/[0.06]">
                   <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-white/10 text-foreground/80">
                     {icon}
@@ -116,7 +120,7 @@ export default function HomePage() {
             </h2>
           </FadeIn>
           <div className="mt-16 grid gap-6 sm:grid-cols-2">
-            <FadeIn delay={0.1}>
+            <ScrollReveal>
               <Link href="/work" className="group block overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] transition-colors hover:border-white/20">
                 <div className="relative aspect-[16/10] bg-gradient-to-br from-purple-500/20 via-blue-500/10 to-transparent">
                   <div className="absolute inset-0" aria-hidden="true">
@@ -134,8 +138,8 @@ export default function HomePage() {
                   </div>
                 </div>
               </Link>
-            </FadeIn>
-            <FadeIn delay={0.25}>
+            </ScrollReveal>
+            <ScrollReveal>
               <Link href="/work" className="group block overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] transition-colors hover:border-white/20">
                 <div className="relative aspect-[16/10] bg-gradient-to-br from-cyan-500/20 via-emerald-500/10 to-transparent">
                   <div className="absolute inset-0" aria-hidden="true">
@@ -153,9 +157,9 @@ export default function HomePage() {
                   </div>
                 </div>
               </Link>
-            </FadeIn>
+            </ScrollReveal>
           </div>
-          <FadeIn delay={0.3} className="mt-10 text-center">
+          <FadeIn delay={0.2} className="mt-10 text-center">
             <Link
               href="/work"
               className="inline-flex items-center gap-2 text-sm text-foreground/60 transition-colors hover:text-foreground"
@@ -173,7 +177,7 @@ export default function HomePage() {
       <section className="relative overflow-hidden py-24 sm:py-32">
         <div className="hero-gradient noise absolute inset-0 opacity-50" />
         <div className="relative z-10 mx-auto max-w-3xl px-6 text-center">
-          <FadeIn>
+          <FadeIn scale>
             <h2 className="text-balance text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
               {t("ctaSection.heading")}
             </h2>

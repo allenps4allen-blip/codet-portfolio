@@ -8,6 +8,8 @@ interface FadeInProps {
   delay?: number;
   direction?: "up" | "down" | "left" | "right" | "none";
   className?: string;
+  blur?: boolean;
+  scale?: boolean;
 }
 
 export default function FadeIn({
@@ -15,21 +17,38 @@ export default function FadeIn({
   delay = 0,
   direction = "up",
   className,
+  blur = true,
+  scale = false,
 }: FadeInProps) {
   const directionOffset = {
-    up: { y: 30 },
-    down: { y: -30 },
-    left: { x: 30 },
-    right: { x: -30 },
+    up: { y: 40 },
+    down: { y: -40 },
+    left: { x: 40 },
+    right: { x: -40 },
     none: {},
   };
 
   return (
     <motion.div
-      initial={{ opacity: 0, ...directionOffset[direction] }}
-      whileInView={{ opacity: 1, x: 0, y: 0 }}
-      viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.5, delay, ease: [0.25, 0.46, 0.45, 0.94] }}
+      initial={{
+        opacity: 0,
+        filter: blur ? "blur(6px)" : "blur(0px)",
+        scale: scale ? 0.95 : 1,
+        ...directionOffset[direction],
+      }}
+      whileInView={{
+        opacity: 1,
+        filter: "blur(0px)",
+        scale: 1,
+        x: 0,
+        y: 0,
+      }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{
+        duration: 0.7,
+        delay,
+        ease: [0.16, 1, 0.3, 1],
+      }}
       className={className}
     >
       {children}

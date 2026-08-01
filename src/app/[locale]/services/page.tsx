@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import FadeIn from "@/components/FadeIn";
+import ScrollReveal from "@/components/ScrollReveal";
 
 const serviceKeys = ["website", "aiAgents", "automations"] as const;
 
@@ -35,17 +36,17 @@ export default function ServicesPage() {
       <section className="pt-32 pb-16 sm:pt-40 sm:pb-20">
         <div className="mx-auto max-w-4xl px-6 text-center">
           <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+            initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="text-balance text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl"
           >
             {t("heading")}
           </motion.h1>
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.15, ease: [0.25, 0.46, 0.45, 0.94] }}
+            initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
             className="mx-auto mt-6 max-w-2xl text-lg text-foreground/70"
           >
             {t("subheading")}
@@ -59,7 +60,7 @@ export default function ServicesPage() {
           {serviceKeys.map((key) => {
             const hasPrice = t(`${key}.price`) !== "";
             return (
-              <FadeIn key={key} delay={0}>
+              <ScrollReveal key={key}>
                 <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-8 sm:p-10 lg:p-12">
                   <div className="flex flex-col gap-8 lg:flex-row lg:gap-12">
                     {/* Left: info */}
@@ -125,7 +126,7 @@ export default function ServicesPage() {
                     </div>
                   </div>
                 </div>
-              </FadeIn>
+              </ScrollReveal>
             );
           })}
         </div>
@@ -133,7 +134,7 @@ export default function ServicesPage() {
 
       {/* Pricing note */}
       <section className="pb-24 sm:pb-32">
-        <FadeIn>
+        <FadeIn scale>
           <div className="mx-auto max-w-3xl px-6 text-center">
             <div className="rounded-xl border border-white/10 bg-white/[0.02] px-8 py-6">
               <p className="text-sm text-foreground/60">

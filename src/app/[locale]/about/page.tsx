@@ -32,17 +32,17 @@ export default function AboutPage() {
       <section className="pt-32 pb-16 sm:pt-40 sm:pb-20">
         <div className="mx-auto max-w-4xl px-6 text-center">
           <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] }}
+            initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="text-balance text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl"
           >
             {t("heading")}
           </motion.h1>
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.15, ease: [0.25, 0.46, 0.45, 0.94] }}
+            initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
             className="mx-auto mt-6 max-w-2xl text-lg text-foreground/70"
           >
             {t("subheading")}
@@ -101,7 +101,7 @@ export default function AboutPage() {
           </FadeIn>
           <div className="mt-16 grid gap-6 sm:grid-cols-2">
             {valueIds.map((id, i) => (
-              <FadeIn key={id} delay={i * 0.1}>
+              <FadeIn key={id} delay={i * 0.1} scale>
                 <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-8 transition-colors hover:border-white/20 hover:bg-white/[0.06]">
                   <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-white/10 text-foreground/80">
                     {valueIcons[i]}
@@ -123,7 +123,7 @@ export default function AboutPage() {
       <section className="relative overflow-hidden py-24 sm:py-32">
         <div className="hero-gradient noise absolute inset-0 opacity-50" />
         <div className="relative z-10 mx-auto max-w-3xl px-6 text-center">
-          <FadeIn>
+          <FadeIn scale>
             <h2 className="text-balance text-3xl font-bold tracking-tight sm:text-4xl">
               {t("cta.heading")}
             </h2>
