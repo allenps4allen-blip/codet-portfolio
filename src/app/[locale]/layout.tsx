@@ -38,11 +38,40 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "metadata" });
+  const title = t("title");
+  const description = t("description");
+
   return {
-    title: t("title"),
-    description: t("description"),
+    title: {
+      default: `${title} — ${description}`,
+      template: `%s | ${title}`,
+    },
+    description,
     metadataBase: new URL("https://codet.dev"),
     themeColor: "#0a0a0a",
+    openGraph: {
+      title,
+      description,
+      siteName: title,
+      locale: locale === "ar" ? "ar_KW" : "en_US",
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+    },
+    robots: {
+      index: true,
+      follow: true,
+    },
+    alternates: {
+      canonical: `/${locale}`,
+      languages: {
+        en: "/en",
+        ar: "/ar",
+      },
+    },
   };
 }
 

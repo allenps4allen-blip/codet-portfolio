@@ -60,7 +60,7 @@
     "pricingNote": "Pricing varies based on requirements — book a free consultation for an accurate quote.",
     "website": {
       "title": "Website Development",
-      "price": "80 KD",
+      "price": "79 KD",
       "priceLabel": "setup",
       "description": "We design and develop high-performance, responsive websites tailored to your brand. From landing pages to full-scale web applications, every project is built with clean code, SEO best practices, and conversion-focused design.",
       "features": {
@@ -73,7 +73,7 @@
     },
     "aiAgents": {
       "title": "AI Agents & Chatbots",
-      "price": "50 KD",
+      "price": "49 KD",
       "priceLabel": "/month",
       "description": "Deploy intelligent AI agents that handle customer inquiries, qualify leads, and automate support — around the clock. Built with the latest language models and trained on your business data for accurate, on-brand responses.",
       "features": {
@@ -201,7 +201,8 @@
       "success": "Message sent! We'll get back to you within 24 hours.",
       "namePlaceholder": "Your name",
       "emailPlaceholder": "you@company.com",
-      "messagePlaceholder": "Describe your project, goals, and timeline..."
+      "messagePlaceholder": "Describe your project, goals, and timeline...",
+      "error": "Something went wrong. Please try again or reach out via WhatsApp."
     },
     "info": {
       "title": "Contact Info",
@@ -209,7 +210,7 @@
       "phoneLabel": "Phone",
       "locationLabel": "Location",
       "hoursLabel": "Working Hours",
-      "hours": "Sun — Thu, 9AM — 6PM (GST)"
+      "hours": "Sun — Thu, 9AM — 6PM (AST) · Support 24/7"
     },
     "whatsapp": {
       "title": "Prefer WhatsApp?",
@@ -220,15 +221,12 @@
   "footer": {
     "navigationTitle": "Navigation",
     "socialTitle": "Social",
-    "email": "hello@codet.dev",
-    "phone": "+971 50 123 4567",
-    "location": "Dubai, UAE",
+    "email": "allenmathew66@gmail.com",
+    "phone": "+965 6656 5517",
+    "location": "Kuwait",
     "copyright": "© {year} CODET. All rights reserved.",
     "social": {
-      "twitter": "Twitter",
-      "linkedin": "LinkedIn",
-      "instagram": "Instagram",
-      "github": "GitHub"
+      "instagram": "Instagram"
     }
   }
 }

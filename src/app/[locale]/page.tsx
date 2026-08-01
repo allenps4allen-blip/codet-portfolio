@@ -64,7 +64,7 @@ export default function HomePage() {
             className="mt-10"
           >
             <a
-              href="https://wa.me/971501234567"
+              href="https://wa.me/96566565517"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 rounded-full bg-foreground px-8 py-3.5 text-sm font-medium text-background transition-opacity hover:opacity-90 sm:text-base"
@@ -179,7 +179,7 @@ export default function HomePage() {
           <FadeIn delay={0.3}>
             <div className="mt-10">
               <a
-                href="https://wa.me/971501234567"
+                href="https://wa.me/96566565517"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 rounded-full bg-foreground px-8 py-3.5 text-sm font-medium text-background transition-opacity hover:opacity-90 sm:text-base"

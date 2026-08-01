@@ -2,10 +2,7 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 
 const socialLinks = [
-  { key: "twitter", href: "#" },
-  { key: "linkedin", href: "#" },
-  { key: "instagram", href: "#" },
-  { key: "github", href: "#" },
+  { key: "instagram", href: "https://www.instagram.com/codet.kuwait/" },
 ] as const;
 
 const navLinks = [

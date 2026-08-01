@@ -96,7 +96,7 @@ export default function ServicesPage() {
                       </div>
 
                       <a
-                        href="https://wa.me/971501234567"
+                        href="https://wa.me/96566565517"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 rounded-full bg-foreground px-6 py-3 text-sm font-medium text-background transition-opacity hover:opacity-90"

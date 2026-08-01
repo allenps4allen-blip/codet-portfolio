@@ -9,10 +9,39 @@ export default function ContactPage() {
   const t = useTranslations("contact");
   const tFooter = useTranslations("footer");
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [error, setError] = useState(false);
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    setSubmitted(true);
+    setSending(true);
+    setError(false);
+
+    const form = e.currentTarget;
+    const data = {
+      name: (form.elements.namedItem("name") as HTMLInputElement).value,
+      email: (form.elements.namedItem("email") as HTMLInputElement).value,
+      service: (form.elements.namedItem("service") as HTMLSelectElement).value,
+      message: (form.elements.namedItem("message") as HTMLTextAreaElement).value,
+    };
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      if (res.ok) {
+        setSubmitted(true);
+      } else {
+        setError(true);
+      }
+    } catch {
+      setError(true);
+    } finally {
+      setSending(false);
+    }
   }
 
   return (
@@ -65,6 +94,7 @@ export default function ContactPage() {
                     <input
                       type="text"
                       id="name"
+                      name="name"
                       required
                       placeholder={t("form.namePlaceholder")}
                       className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-foreground placeholder:text-foreground/30 focus:border-white/30 focus:outline-none focus:ring-0 transition-colors"
@@ -77,6 +107,7 @@ export default function ContactPage() {
                     <input
                       type="email"
                       id="email"
+                      name="email"
                       required
                       placeholder={t("form.emailPlaceholder")}
                       className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-foreground placeholder:text-foreground/30 focus:border-white/30 focus:outline-none focus:ring-0 transition-colors"
@@ -88,6 +119,7 @@ export default function ContactPage() {
                     </label>
                     <select
                       id="service"
+                      name="service"
                       required
                       defaultValue=""
                       className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-foreground focus:border-white/30 focus:outline-none focus:ring-0 transition-colors"
@@ -105,17 +137,24 @@ export default function ContactPage() {
                     </label>
                     <textarea
                       id="message"
+                      name="message"
                       rows={5}
                       required
                       placeholder={t("form.messagePlaceholder")}
                       className="w-full resize-none rounded-xl border border-white/10 bg-white/[0.03] px-4 py-3 text-sm text-foreground placeholder:text-foreground/30 focus:border-white/30 focus:outline-none focus:ring-0 transition-colors"
                     />
                   </div>
+
+                  {error && (
+                    <p className="text-sm text-red-400">{t("form.error")}</p>
+                  )}
+
                   <button
                     type="submit"
-                    className="inline-flex items-center gap-2 rounded-full bg-foreground px-8 py-3.5 text-sm font-medium text-background transition-opacity hover:opacity-90"
+                    disabled={sending}
+                    className="inline-flex items-center gap-2 rounded-full bg-foreground px-8 py-3.5 text-sm font-medium text-background transition-opacity hover:opacity-90 disabled:opacity-60"
                   >
-                    {t("form.submit")}
+                    {sending ? t("form.sending") : t("form.submit")}
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="h-4 w-4 rtl:rotate-180" aria-hidden="true">
                       <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
                     </svg>
@@ -164,7 +203,7 @@ export default function ContactPage() {
                   {t("whatsapp.description")}
                 </p>
                 <a
-                  href="https://wa.me/971501234567"
+                  href="https://wa.me/96566565517"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-6 py-2.5 text-sm font-medium text-emerald-400 transition-colors hover:bg-emerald-500/20"
