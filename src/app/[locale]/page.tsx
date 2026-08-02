@@ -91,17 +91,17 @@ export default function HomePage() {
               {t("whatWeDo")}
             </h2>
           </FadeIn>
-          <div className="mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-12 grid grid-cols-2 gap-3 sm:mt-16 sm:gap-6 lg:grid-cols-3">
             {services.map(({ key, icon }, i) => (
               <FadeIn key={key} delay={i * 0.12} scale>
-                <div className="group rounded-2xl border border-white/10 bg-white/[0.03] p-8 transition-colors hover:border-white/20 hover:bg-white/[0.06]">
-                  <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-white/10 text-foreground/80">
+                <div className="group rounded-xl border border-white/10 bg-white/[0.03] p-4 transition-colors hover:border-white/20 hover:bg-white/[0.06] sm:rounded-2xl sm:p-8">
+                  <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-lg bg-white/10 text-foreground/80 sm:mb-6 sm:h-12 sm:w-12 sm:rounded-xl">
                     {icon}
                   </div>
-                  <h3 className="text-lg font-semibold">
+                  <h3 className="text-sm font-semibold sm:text-lg">
                     {t(`services.${key}.title`)}
                   </h3>
-                  <p className="mt-3 text-sm leading-relaxed text-foreground/60">
+                  <p className="mt-2 text-xs leading-relaxed text-foreground/60 sm:mt-3 sm:text-sm">
                     {t(`services.${key}.description`)}
                   </p>
                 </div>
@@ -119,17 +119,17 @@ export default function HomePage() {
               {t("process.title")}
             </h2>
           </FadeIn>
-          <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-12 grid grid-cols-2 gap-3 sm:mt-16 sm:gap-8 lg:grid-cols-4">
             {(["1", "2", "3", "4"] as const).map((step, i) => (
               <FadeIn key={step} delay={i * 0.1} scale>
-                <div className="group relative rounded-2xl border border-white/10 bg-white/[0.03] p-8 transition-colors hover:border-white/20 hover:bg-white/[0.06]">
-                  <span className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-foreground/70">
+                <div className="group relative rounded-xl border border-white/10 bg-white/[0.03] p-4 transition-colors hover:border-white/20 hover:bg-white/[0.06] sm:rounded-2xl sm:p-8">
+                  <span className="mb-2 inline-flex h-8 w-8 items-center justify-center rounded-full bg-white/10 text-xs font-bold text-foreground/70 sm:mb-4 sm:h-10 sm:w-10 sm:text-sm">
                     {step}
                   </span>
-                  <h3 className="mt-4 text-lg font-semibold">
+                  <h3 className="mt-2 text-sm font-semibold sm:mt-4 sm:text-lg">
                     {t(`process.steps.${step}.title`)}
                   </h3>
-                  <p className="mt-3 text-sm leading-relaxed text-foreground/60">
+                  <p className="mt-2 text-xs leading-relaxed text-foreground/60 sm:mt-3 sm:text-sm">
                     {t(`process.steps.${step}.description`)}
                   </p>
                 </div>
