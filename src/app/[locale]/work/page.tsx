@@ -56,6 +56,7 @@ export default function WorkPage() {
                     <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-110 group-hover:-translate-y-1" aria-hidden="true">
                       <ProjectIllustration index={i} />
                     </div>
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
                     <div className="relative flex h-full flex-col justify-between p-6 sm:p-10">
                       <span className="inline-block self-start rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-medium backdrop-blur-sm">
                         {t(`projects.${id}.category`)}

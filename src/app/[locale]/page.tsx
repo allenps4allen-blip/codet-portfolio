@@ -154,6 +154,7 @@ export default function HomePage() {
                   <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-110 group-hover:-translate-y-1" aria-hidden="true">
                     <ProjectIllustration index={0} />
                   </div>
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
                   <div className="relative flex h-full items-end p-6 sm:p-12">
                     <div>
                       <p className="text-xs font-medium uppercase tracking-wider text-foreground/50">
@@ -173,6 +174,7 @@ export default function HomePage() {
                   <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-110 group-hover:-translate-y-1" aria-hidden="true">
                     <ProjectIllustration index={1} />
                   </div>
+                  <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
                   <div className="relative flex h-full items-end p-6 sm:p-12">
                     <div>
                       <p className="text-xs font-medium uppercase tracking-wider text-foreground/50">
