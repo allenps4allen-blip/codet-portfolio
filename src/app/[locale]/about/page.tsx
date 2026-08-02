@@ -53,14 +53,14 @@ export default function AboutPage() {
       {/* Stats */}
       <section className="pb-20">
         <div className="mx-auto max-w-4xl px-6">
-          <div className="grid grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-3 sm:gap-6">
             {(["projects", "clients", "countries"] as const).map((key, i) => (
               <FadeIn key={key} delay={i * 0.1}>
                 <div className="text-center">
-                  <p className="text-3xl font-bold sm:text-4xl md:text-5xl">
+                  <p className="text-4xl font-bold sm:text-3xl md:text-5xl">
                     {t(`stats.${key}`)}
                   </p>
-                  <p className="mt-2 text-xs uppercase tracking-wider text-foreground/50 sm:text-sm">
+                  <p className="mt-2 text-sm uppercase tracking-wider text-foreground/50 sm:text-xs md:text-sm">
                     {t(`stats.${key}Label`)}
                   </p>
                 </div>

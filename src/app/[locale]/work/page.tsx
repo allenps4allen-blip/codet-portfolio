@@ -56,15 +56,15 @@ export default function WorkPage() {
                     <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-110 group-hover:-translate-y-1" aria-hidden="true">
                       <ProjectIllustration index={i} />
                     </div>
-                    <div className="relative flex h-full flex-col justify-between p-8 sm:p-10">
+                    <div className="relative flex h-full flex-col justify-between p-6 sm:p-10">
                       <span className="inline-block self-start rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-medium backdrop-blur-sm">
                         {t(`projects.${id}.category`)}
                       </span>
                       <div>
-                        <h2 className="text-xl font-semibold sm:text-2xl">
+                        <h2 className="text-lg font-semibold sm:text-2xl">
                           {t(`projects.${id}.title`)}
                         </h2>
-                        <p className="mt-2 text-sm leading-relaxed text-foreground/60">
+                        <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-foreground/60">
                           {t(`projects.${id}.description`)}
                         </p>
                       </div>

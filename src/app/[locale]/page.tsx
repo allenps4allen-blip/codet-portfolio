@@ -154,7 +154,7 @@ export default function HomePage() {
                   <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-110 group-hover:-translate-y-1" aria-hidden="true">
                     <ProjectIllustration index={0} />
                   </div>
-                  <div className="relative flex h-full items-end p-8 sm:p-12">
+                  <div className="relative flex h-full items-end p-6 sm:p-12">
                     <div>
                       <p className="text-xs font-medium uppercase tracking-wider text-foreground/50">
                         {t("portfolio.project1.category")}
@@ -173,7 +173,7 @@ export default function HomePage() {
                   <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-110 group-hover:-translate-y-1" aria-hidden="true">
                     <ProjectIllustration index={1} />
                   </div>
-                  <div className="relative flex h-full items-end p-8 sm:p-12">
+                  <div className="relative flex h-full items-end p-6 sm:p-12">
                     <div>
                       <p className="text-xs font-medium uppercase tracking-wider text-foreground/50">
                         {t("portfolio.project2.category")}

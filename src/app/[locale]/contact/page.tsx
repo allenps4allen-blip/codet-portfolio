@@ -71,7 +71,7 @@ export default function ContactPage() {
       {/* Form + Info */}
       <section className="pb-24 sm:pb-32">
         <div className="mx-auto max-w-5xl px-6">
-          <div className="grid gap-12 lg:grid-cols-5 lg:gap-16">
+          <div className="grid gap-10 lg:grid-cols-5 lg:gap-16">
             {/* Form */}
             <FadeIn className="lg:col-span-3">
               {submitted ? (

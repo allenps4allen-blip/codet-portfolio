@@ -36,12 +36,12 @@ export default function Footer() {
             <h3 className="text-sm font-semibold uppercase tracking-wider text-foreground/50">
               {t("navigationTitle")}
             </h3>
-            <ul className="space-y-2">
+            <ul className="space-y-3 sm:space-y-2">
               {navLinks.map(({ href, key }) => (
                 <li key={key}>
                   <Link
                     href={href}
-                    className="text-sm text-foreground/70 transition-colors hover:text-foreground"
+                    className="inline-block py-1 text-sm text-foreground/70 transition-colors hover:text-foreground"
                   >
                     {tNav(key)}
                   </Link>

@@ -64,6 +64,11 @@ export async function generateMetadata({
       title,
       description,
     },
+    viewport: {
+      width: "device-width",
+      initialScale: 1,
+      viewportFit: "cover",
+    },
     robots: {
       index: true,
       follow: true,
