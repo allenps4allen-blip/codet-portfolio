@@ -94,8 +94,45 @@ export default async function LocaleLayout({
   const messages = await getMessages();
   const isArabic = locale === "ar";
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    name: "CODET",
+    description: isArabic
+      ? "نرقمن أعمالك — مواقع إلكترونية، وكلاء ذكاء اصطناعي، أتمتة، وسير عمل."
+      : "We digitalize your business — websites, AI agents, automations, and workflows.",
+    url: "https://codet.dev",
+    telephone: "+96566565517",
+    email: "codet.kuwait@gmail.com",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Kuwait City",
+      addressCountry: "KW",
+    },
+    areaServed: {
+      "@type": "GeoCircle",
+      geoMidpoint: { "@type": "GeoCoordinates", latitude: 29.3759, longitude: 47.9774 },
+      geoRadius: "500000",
+    },
+    serviceType: ["Web Development", "AI Agents", "Chatbots", "Workflow Automation"],
+    priceRange: "$$",
+    openingHoursSpecification: {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday"],
+      opens: "09:00",
+      closes: "18:00",
+    },
+    sameAs: ["https://instagram.com/codet.kw"],
+  };
+
   return (
     <html lang={locale} dir={isArabic ? "rtl" : "ltr"}>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body
         className={`${inter.variable} ${geistSans.variable} ${notoSansArabic.variable} ${
           isArabic ? "font-arabic" : "font-sans"

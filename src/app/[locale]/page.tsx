@@ -111,6 +111,34 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* How We Work */}
+      <section className="py-24 sm:py-32">
+        <div className="mx-auto max-w-7xl px-6">
+          <FadeIn>
+            <h2 className="text-center text-sm font-semibold uppercase tracking-widest text-foreground/50">
+              {t("process.title")}
+            </h2>
+          </FadeIn>
+          <div className="mt-16 grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+            {(["1", "2", "3", "4"] as const).map((step, i) => (
+              <FadeIn key={step} delay={i * 0.1} scale>
+                <div className="group relative rounded-2xl border border-white/10 bg-white/[0.03] p-8 transition-colors hover:border-white/20 hover:bg-white/[0.06]">
+                  <span className="mb-4 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-sm font-bold text-foreground/70">
+                    {step}
+                  </span>
+                  <h3 className="mt-4 text-lg font-semibold">
+                    {t(`process.steps.${step}.title`)}
+                  </h3>
+                  <p className="mt-3 text-sm leading-relaxed text-foreground/60">
+                    {t(`process.steps.${step}.description`)}
+                  </p>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Portfolio Preview */}
       <section className="py-24 sm:py-32">
         <div className="mx-auto max-w-7xl px-6">
@@ -121,9 +149,9 @@ export default function HomePage() {
           </FadeIn>
           <div className="mt-16 grid gap-6 sm:grid-cols-2">
             <ScrollReveal>
-              <Link href="/work" className="group block overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] transition-colors hover:border-white/20">
+              <Link href="/work" className="group block overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] transition-all duration-500 hover:border-white/20 hover:shadow-lg hover:shadow-white/[0.03]">
                 <div className="relative aspect-[16/10] bg-gradient-to-br from-purple-500/20 via-blue-500/10 to-transparent">
-                  <div className="absolute inset-0" aria-hidden="true">
+                  <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-110 group-hover:-translate-y-1" aria-hidden="true">
                     <ProjectIllustration index={0} />
                   </div>
                   <div className="relative flex h-full items-end p-8 sm:p-12">
@@ -140,9 +168,9 @@ export default function HomePage() {
               </Link>
             </ScrollReveal>
             <ScrollReveal>
-              <Link href="/work" className="group block overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] transition-colors hover:border-white/20">
+              <Link href="/work" className="group block overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] transition-all duration-500 hover:border-white/20 hover:shadow-lg hover:shadow-white/[0.03]">
                 <div className="relative aspect-[16/10] bg-gradient-to-br from-cyan-500/20 via-emerald-500/10 to-transparent">
-                  <div className="absolute inset-0" aria-hidden="true">
+                  <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-110 group-hover:-translate-y-1" aria-hidden="true">
                     <ProjectIllustration index={1} />
                   </div>
                   <div className="relative flex h-full items-end p-8 sm:p-12">

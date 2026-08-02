@@ -51,9 +51,9 @@ export default function WorkPage() {
           <div className="grid gap-8 sm:grid-cols-2">
             {projectIds.map((id, i) => (
               <ScrollReveal key={id}>
-                <div className="group overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] transition-colors hover:border-white/20">
+                <div className="group overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] transition-all duration-500 hover:border-white/20 hover:shadow-lg hover:shadow-white/[0.03]">
                   <div className={`relative aspect-[16/10] bg-gradient-to-br ${gradients[i]}`}>
-                    <div className="absolute inset-0" aria-hidden="true">
+                    <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-110 group-hover:-translate-y-1" aria-hidden="true">
                       <ProjectIllustration index={i} />
                     </div>
                     <div className="relative flex h-full flex-col justify-between p-8 sm:p-10">

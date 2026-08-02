@@ -43,6 +43,27 @@
       },
       "viewAll": "View All Projects"
     },
+    "process": {
+      "title": "How We Work",
+      "steps": {
+        "1": {
+          "title": "Discovery",
+          "description": "We learn about your business, goals, and challenges to define the right solution."
+        },
+        "2": {
+          "title": "Design & Plan",
+          "description": "We map out the architecture, design the interface, and align on scope and timeline."
+        },
+        "3": {
+          "title": "Build & Test",
+          "description": "We develop your solution with clean code, test thoroughly, and iterate based on your feedback."
+        },
+        "4": {
+          "title": "Launch & Support",
+          "description": "We deploy to production, monitor performance, and provide ongoing maintenance."
+        }
+      }
+    },
     "ctaSection": {
       "heading": "Ready to digitalize?",
       "subtext": "Let's discuss how we can transform your business with the right technology.",
@@ -169,12 +190,12 @@
       }
     },
     "stats": {
-      "projects": "50+",
-      "projectsLabel": "Projects Delivered",
-      "clients": "30+",
-      "clientsLabel": "Happy Clients",
-      "countries": "6",
-      "countriesLabel": "Countries Served"
+      "projects": "24/7",
+      "projectsLabel": "Support Available",
+      "clients": "100%",
+      "clientsLabel": "Client Satisfaction",
+      "countries": "2 Weeks",
+      "countriesLabel": "Average Turnaround"
     },
     "cta": {
       "heading": "Ready to work together?",
