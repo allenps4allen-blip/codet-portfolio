@@ -127,3 +127,112 @@ body {
   pointer-events: none;
   animation: grain 8s steps(10) infinite;
 }
+
+/* Liquid Glass Theme */
+.glass-card {
+  background: rgba(255, 255, 255, 0.05);
+  border: 0.5px solid rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(36px) saturate(1.7);
+  -webkit-backdrop-filter: blur(36px) saturate(1.7);
+  position: relative;
+  overflow: hidden;
+}
+
+.glass-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.08) 0%,
+    transparent 50%
+  );
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.glass-card::after {
+  content: "";
+  position: absolute;
+  top: -0.5px;
+  left: 12%;
+  right: 12%;
+  height: 0.5px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  pointer-events: none;
+}
+
+.glass-nav {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(60px) saturate(1.8);
+  -webkit-backdrop-filter: blur(60px) saturate(1.8);
+}
+
+.dot-matrix {
+  background-image: radial-gradient(
+    circle 1px,
+    rgba(255, 255, 255, 0.06) 1px,
+    transparent 1px
+  );
+  background-size: 22px 22px;
+}
+
+.section-divider {
+  height: 0.5px;
+  background: linear-gradient(
+    90deg,
+    transparent 5%,
+    rgba(255, 255, 255, 0.06) 50%,
+    transparent 95%
+  );
+}
+
+@keyframes aurora-drift {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(15px, -10px) scale(1.05);
+  }
+  66% {
+    transform: translate(-10px, 15px) scale(0.95);
+  }
+}
+
+.aurora-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  animation: aurora-drift 14s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.glass-project-bar {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(28px) saturate(1.5);
+  -webkit-backdrop-filter: blur(28px) saturate(1.5);
+  border-top: 0.5px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+}
+
+.glass-project-bar::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 15%;
+  right: 15%;
+  height: 0.5px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  pointer-events: none;
+}

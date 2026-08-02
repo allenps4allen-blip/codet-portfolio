@@ -23,9 +23,12 @@ export default function WorkPage() {
 
   return (
     <>
-      {/* Header */}
-      <section className="pt-32 pb-16 sm:pt-40 sm:pb-20">
-        <div className="mx-auto max-w-4xl px-6 text-center">
+      {/* Header — Dot matrix + aurora */}
+      <section className="relative overflow-hidden pt-32 pb-16 sm:pt-40 sm:pb-20">
+        <div className="dot-matrix absolute inset-0" />
+        <div className="aurora-blob" style={{ width: 200, height: 200, background: "rgba(120, 70, 255, 0.1)", top: "20px", right: "-40px" }} />
+        <div className="aurora-blob" style={{ width: 160, height: 160, background: "rgba(0, 190, 220, 0.08)", bottom: "0", left: "-20px", animationDelay: "-6s" }} />
+        <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
           <motion.h1
             initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
@@ -45,30 +48,35 @@ export default function WorkPage() {
         </div>
       </section>
 
-      {/* Projects Grid */}
-      <section className="pb-24 sm:pb-32">
-        <div className="mx-auto max-w-7xl px-6">
+      <div className="section-divider mx-6 sm:mx-12" />
+
+      {/* Projects Grid — Dot matrix + film grain accents */}
+      <section className="relative overflow-hidden pb-24 sm:pb-32">
+        <div className="dot-matrix absolute inset-0" />
+        <div className="pointer-events-none absolute -right-10 top-20 h-[300px] w-[300px] rounded-full" style={{ background: "radial-gradient(circle, rgba(140, 60, 255, 0.05), transparent)", filter: "blur(20px)" }} />
+        <div className="pointer-events-none absolute -left-10 bottom-40 h-[250px] w-[250px] rounded-full" style={{ background: "radial-gradient(circle, rgba(0, 180, 200, 0.04), transparent)", filter: "blur(20px)" }} />
+        <div className="relative z-10 mx-auto max-w-7xl px-6 pt-16">
           <div className="grid gap-8 sm:grid-cols-2">
             {projectIds.map((id, i) => (
               <ScrollReveal key={id}>
-                <div className="group overflow-hidden rounded-2xl border border-white/10 bg-white/[0.03] transition-all duration-500 hover:border-white/20 hover:shadow-lg hover:shadow-white/[0.03]">
+                <div className="group overflow-hidden rounded-2xl transition-all duration-500 hover:translate-y-[-3px]" style={{ border: "0.5px solid rgba(255,255,255,0.1)" }}>
                   <div className={`relative aspect-[16/10] bg-gradient-to-br ${gradients[i]}`}>
+                    <div className="dot-matrix absolute inset-0 opacity-50" style={{ backgroundSize: "18px 18px" }} />
                     <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-110 group-hover:-translate-y-1" aria-hidden="true">
                       <ProjectIllustration index={i} />
                     </div>
-                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
                     <div className="relative flex h-full flex-col justify-between p-6 sm:p-10">
-                      <span className="inline-block self-start rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-medium backdrop-blur-sm">
+                      <span className="glass-card inline-block self-start rounded-full px-3 py-1 text-xs font-medium">
                         {t(`projects.${id}.category`)}
                       </span>
-                      <div>
-                        <h2 className="text-lg font-semibold sm:text-2xl">
-                          {t(`projects.${id}.title`)}
-                        </h2>
-                        <p className="mt-2 line-clamp-3 text-sm leading-relaxed text-foreground/60">
-                          {t(`projects.${id}.description`)}
-                        </p>
-                      </div>
+                    </div>
+                    <div className="glass-project-bar absolute inset-x-0 bottom-0 p-5 sm:p-6">
+                      <h2 className="text-lg font-semibold sm:text-xl">
+                        {t(`projects.${id}.title`)}
+                      </h2>
+                      <p className="mt-1.5 line-clamp-2 text-sm leading-relaxed text-foreground/50">
+                        {t(`projects.${id}.description`)}
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -78,31 +86,47 @@ export default function WorkPage() {
         </div>
       </section>
 
-      {/* CTA */}
+      <div className="section-divider mx-6 sm:mx-12" />
+
+      {/* CTA — Constellation + dot matrix */}
       <section className="relative overflow-hidden py-24 sm:py-32">
-        <div className="hero-gradient noise absolute inset-0 opacity-50" />
+        <div className="dot-matrix absolute inset-0" />
+        <svg className="pointer-events-none absolute inset-0 h-full w-full" viewBox="0 0 1200 400" fill="none" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+          <circle cx="150" cy="80" r="1.8" fill="rgba(255,255,255,0.1)" />
+          <circle cx="400" cy="120" r="1.5" fill="rgba(255,255,255,0.07)" />
+          <circle cx="650" cy="60" r="2" fill="rgba(255,255,255,0.09)" />
+          <circle cx="900" cy="100" r="1.5" fill="rgba(255,255,255,0.08)" />
+          <circle cx="300" cy="300" r="1.8" fill="rgba(255,255,255,0.08)" />
+          <circle cx="600" cy="320" r="1.5" fill="rgba(255,255,255,0.07)" />
+          <circle cx="850" cy="280" r="2" fill="rgba(255,255,255,0.09)" />
+          <line x1="150" y1="80" x2="400" y2="120" stroke="rgba(255,255,255,0.02)" strokeWidth="0.5" />
+          <line x1="400" y1="120" x2="650" y2="60" stroke="rgba(255,255,255,0.025)" strokeWidth="0.5" />
+          <line x1="650" y1="60" x2="900" y2="100" stroke="rgba(255,255,255,0.02)" strokeWidth="0.5" />
+          <line x1="300" y1="300" x2="600" y2="320" stroke="rgba(255,255,255,0.02)" strokeWidth="0.5" />
+          <line x1="600" y1="320" x2="850" y2="280" stroke="rgba(255,255,255,0.025)" strokeWidth="0.5" />
+          <line x1="400" y1="120" x2="300" y2="300" stroke="rgba(255,255,255,0.015)" strokeWidth="0.5" />
+          <line x1="650" y1="60" x2="600" y2="320" stroke="rgba(255,255,255,0.015)" strokeWidth="0.5" />
+        </svg>
         <div className="relative z-10 mx-auto max-w-3xl px-6 text-center">
           <FadeIn scale>
-            <h2 className="text-balance text-3xl font-bold tracking-tight sm:text-4xl">
-              {t("cta.heading")}
-            </h2>
-          </FadeIn>
-          <FadeIn delay={0.15}>
-            <p className="mx-auto mt-6 max-w-xl text-foreground/70">
-              {t("cta.subtext")}
-            </p>
-          </FadeIn>
-          <FadeIn delay={0.3}>
-            <div className="mt-10">
-              <Link
-                href="/contact"
-                className="inline-flex items-center gap-2 rounded-full bg-foreground px-8 py-3.5 text-sm font-medium text-background transition-opacity hover:opacity-90"
-              >
-                {t("cta.button")}
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="h-4 w-4 rtl:rotate-180" aria-hidden="true">
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-                </svg>
-              </Link>
+            <div className="glass-card mx-auto max-w-xl rounded-2xl px-8 py-12 sm:rounded-3xl sm:px-12 sm:py-16">
+              <h2 className="text-balance text-3xl font-bold tracking-tight sm:text-4xl">
+                {t("cta.heading")}
+              </h2>
+              <p className="mx-auto mt-6 max-w-xl text-foreground/70">
+                {t("cta.subtext")}
+              </p>
+              <div className="mt-10">
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center gap-2 rounded-full bg-foreground px-8 py-3.5 text-sm font-medium text-background transition-opacity hover:opacity-90"
+                >
+                  {t("cta.button")}
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="h-4 w-4 rtl:rotate-180" aria-hidden="true">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                  </svg>
+                </Link>
+              </div>
             </div>
           </FadeIn>
         </div>

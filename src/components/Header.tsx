@@ -41,7 +41,7 @@ export default function Header() {
     <header
       className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${
         scrolled && !mobileOpen
-          ? "border-b border-white/10 bg-background/60 backdrop-blur-xl"
+          ? "glass-nav border-b border-white/[0.08]"
           : mobileOpen
             ? "bg-transparent"
             : "bg-transparent"

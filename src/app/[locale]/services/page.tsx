@@ -32,9 +32,12 @@ export default function ServicesPage() {
 
   return (
     <>
-      {/* Header */}
-      <section className="pt-32 pb-16 sm:pt-40 sm:pb-20">
-        <div className="mx-auto max-w-4xl px-6 text-center">
+      {/* Header — Dot matrix + aurora */}
+      <section className="relative overflow-hidden pt-32 pb-16 sm:pt-40 sm:pb-20">
+        <div className="dot-matrix absolute inset-0" />
+        <div className="aurora-blob" style={{ width: 220, height: 220, background: "rgba(120, 70, 255, 0.12)", top: "-20px", left: "-40px" }} />
+        <div className="aurora-blob" style={{ width: 180, height: 180, background: "rgba(0, 190, 220, 0.08)", bottom: "0", right: "-20px", animationDelay: "-6s" }} />
+        <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
           <motion.h1
             initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
             animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
@@ -54,18 +57,22 @@ export default function ServicesPage() {
         </div>
       </section>
 
-      {/* Services */}
-      <section className="pb-24 sm:pb-32">
-        <div className="mx-auto max-w-5xl px-6 space-y-16 lg:space-y-24">
+      <div className="section-divider mx-6 sm:mx-12" />
+
+      {/* Services — Dot matrix */}
+      <section className="relative overflow-hidden pb-24 sm:pb-32">
+        <div className="dot-matrix absolute inset-0" />
+        <div className="pointer-events-none absolute left-1/2 top-1/3 h-[400px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full" style={{ background: "radial-gradient(ellipse, rgba(100, 140, 255, 0.05) 0%, transparent 70%)" }} />
+        <div className="relative z-10 mx-auto max-w-5xl space-y-16 px-6 pt-16 lg:space-y-24">
           {serviceKeys.map((key) => {
             const hasPrice = t(`${key}.price`) !== "";
             return (
               <ScrollReveal key={key}>
-                <div className="rounded-2xl border border-white/10 bg-white/[0.03] p-8 sm:p-10 lg:p-12">
+                <div className="glass-card rounded-2xl p-8 sm:p-10 lg:p-12">
                   <div className="flex flex-col gap-8 lg:flex-row lg:gap-12">
                     {/* Left: info */}
                     <div className="flex-1 space-y-6">
-                      <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-white/10 text-foreground/80">
+                      <div className="flex h-14 w-14 items-center justify-center rounded-xl bg-white/[0.06] text-foreground/80" style={{ border: "0.5px solid rgba(255,255,255,0.1)" }}>
                         {serviceIcons[key]}
                       </div>
                       <h2 className="text-2xl font-bold sm:text-3xl">
@@ -133,10 +140,11 @@ export default function ServicesPage() {
       </section>
 
       {/* Pricing note */}
-      <section className="pb-24 sm:pb-32">
+      <section className="relative overflow-hidden pb-24 sm:pb-32">
+        <div className="dot-matrix absolute inset-0" />
         <FadeIn scale>
-          <div className="mx-auto max-w-3xl px-6 text-center">
-            <div className="rounded-xl border border-white/10 bg-white/[0.02] px-8 py-6">
+          <div className="relative z-10 mx-auto max-w-3xl px-6 text-center">
+            <div className="glass-card rounded-xl px-8 py-6">
               <p className="text-sm text-foreground/60">
                 {t("pricingNote")}
               </p>
