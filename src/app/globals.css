@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --background: 10 10 10;
+  --background: 5 5 5;
   --foreground: 250 250 250;
   color-scheme: dark;
 }
@@ -235,4 +235,101 @@ body {
     transparent
   );
   pointer-events: none;
+}
+
+/* ROI Calculator slider styles */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #00a884;
+  border: 3px solid #0a0a0a;
+  box-shadow: 0 0 10px rgba(0, 168, 132, 0.4);
+  cursor: grab;
+}
+input[type="range"]::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #00a884;
+  border: 3px solid #0a0a0a;
+  box-shadow: 0 0 10px rgba(0, 168, 132, 0.4);
+  cursor: grab;
+}
+input[type="range"]:active::-webkit-slider-thumb {
+  cursor: grabbing;
+}
+
+/* ── Responsive overrides for new homepage sections ── */
+@media (max-width: 768px) {
+  /* Hero phones: stack vertically, reduce size */
+  .hero-phone-pair {
+    flex-direction: column !important;
+    gap: 24px !important;
+    align-items: center !important;
+  }
+  .hero-phone-frame {
+    transform: scale(0.78) !important;
+  }
+  .hero-headline h1 {
+    font-size: 17px !important;
+  }
+
+  /* Services: single column */
+  .services-grid {
+    flex-direction: column !important;
+  }
+
+  /* ROI Calculator: stack vertically */
+  .roi-card {
+    flex-direction: column !important;
+  }
+  .roi-divider {
+    width: 100% !important;
+    height: 1px !important;
+  }
+  .roi-result-row {
+    flex-direction: column !important;
+    gap: 16px !important;
+  }
+  .roi-section {
+    padding: 60px 20px !important;
+  }
+
+  /* Stats: 2x2 grid */
+  .stats-grid {
+    flex-wrap: wrap !important;
+    gap: 30px 40px !important;
+  }
+  .stats-grid > div {
+    flex: 0 0 calc(50% - 20px) !important;
+  }
+  .stats-section {
+    padding: 50px 20px !important;
+  }
+
+  /* CTA */
+  .cta-section {
+    padding: 80px 20px 100px !important;
+  }
+  .cta-h2 {
+    font-size: 28px !important;
+  }
+
+  /* Services / Process general padding */
+  .services-section {
+    padding: 60px 20px !important;
+  }
+  .process-section {
+    padding: 60px 20px 80px !important;
+  }
 }
