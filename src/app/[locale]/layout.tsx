@@ -50,7 +50,7 @@ export async function generateMetadata({
       template: `%s | ${title}`,
     },
     description,
-    metadataBase: new URL("https://codet.dev"),
+    metadataBase: new URL("https://www.codet-kw.com"),
     themeColor: "#0a0a0a",
     openGraph: {
       title,
@@ -101,7 +101,7 @@ export default async function LocaleLayout({
     description: isArabic
       ? "نرقمن أعمالك — مواقع إلكترونية، وكلاء ذكاء اصطناعي، أتمتة، وسير عمل."
       : "We digitalize your business — websites, AI agents, automations, and workflows.",
-    url: "https://codet.dev",
+    url: "https://www.codet-kw.com",
     telephone: "+96566565517",
     email: "codet.kuwait@gmail.com",
     address: {
