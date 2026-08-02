@@ -2,11 +2,10 @@
 
 import { useState, useEffect, useRef } from "react";
 
-function AnimatedNumber({ value, prefix = "", suffix = "", color = "#e9edef" }: {
+function AnimatedNumber({ value, prefix = "", suffix = "" }: {
   value: number;
   prefix?: string;
   suffix?: string;
-  color?: string;
 }) {
   const [display, setDisplay] = useState(0);
   const frameRef = useRef<number>(0);
@@ -33,7 +32,7 @@ function AnimatedNumber({ value, prefix = "", suffix = "", color = "#e9edef" }: 
   }, [value]);
 
   return (
-    <span style={{ color, fontVariantNumeric: "tabular-nums", fontWeight: 700 }}>
+    <span style={{ fontVariantNumeric: "tabular-nums" }}>
       {prefix}{display.toLocaleString()}{suffix}
     </span>
   );
@@ -74,9 +73,9 @@ function Slider({ label, value, onChange, min, max, step = 1, unit = "" }: {
 }
 
 export default function ROICalculator() {
-  const [employees, setEmployees] = useState(12);
-  const [hours, setHours] = useState(15);
-  const [rate, setRate] = useState(8);
+  const [employees, setEmployees] = useState(8);
+  const [hours, setHours] = useState(10);
+  const [rate, setRate] = useState(5);
   const sectionRef = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
 
@@ -89,64 +88,68 @@ export default function ROICalculator() {
     return () => obs.disconnect();
   }, []);
 
-  const monthlySavings = employees * hours * rate * 4;
+  const weeklyWaste = employees * hours * rate;
+  const monthlySavings = Math.round(weeklyWaste * 4 * 0.85);
   const yearlySavings = monthlySavings * 12;
   const hoursReclaimed = employees * hours * 4;
-  const tasksAutomated = Math.round(employees * hours * 0.7 * 4);
 
   return (
     <div ref={sectionRef} className="roi-section" style={s.section}>
       <div style={s.header}>
         <span style={s.eyebrow}>ROI Calculator</span>
-        <h2 style={s.h2}>How much could you save?</h2>
-        <p style={s.subtitle}>Drag the sliders to match your business. Watch the numbers change.</p>
+        <h2 style={s.h2}>See your potential savings</h2>
+        <p style={s.subtitle}>Adjust the sliders to match your team. Results update instantly.</p>
       </div>
 
-      <div className="roi-card" style={{ ...s.card, opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(30px)", transition: "all 0.7s cubic-bezier(0.16, 1, 0.3, 1)" }}>
-        <div style={s.inputSide}>
-          <Slider label="Team size" value={employees} onChange={setEmployees} min={1} max={80} unit=" people" />
-          <Slider label="Hours on repetitive tasks / week" value={hours} onChange={setHours} min={1} max={40} unit=" hrs" />
-          <Slider label="Average hourly cost" value={rate} onChange={setRate} min={2} max={40} step={1} unit=" KD" />
+      <div style={{
+        ...s.card,
+        opacity: visible ? 1 : 0,
+        transform: visible ? "translateY(0)" : "translateY(30px)",
+        transition: "all 0.7s cubic-bezier(0.16, 1, 0.3, 1)",
+      }}>
+        <div style={s.slidersSection}>
+          <Slider label="Team size" value={employees} onChange={setEmployees} min={1} max={50} unit=" people" />
+          <Slider label="Hours wasted on manual tasks / week" value={hours} onChange={setHours} min={1} max={40} unit=" hrs" />
+          <Slider label="Average hourly cost" value={rate} onChange={setRate} min={2} max={25} step={1} unit=" KD" />
         </div>
 
-        <div className="roi-divider" style={s.divider} />
-
-        <div style={s.resultSide}>
-          <div style={s.resultMain}>
-            <span style={s.resultLabel}>Monthly savings</span>
-            <div style={s.resultBig}>
-              <AnimatedNumber value={monthlySavings} suffix=" KD" color="#00a884" />
+        <div style={s.resultsSection}>
+          <div style={s.resultCard}>
+            <span style={s.resultCardLabel}>Monthly savings</span>
+            <div style={s.resultCardValue}>
+              <AnimatedNumber value={monthlySavings} suffix=" KD" />
             </div>
           </div>
 
-          <div className="roi-result-row" style={s.resultRow}>
-            <div style={s.resultSmall}>
-              <span style={s.resultLabel}>Yearly savings</span>
-              <AnimatedNumber value={yearlySavings} suffix=" KD" color="#e9edef" />
-            </div>
-            <div style={s.resultSmall}>
-              <span style={s.resultLabel}>Hours reclaimed / mo</span>
-              <AnimatedNumber value={hoursReclaimed} suffix=" hrs" color="#e9edef" />
-            </div>
-            <div style={s.resultSmall}>
-              <span style={s.resultLabel}>Tasks automated / mo</span>
-              <AnimatedNumber value={tasksAutomated} color="#e9edef" />
+          <div style={s.resultCard}>
+            <span style={s.resultCardLabel}>Yearly savings</span>
+            <div style={{ ...s.resultCardValue, color: "#e9edef", fontSize: 28 }}>
+              <AnimatedNumber value={yearlySavings} suffix=" KD" />
             </div>
           </div>
 
-          <div style={s.barSection}>
-            <div style={s.barLabel}>
-              <span>Manual cost</span>
-              <span>With automation</span>
+          <div style={s.resultCard}>
+            <span style={s.resultCardLabel}>Hours reclaimed / month</span>
+            <div style={{ ...s.resultCardValue, color: "#e9edef", fontSize: 28 }}>
+              <AnimatedNumber value={hoursReclaimed} suffix=" hrs" />
             </div>
-            <div style={s.barTrack}>
-              <div style={{ ...s.barFull, width: "100%" }}>
-                <span style={s.barText}>{(employees * hours * rate * 4).toLocaleString()} KD</span>
+          </div>
+        </div>
+
+        <div style={s.comparison}>
+          <div style={s.compRow}>
+            <span style={s.compLabel}>Current weekly cost</span>
+            <div style={s.compBarTrack}>
+              <div style={{ ...s.compBar, width: "100%", background: "rgba(255,70,70,0.2)" }}>
+                <span style={s.compBarText}>{weeklyWaste.toLocaleString()} KD</span>
               </div>
             </div>
-            <div style={s.barTrack}>
-              <div style={{ ...s.barSaved, width: `${Math.max(8, 100 - (monthlySavings / (employees * hours * rate * 4)) * 100)}%` }}>
-                <span style={s.barText}>{Math.round(employees * hours * rate * 4 * 0.15).toLocaleString()} KD</span>
+          </div>
+          <div style={s.compRow}>
+            <span style={s.compLabel}>With CODET automation</span>
+            <div style={s.compBarTrack}>
+              <div style={{ ...s.compBar, width: `${Math.max(10, 15)}%`, background: "rgba(0,168,132,0.25)" }}>
+                <span style={s.compBarText}>{Math.round(weeklyWaste * 0.15).toLocaleString()} KD</span>
               </div>
             </div>
           </div>
@@ -160,7 +163,6 @@ const s: Record<string, React.CSSProperties> = {
   section: {
     padding: "100px 40px",
     fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-    minHeight: "80vh",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
@@ -191,32 +193,83 @@ const s: Record<string, React.CSSProperties> = {
     marginTop: 10,
   },
   card: {
-    display: "flex",
-    gap: 0,
     background: "rgba(255,255,255,0.03)",
     border: "1px solid rgba(255,255,255,0.06)",
     borderRadius: 20,
-    maxWidth: 820,
+    maxWidth: 640,
     width: "100%",
-    overflow: "hidden",
-  },
-  inputSide: {
-    flex: 1,
     padding: "36px 32px",
+  },
+  slidersSection: {
     display: "flex",
     flexDirection: "column",
     gap: 28,
+    marginBottom: 32,
   },
-  divider: {
-    width: 1,
-    background: "rgba(255,255,255,0.06)",
+  resultsSection: {
+    display: "flex",
+    gap: 12,
+    marginBottom: 28,
   },
-  resultSide: {
-    flex: 1.1,
-    padding: "36px 32px",
+  resultCard: {
+    flex: 1,
+    background: "rgba(255,255,255,0.03)",
+    border: "1px solid rgba(255,255,255,0.06)",
+    borderRadius: 12,
+    padding: "16px 14px",
+    textAlign: "center",
+  },
+  resultCardLabel: {
+    fontSize: 10,
+    color: "rgba(255,255,255,0.35)",
+    fontWeight: 500,
+    textTransform: "uppercase",
+    letterSpacing: 0.8,
+    display: "block",
+    marginBottom: 8,
+  },
+  resultCardValue: {
+    fontSize: 32,
+    fontWeight: 700,
+    color: "#00a884",
+    letterSpacing: -1,
+    lineHeight: 1,
+  },
+  comparison: {
     display: "flex",
     flexDirection: "column",
-    gap: 24,
+    gap: 10,
+  },
+  compRow: {
+    display: "flex",
+    flexDirection: "column",
+    gap: 4,
+  },
+  compLabel: {
+    fontSize: 11,
+    color: "rgba(255,255,255,0.3)",
+    fontWeight: 500,
+  },
+  compBarTrack: {
+    width: "100%",
+    height: 24,
+    background: "rgba(255,255,255,0.04)",
+    borderRadius: 6,
+    overflow: "hidden",
+  },
+  compBar: {
+    height: "100%",
+    borderRadius: 6,
+    display: "flex",
+    alignItems: "center",
+    paddingLeft: 10,
+    transition: "width 0.4s ease",
+  },
+  compBarText: {
+    fontSize: 10,
+    fontWeight: 600,
+    color: "rgba(255,255,255,0.5)",
+    fontVariantNumeric: "tabular-nums",
   },
   sliderGroup: {
     display: "flex",
@@ -267,75 +320,5 @@ const s: Record<string, React.CSSProperties> = {
     background: "linear-gradient(90deg, #005c4b, #00a884)",
     borderRadius: 2,
     transition: "width 0.05s ease",
-  },
-  resultMain: {
-    display: "flex",
-    flexDirection: "column",
-    gap: 6,
-  },
-  resultLabel: {
-    fontSize: 11,
-    color: "rgba(255,255,255,0.35)",
-    fontWeight: 500,
-    textTransform: "uppercase",
-    letterSpacing: 1,
-  },
-  resultBig: {
-    fontSize: 38,
-    fontWeight: 700,
-    letterSpacing: -1,
-  },
-  resultRow: {
-    display: "flex",
-    gap: 20,
-  },
-  resultSmall: {
-    display: "flex",
-    flexDirection: "column",
-    gap: 4,
-    fontSize: 18,
-    fontWeight: 600,
-  },
-  barSection: {
-    marginTop: 8,
-  },
-  barLabel: {
-    display: "flex",
-    justifyContent: "space-between",
-    fontSize: 11,
-    color: "rgba(255,255,255,0.3)",
-    marginBottom: 8,
-  },
-  barTrack: {
-    width: "100%",
-    height: 24,
-    background: "rgba(255,255,255,0.04)",
-    borderRadius: 6,
-    marginBottom: 6,
-    overflow: "hidden",
-  },
-  barFull: {
-    height: "100%",
-    background: "rgba(255,70,70,0.2)",
-    borderRadius: 6,
-    display: "flex",
-    alignItems: "center",
-    paddingLeft: 10,
-    transition: "width 0.4s ease",
-  },
-  barSaved: {
-    height: "100%",
-    background: "rgba(0,168,132,0.25)",
-    borderRadius: 6,
-    display: "flex",
-    alignItems: "center",
-    paddingLeft: 10,
-    transition: "width 0.4s ease",
-  },
-  barText: {
-    fontSize: 10,
-    fontWeight: 600,
-    color: "rgba(255,255,255,0.5)",
-    fontVariantNumeric: "tabular-nums",
   },
 };

@@ -2,22 +2,26 @@
 
 import { useState, useEffect } from "react";
 
-function WebsiteDemo({ active }: { active: boolean }) {
+function WebsiteDemo() {
   const [loadProgress, setLoadProgress] = useState(0);
 
   useEffect(() => {
-    if (!active) { setLoadProgress(0); return; }
     let frame: number;
     let start: number | null = null;
+    const duration = 2000;
+    const pause = 1500;
+
     const animate = (ts: number) => {
       if (!start) start = ts;
-      const p = Math.min(1, (ts - start) / 1200);
+      const elapsed = ts - start;
+      const cycle = elapsed % (duration + pause);
+      const p = Math.min(1, cycle / duration);
       setLoadProgress(p);
-      if (p < 1) frame = requestAnimationFrame(animate);
+      frame = requestAnimationFrame(animate);
     };
     frame = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(frame);
-  }, [active]);
+  }, []);
 
   return (
     <div style={demo.browserWrap}>
@@ -32,11 +36,11 @@ function WebsiteDemo({ active }: { active: boolean }) {
       </div>
       <div style={demo.browserBody}>
         <div style={{ position: "absolute", top: 0, left: 0, height: 2, background: "#00a884", width: `${loadProgress * 100}%`, transition: "width 0.05s linear", borderRadius: 1, zIndex: 2 }} />
-        <div style={{ ...demo.block, width: "65%", height: 14, opacity: loadProgress > 0.2 ? 1 : 0, transition: "opacity 0.3s ease", background: "rgba(255,255,255,0.15)" }} />
-        <div style={{ ...demo.block, width: "45%", height: 8, marginTop: 6, opacity: loadProgress > 0.3 ? 1 : 0, transition: "opacity 0.3s ease" }} />
-        <div style={{ ...demo.block, width: "30%", height: 22, marginTop: 12, borderRadius: 6, opacity: loadProgress > 0.4 ? 1 : 0, transition: "opacity 0.3s ease", background: "rgba(0,168,132,0.4)" }} />
+        <div style={{ ...demo.block, width: "65%", height: 14, opacity: loadProgress > 0.15 ? 1 : 0, transition: "opacity 0.3s ease", background: "rgba(255,255,255,0.15)" }} />
+        <div style={{ ...demo.block, width: "45%", height: 8, marginTop: 6, opacity: loadProgress > 0.25 ? 1 : 0, transition: "opacity 0.3s ease" }} />
+        <div style={{ ...demo.block, width: "30%", height: 22, marginTop: 12, borderRadius: 6, opacity: loadProgress > 0.35 ? 1 : 0, transition: "opacity 0.3s ease", background: "rgba(0,168,132,0.4)" }} />
         <div style={{ display: "flex", gap: 8, marginTop: 16 }}>
-          {[0.5, 0.6, 0.7].map((t, i) => (
+          {[0.45, 0.55, 0.65].map((t, i) => (
             <div key={i} style={{ flex: 1, opacity: loadProgress > t ? 1 : 0, transition: "opacity 0.3s ease, transform 0.3s ease", transform: loadProgress > t ? "translateY(0)" : "translateY(8px)" }}>
               <div style={{ ...demo.block, height: 36, borderRadius: 6 }} />
               <div style={{ ...demo.block, width: "80%", height: 6, marginTop: 6 }} />
@@ -55,7 +59,7 @@ function WebsiteDemo({ active }: { active: boolean }) {
   );
 }
 
-function AgentDemo({ active }: { active: boolean }) {
+function AgentDemo() {
   const msgs = [
     { from: "user", text: "What are your hours?" },
     { from: "bot", text: "We're open Sun–Thu, 9 AM – 6 PM! Need to book?" },
@@ -65,15 +69,25 @@ function AgentDemo({ active }: { active: boolean }) {
   const [visibleCount, setVisibleCount] = useState(0);
 
   useEffect(() => {
-    if (!active) { setVisibleCount(0); return; }
-    let i = 0;
-    const interval = setInterval(() => {
-      i++;
-      setVisibleCount(i);
-      if (i >= msgs.length) clearInterval(interval);
-    }, 700);
+    const totalDuration = msgs.length * 800;
+    const pause = 2000;
+    const cycle = totalDuration + pause;
+
+    const tick = () => {
+      const now = Date.now();
+      const elapsed = now % cycle;
+      const count = Math.min(msgs.length, Math.floor(elapsed / 800) + 1);
+      if (elapsed > totalDuration) {
+        setVisibleCount(msgs.length);
+      } else {
+        setVisibleCount(count);
+      }
+    };
+
+    const interval = setInterval(tick, 200);
+    tick();
     return () => clearInterval(interval);
-  }, [active]);
+  }, []);
 
   return (
     <div style={demo.chatWrap}>
@@ -102,38 +116,51 @@ function AgentDemo({ active }: { active: boolean }) {
   );
 }
 
-function AutomationDemo({ active }: { active: boolean }) {
+function AutomationDemo() {
   const [step, setStep] = useState(0);
   const nodes = ["Email", "Extract", "CRM", "Notify"];
 
   useEffect(() => {
-    if (!active) { setStep(0); return; }
-    let i = 0;
-    const interval = setInterval(() => {
-      i++;
-      setStep(i);
-      if (i >= nodes.length) clearInterval(interval);
-    }, 500);
+    const totalSteps = nodes.length;
+    const stepDuration = 600;
+    const pause = 2000;
+    const cycle = totalSteps * stepDuration + pause;
+
+    const tick = () => {
+      const now = Date.now();
+      const elapsed = now % cycle;
+      const s = Math.min(totalSteps, Math.floor(elapsed / stepDuration));
+      setStep(s);
+    };
+
+    const interval = setInterval(tick, 150);
+    tick();
     return () => clearInterval(interval);
-  }, [active]);
+  }, []);
 
   return (
     <div style={demo.autoWrap}>
-      <div style={{ display: "flex", alignItems: "center", gap: 0, justifyContent: "center" }}>
+      <div style={demo.autoFlow}>
         {nodes.map((n, i) => (
-          <div key={i} style={{ display: "flex", alignItems: "center" }}>
+          <div key={i} style={demo.autoNodeRow}>
             <div style={{
-              padding: "6px 12px", borderRadius: 8, fontSize: 10, fontWeight: 600, color: i < step ? "#050505" : "rgba(255,255,255,0.3)",
-              background: i < step ? "#00a884" : "rgba(255,255,255,0.06)", border: `1px solid ${i < step ? "#00a884" : "rgba(255,255,255,0.08)"}`,
-              transition: "all 0.4s ease", transform: i < step ? "scale(1.05)" : "scale(1)",
+              ...demo.autoNode,
+              color: i < step ? "#050505" : "rgba(255,255,255,0.3)",
+              background: i < step ? "#00a884" : "rgba(255,255,255,0.06)",
+              borderColor: i < step ? "#00a884" : "rgba(255,255,255,0.08)",
+              transform: i < step ? "scale(1.05)" : "scale(1)",
             }}>
               {n}
             </div>
             {i < nodes.length - 1 && (
-              <div style={{ width: 24, height: 2, background: i < step - 1 ? "#00a884" : "rgba(255,255,255,0.08)", transition: "background 0.4s ease", position: "relative" }}>
-                {i === step - 2 && (
-                  <div style={{ position: "absolute", width: 6, height: 6, borderRadius: "50%", background: "#00a884", top: -2, animation: "flowDot 0.5s ease-out forwards", boxShadow: "0 0 8px rgba(0,168,132,0.6)" }} />
-                )}
+              <div style={{
+                ...demo.autoConnector,
+                background: i < step - 1 ? "#00a884" : "rgba(255,255,255,0.08)",
+              }}>
+                <div style={{
+                  ...demo.autoArrow,
+                  borderColor: i < step - 1 ? "#00a884" : "rgba(255,255,255,0.15)",
+                }} />
               </div>
             )}
           </div>
@@ -141,7 +168,7 @@ function AutomationDemo({ active }: { active: boolean }) {
       </div>
       {step >= nodes.length && (
         <div style={{ textAlign: "center" as const, marginTop: 14, animation: "fadeSlideIn 0.4s ease-out" }}>
-          <span style={{ fontSize: 10, color: "#00a884", fontWeight: 600 }}>✓ Workflow completed in 1.2s</span>
+          <span style={{ fontSize: 10, color: "#00a884", fontWeight: 600 }}>&#x2713; Workflow completed in 1.2s</span>
         </div>
       )}
     </div>
@@ -155,8 +182,6 @@ const services = [
 ];
 
 export default function ServicesShowcase() {
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
-
   return (
     <div className="services-section" style={s.section}>
       <style dangerouslySetInnerHTML={{ __html: keyframes }} />
@@ -168,20 +193,10 @@ export default function ServicesShowcase() {
 
       <div className="services-grid" style={s.grid}>
         {services.map((svc, i) => (
-          <div
-            key={i}
-            style={{
-              ...s.card,
-              borderColor: activeIndex === i ? "rgba(0,168,132,0.2)" : "rgba(255,255,255,0.06)",
-              boxShadow: activeIndex === i ? "0 8px 40px rgba(0,168,132,0.08)" : "none",
-            }}
-            onMouseEnter={() => setActiveIndex(i)}
-            onMouseLeave={() => setActiveIndex(null)}
-          >
+          <div key={i} style={s.card}>
             <div style={s.demoArea}>
-              <svc.Demo active={activeIndex === i} />
+              <svc.Demo />
             </div>
-
             <div style={s.cardContent}>
               <h3 style={s.cardTitle}>{svc.title}</h3>
               <p style={s.cardDesc}>{svc.desc}</p>
@@ -205,10 +220,6 @@ const keyframes = `
   @keyframes popIn {
     from { opacity: 0; transform: scale(0.6); }
     to { opacity: 1; transform: scale(1); }
-  }
-  @keyframes flowDot {
-    from { left: 0; opacity: 1; }
-    to { left: 24px; opacity: 0; }
   }
 `;
 
@@ -277,6 +288,44 @@ const demo: Record<string, React.CSSProperties> = {
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
+  },
+  autoFlow: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    flexWrap: "wrap",
+    gap: 0,
+  },
+  autoNodeRow: {
+    display: "flex",
+    alignItems: "center",
+  },
+  autoNode: {
+    padding: "6px 12px",
+    borderRadius: 8,
+    fontSize: 10,
+    fontWeight: 600,
+    border: "1px solid",
+    transition: "all 0.4s ease",
+    whiteSpace: "nowrap",
+  },
+  autoConnector: {
+    width: 20,
+    height: 2,
+    transition: "background 0.4s ease",
+    position: "relative",
+    flexShrink: 0,
+  },
+  autoArrow: {
+    position: "absolute",
+    right: 0,
+    top: -3,
+    width: 6,
+    height: 6,
+    borderTop: "2px solid",
+    borderRight: "2px solid",
+    transform: "rotate(45deg)",
+    transition: "border-color 0.4s ease",
   },
 };
 

@@ -271,36 +271,20 @@ input[type="range"]:active::-webkit-slider-thumb {
 
 /* ── Responsive overrides for new homepage sections ── */
 @media (max-width: 768px) {
-  /* Hero phones: stack vertically, reduce size */
-  .hero-phone-pair {
-    flex-direction: column !important;
-    gap: 24px !important;
-    align-items: center !important;
-  }
-  .hero-phone-frame {
-    transform: scale(0.78) !important;
-  }
-  .hero-headline h1 {
-    font-size: 17px !important;
-  }
-
   /* Services: single column */
   .services-grid {
     flex-direction: column !important;
   }
+  .services-section {
+    padding: 60px 20px !important;
+  }
 
-  /* ROI Calculator: stack vertically */
-  .roi-card {
-    flex-direction: column !important;
+  /* Process */
+  .process-section {
+    padding: 60px 20px 80px !important;
   }
-  .roi-divider {
-    width: 100% !important;
-    height: 1px !important;
-  }
-  .roi-result-row {
-    flex-direction: column !important;
-    gap: 16px !important;
-  }
+
+  /* ROI Calculator */
   .roi-section {
     padding: 60px 20px !important;
   }
@@ -323,13 +307,5 @@ input[type="range"]:active::-webkit-slider-thumb {
   }
   .cta-h2 {
     font-size: 28px !important;
-  }
-
-  /* Services / Process general padding */
-  .services-section {
-    padding: 60px 20px !important;
-  }
-  .process-section {
-    padding: 60px 20px 80px !important;
   }
 }

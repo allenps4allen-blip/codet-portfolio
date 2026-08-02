@@ -2,10 +2,11 @@
 
 import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
+import { motion } from "framer-motion";
 import FadeIn from "@/components/FadeIn";
+import ParallaxHero from "@/components/ParallaxHero";
 import ScrollReveal from "@/components/ScrollReveal";
 import ProjectIllustration from "@/components/ProjectIllustration";
-import HeroScrollDemo from "@/components/HeroScrollDemo";
 import ServicesShowcase from "@/components/ServicesShowcase";
 import ProcessPipeline from "@/components/ProcessPipeline";
 import ROICalculator from "@/components/ROICalculator";
@@ -16,10 +17,55 @@ export default function HomePage() {
 
   return (
     <>
-      {/* Hero — Scroll-driven phone comparison */}
-      <HeroScrollDemo />
+      {/* Hero — Dot matrix + Aurora blobs */}
+      <section className="relative flex min-h-screen items-center justify-center overflow-hidden pt-20">
+        <div className="dot-matrix absolute inset-0" />
+        <div className="aurora-blob" style={{ width: 300, height: 300, background: "rgba(120, 70, 255, 0.14)", top: "-60px", left: "-40px" }} />
+        <div className="aurora-blob" style={{ width: 250, height: 250, background: "rgba(0, 190, 220, 0.1)", bottom: "-40px", right: "-20px", animationDelay: "-5s" }} />
+        <div className="aurora-blob" style={{ width: 150, height: 150, background: "rgba(255, 80, 180, 0.08)", top: "40%", left: "60%", animationDelay: "-9s" }} />
+        <ParallaxHero>
+          <div className="relative z-10 mx-auto max-w-4xl px-6 text-center">
+            <motion.h1
+              initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              className="text-balance text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl"
+            >
+              {t("heading")}
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+              className="mx-auto mt-6 max-w-2xl text-base text-foreground/70 sm:text-lg md:text-xl"
+            >
+              {t("subtext")}
+            </motion.p>
+            <motion.div
+              initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
+              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+              transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+              className="mt-10"
+            >
+              <a
+                href="https://wa.me/96566565517"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="glass-card inline-flex items-center gap-2 rounded-full px-8 py-3.5 text-sm font-medium text-foreground transition-all hover:bg-white/[0.12] sm:text-base"
+              >
+                {t("cta")}
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="h-4 w-4 rtl:rotate-180" aria-hidden="true">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+                </svg>
+              </a>
+            </motion.div>
+          </div>
+        </ParallaxHero>
+      </section>
 
-      {/* Services — Interactive hover demos */}
+      <div className="section-divider mx-6 sm:mx-12" />
+
+      {/* Services — Interactive demos */}
       <ServicesShowcase />
 
       {/* Process — Scroll-triggered timeline */}
@@ -28,7 +74,7 @@ export default function HomePage() {
       {/* ROI Calculator — Interactive sliders */}
       <ROICalculator />
 
-      {/* Portfolio Preview — Keep existing */}
+      {/* Portfolio Preview */}
       <section className="relative overflow-hidden py-24 sm:py-32" style={{ background: "#050505" }}>
         <div className="dot-matrix absolute inset-0" />
         <div className="pointer-events-none absolute -right-10 -top-10 h-[250px] w-[250px] rounded-full" style={{ background: "radial-gradient(circle, rgba(140, 60, 255, 0.06), transparent)", filter: "blur(20px)" }} />
