@@ -172,37 +172,37 @@ export default function HomePage() {
           </FadeIn>
           <div className="mt-16 grid gap-6 sm:grid-cols-2">
             <ScrollReveal>
-              <Link href="/work" className="group block overflow-hidden rounded-2xl transition-all duration-500 hover:translate-y-[-3px]" style={{ border: "0.5px solid rgba(255,255,255,0.1)" }}>
-                <div className="relative aspect-[16/10] bg-gradient-to-br from-purple-500/20 via-blue-500/10 to-transparent">
+              <Link href="/work" className="glass-card group block overflow-hidden rounded-2xl transition-all duration-500 hover:translate-y-[-3px]">
+                <div className="p-5 sm:p-6">
+                  <p className="text-xs font-medium uppercase tracking-wider text-foreground/40">
+                    {t("portfolio.project1.category")}
+                  </p>
+                  <h3 className="mt-1 text-lg font-semibold transition-colors group-hover:text-foreground sm:text-xl">
+                    {t("portfolio.project1.title")}
+                  </h3>
+                </div>
+                <div className="relative aspect-[16/9] overflow-hidden bg-gradient-to-br from-purple-500/20 via-blue-500/10 to-transparent">
                   <div className="dot-matrix absolute inset-0 opacity-60" style={{ backgroundSize: "18px 18px" }} />
-                  <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-110 group-hover:-translate-y-1" aria-hidden="true">
+                  <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-110" aria-hidden="true">
                     <ProjectIllustration index={0} />
-                  </div>
-                  <div className="glass-project-bar absolute inset-x-0 bottom-0 p-6 sm:p-8">
-                    <p className="text-xs font-medium uppercase tracking-wider text-foreground/40">
-                      {t("portfolio.project1.category")}
-                    </p>
-                    <h3 className="mt-1 text-lg font-semibold transition-colors group-hover:text-foreground sm:text-xl">
-                      {t("portfolio.project1.title")}
-                    </h3>
                   </div>
                 </div>
               </Link>
             </ScrollReveal>
             <ScrollReveal>
-              <Link href="/work" className="group block overflow-hidden rounded-2xl transition-all duration-500 hover:translate-y-[-3px]" style={{ border: "0.5px solid rgba(255,255,255,0.1)" }}>
-                <div className="relative aspect-[16/10] bg-gradient-to-br from-cyan-500/20 via-emerald-500/10 to-transparent">
+              <Link href="/work" className="glass-card group block overflow-hidden rounded-2xl transition-all duration-500 hover:translate-y-[-3px]">
+                <div className="p-5 sm:p-6">
+                  <p className="text-xs font-medium uppercase tracking-wider text-foreground/40">
+                    {t("portfolio.project2.category")}
+                  </p>
+                  <h3 className="mt-1 text-lg font-semibold transition-colors group-hover:text-foreground sm:text-xl">
+                    {t("portfolio.project2.title")}
+                  </h3>
+                </div>
+                <div className="relative aspect-[16/9] overflow-hidden bg-gradient-to-br from-cyan-500/20 via-emerald-500/10 to-transparent">
                   <div className="dot-matrix absolute inset-0 opacity-60" style={{ backgroundSize: "18px 18px" }} />
-                  <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-110 group-hover:-translate-y-1" aria-hidden="true">
+                  <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-110" aria-hidden="true">
                     <ProjectIllustration index={1} />
-                  </div>
-                  <div className="glass-project-bar absolute inset-x-0 bottom-0 p-6 sm:p-8">
-                    <p className="text-xs font-medium uppercase tracking-wider text-foreground/40">
-                      {t("portfolio.project2.category")}
-                    </p>
-                    <h3 className="mt-1 text-lg font-semibold transition-colors group-hover:text-foreground sm:text-xl">
-                      {t("portfolio.project2.title")}
-                    </h3>
                   </div>
                 </div>
               </Link>

@@ -59,24 +59,22 @@ export default function WorkPage() {
           <div className="grid gap-8 sm:grid-cols-2">
             {projectIds.map((id, i) => (
               <ScrollReveal key={id}>
-                <div className="group overflow-hidden rounded-2xl transition-all duration-500 hover:translate-y-[-3px]" style={{ border: "0.5px solid rgba(255,255,255,0.1)" }}>
-                  <div className={`relative aspect-[16/10] bg-gradient-to-br ${gradients[i]}`}>
+                <div className="glass-card group overflow-hidden rounded-2xl transition-all duration-500 hover:translate-y-[-3px]">
+                  <div className="p-5 sm:p-6">
+                    <span className="mb-2 inline-block rounded-full bg-white/[0.06] px-3 py-1 text-xs font-medium" style={{ border: "0.5px solid rgba(255,255,255,0.1)" }}>
+                      {t(`projects.${id}.category`)}
+                    </span>
+                    <h2 className="text-lg font-semibold sm:text-xl">
+                      {t(`projects.${id}.title`)}
+                    </h2>
+                    <p className="mt-1.5 line-clamp-2 text-sm leading-relaxed text-foreground/50">
+                      {t(`projects.${id}.description`)}
+                    </p>
+                  </div>
+                  <div className={`relative aspect-[16/9] overflow-hidden bg-gradient-to-br ${gradients[i]}`}>
                     <div className="dot-matrix absolute inset-0 opacity-50" style={{ backgroundSize: "18px 18px" }} />
-                    <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-110 group-hover:-translate-y-1" aria-hidden="true">
+                    <div className="absolute inset-0 transition-transform duration-700 ease-out group-hover:scale-110" aria-hidden="true">
                       <ProjectIllustration index={i} />
-                    </div>
-                    <div className="relative flex h-full flex-col justify-between p-6 sm:p-10">
-                      <span className="glass-card inline-block self-start rounded-full px-3 py-1 text-xs font-medium">
-                        {t(`projects.${id}.category`)}
-                      </span>
-                    </div>
-                    <div className="glass-project-bar absolute inset-x-0 bottom-0 p-5 sm:p-6">
-                      <h2 className="text-lg font-semibold sm:text-xl">
-                        {t(`projects.${id}.title`)}
-                      </h2>
-                      <p className="mt-1.5 line-clamp-2 text-sm leading-relaxed text-foreground/50">
-                        {t(`projects.${id}.description`)}
-                      </p>
                     </div>
                   </div>
                 </div>
