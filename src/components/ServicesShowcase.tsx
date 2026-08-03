@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 function WebsiteDemo() {
   const [loadProgress, setLoadProgress] = useState(0);
@@ -62,26 +63,21 @@ function WebsiteDemo() {
 function AgentDemo() {
   const msgs = [
     { from: "user", text: "What are your hours?" },
-    { from: "bot", text: "We're open Sun–Thu, 9 AM – 6 PM! Need to book?" },
+    { from: "bot", text: "Sun–Thu, 9 AM – 6 PM! Need to book?" },
     { from: "user", text: "Yes, tomorrow at 10" },
     { from: "bot", text: "✅ Done! See you at 10 AM." },
   ];
   const [visibleCount, setVisibleCount] = useState(0);
 
   useEffect(() => {
-    const totalDuration = msgs.length * 800;
-    const pause = 2000;
-    const cycle = totalDuration + pause;
+    const msgCount = msgs.length;
+    const stepMs = 800;
+    const pauseMs = 2000;
+    const cycleMs = msgCount * stepMs + pauseMs;
 
     const tick = () => {
-      const now = Date.now();
-      const elapsed = now % cycle;
-      const count = Math.min(msgs.length, Math.floor(elapsed / 800) + 1);
-      if (elapsed > totalDuration) {
-        setVisibleCount(msgs.length);
-      } else {
-        setVisibleCount(count);
-      }
+      const elapsed = Date.now() % cycleMs;
+      setVisibleCount(elapsed > msgCount * stepMs ? msgCount : Math.min(msgCount, Math.floor(elapsed / stepMs) + 1));
     };
 
     const interval = setInterval(tick, 200);
@@ -121,16 +117,14 @@ function AutomationDemo() {
   const nodes = ["Email", "Extract", "CRM", "Notify"];
 
   useEffect(() => {
-    const totalSteps = nodes.length;
-    const stepDuration = 600;
-    const pause = 2000;
-    const cycle = totalSteps * stepDuration + pause;
+    const total = nodes.length;
+    const stepMs = 600;
+    const pauseMs = 2000;
+    const cycleMs = total * stepMs + pauseMs;
 
     const tick = () => {
-      const now = Date.now();
-      const elapsed = now % cycle;
-      const s = Math.min(totalSteps, Math.floor(elapsed / stepDuration));
-      setStep(s);
+      const elapsed = Date.now() % cycleMs;
+      setStep(elapsed > total * stepMs ? total : Math.min(total, Math.floor(elapsed / stepMs)));
     };
 
     const interval = setInterval(tick, 150);
@@ -140,35 +134,35 @@ function AutomationDemo() {
 
   return (
     <div style={demo.autoWrap}>
-      <div style={demo.autoFlow}>
+      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 0 }}>
         {nodes.map((n, i) => (
-          <div key={i} style={demo.autoNodeRow}>
+          <div key={i} style={{ display: "inline-flex", alignItems: "center" }}>
             <div style={{
-              ...demo.autoNode,
+              padding: "5px 10px",
+              borderRadius: 6,
+              fontSize: 9,
+              fontWeight: 600,
+              whiteSpace: "nowrap" as const,
               color: i < step ? "#050505" : "rgba(255,255,255,0.3)",
               background: i < step ? "#00a884" : "rgba(255,255,255,0.06)",
-              borderColor: i < step ? "#00a884" : "rgba(255,255,255,0.08)",
+              border: `1px solid ${i < step ? "#00a884" : "rgba(255,255,255,0.08)"}`,
+              transition: "all 0.4s ease",
               transform: i < step ? "scale(1.05)" : "scale(1)",
             }}>
               {n}
             </div>
             {i < nodes.length - 1 && (
-              <div style={{
-                ...demo.autoConnector,
-                background: i < step - 1 ? "#00a884" : "rgba(255,255,255,0.08)",
-              }}>
-                <div style={{
-                  ...demo.autoArrow,
-                  borderColor: i < step - 1 ? "#00a884" : "rgba(255,255,255,0.15)",
-                }} />
-              </div>
+              <svg width="16" height="10" viewBox="0 0 16 10" style={{ flexShrink: 0, margin: "0 2px" }}>
+                <line x1="0" y1="5" x2="11" y2="5" stroke={i < step - 1 ? "#00a884" : "rgba(255,255,255,0.12)"} strokeWidth="1.5" style={{ transition: "stroke 0.4s ease" }} />
+                <path d="M9 2 L13 5 L9 8" fill="none" stroke={i < step - 1 ? "#00a884" : "rgba(255,255,255,0.12)"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ transition: "stroke 0.4s ease" }} />
+              </svg>
             )}
           </div>
         ))}
       </div>
       {step >= nodes.length && (
-        <div style={{ textAlign: "center" as const, marginTop: 14, animation: "fadeSlideIn 0.4s ease-out" }}>
-          <span style={{ fontSize: 10, color: "#00a884", fontWeight: 600 }}>&#x2713; Workflow completed in 1.2s</span>
+        <div style={{ textAlign: "center" as const, marginTop: 12, animation: "fadeSlideIn 0.4s ease-out" }}>
+          <span style={{ fontSize: 9, color: "#00a884", fontWeight: 600 }}>&#x2713; Workflow completed in 1.2s</span>
         </div>
       )}
     </div>
@@ -176,12 +170,14 @@ function AutomationDemo() {
 }
 
 const services = [
-  { title: "Websites", desc: "Lightning-fast, conversion-optimized sites built with modern frameworks. Every pixel earns its place.", Demo: WebsiteDemo },
-  { title: "AI Agents", desc: "Intelligent agents that handle support, bookings, and lead gen around the clock — in any language.", Demo: AgentDemo },
-  { title: "Automations", desc: "End-to-end workflows that eliminate busywork. Your systems talk to each other so your team doesn't have to.", Demo: AutomationDemo },
+  { title: "Websites", desc: "Lightning-fast, conversion-optimized sites built with modern frameworks. Every pixel earns its place.", Demo: WebsiteDemo, href: null },
+  { title: "AI Agents", desc: "Intelligent agents that handle support, bookings, and lead gen around the clock — in any language.", Demo: AgentDemo, href: "/demo/ai-agent" },
+  { title: "Automations", desc: "End-to-end workflows that eliminate busywork. Your systems talk to each other so your team doesn’t have to.", Demo: AutomationDemo, href: null },
 ];
 
 export default function ServicesShowcase() {
+  const router = useRouter();
+
   return (
     <div className="services-section" style={s.section}>
       <style dangerouslySetInnerHTML={{ __html: keyframes }} />
@@ -193,12 +189,23 @@ export default function ServicesShowcase() {
 
       <div className="services-grid" style={s.grid}>
         {services.map((svc, i) => (
-          <div key={i} style={s.card}>
+          <div
+            key={i}
+            style={{ ...s.card, cursor: svc.href ? "pointer" : "default" }}
+            onClick={() => svc.href && router.push(svc.href)}
+          >
             <div style={s.demoArea}>
               <svc.Demo />
             </div>
             <div style={s.cardContent}>
-              <h3 style={s.cardTitle}>{svc.title}</h3>
+              <h3 style={s.cardTitle}>
+                {svc.title}
+                {svc.href && (
+                  <span style={{ marginLeft: 8, fontSize: 12, color: "#00a884", fontWeight: 500 }}>
+                    See demo &#x2192;
+                  </span>
+                )}
+              </h3>
               <p style={s.cardDesc}>{svc.desc}</p>
             </div>
           </div>
@@ -283,49 +290,11 @@ const demo: Record<string, React.CSSProperties> = {
     borderRadius: 8,
     border: "1px solid rgba(255,255,255,0.06)",
     background: "#0a0a0a",
-    padding: "24px 14px",
+    padding: "24px 10px",
     minHeight: 130,
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-  },
-  autoFlow: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    flexWrap: "wrap",
-    gap: 0,
-  },
-  autoNodeRow: {
-    display: "flex",
-    alignItems: "center",
-  },
-  autoNode: {
-    padding: "6px 12px",
-    borderRadius: 8,
-    fontSize: 10,
-    fontWeight: 600,
-    border: "1px solid",
-    transition: "all 0.4s ease",
-    whiteSpace: "nowrap",
-  },
-  autoConnector: {
-    width: 20,
-    height: 2,
-    transition: "background 0.4s ease",
-    position: "relative",
-    flexShrink: 0,
-  },
-  autoArrow: {
-    position: "absolute",
-    right: 0,
-    top: -3,
-    width: 6,
-    height: 6,
-    borderTop: "2px solid",
-    borderRight: "2px solid",
-    transform: "rotate(45deg)",
-    transition: "border-color 0.4s ease",
   },
 };
 
@@ -366,7 +335,6 @@ const s: Record<string, React.CSSProperties> = {
     border: "1px solid rgba(255,255,255,0.06)",
     borderRadius: 16,
     overflow: "hidden",
-    cursor: "default",
     transition: "all 0.35s ease",
   },
   demoArea: {
@@ -380,6 +348,8 @@ const s: Record<string, React.CSSProperties> = {
     fontWeight: 600,
     color: "#e9edef",
     margin: 0,
+    display: "flex",
+    alignItems: "center",
   },
   cardDesc: {
     fontSize: 13,

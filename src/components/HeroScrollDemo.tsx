@@ -170,7 +170,7 @@ export default function HeroScrollDemo() {
   const leftScale = Math.max(0.92, 1 - scrollProgress * 0.1);
 
   return (
-    <div ref={containerRef} style={{ height: "400vh", position: "relative" }}>
+    <div ref={containerRef} style={{ height: "250vh", position: "relative" }}>
       <style dangerouslySetInnerHTML={{ __html: keyframes }} />
 
       <div style={s.stickyContainer}>
