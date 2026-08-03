@@ -108,9 +108,9 @@ export default function ROICalculator() {
         transition: "all 0.7s cubic-bezier(0.16, 1, 0.3, 1)",
       }}>
         <div style={s.slidersSection}>
-          <Slider label="Team size" value={employees} onChange={setEmployees} min={1} max={50} unit=" people" />
-          <Slider label="Hours wasted on manual tasks / week" value={hours} onChange={setHours} min={1} max={40} unit=" hrs" />
-          <Slider label="Average hourly cost" value={rate} onChange={setRate} min={2} max={25} step={1} unit=" KD" />
+          <Slider label="Team size" value={employees} onChange={setEmployees} min={1} max={10} unit=" people" />
+          <Slider label="Hours wasted on manual tasks / week" value={hours} onChange={setHours} min={1} max={30} unit=" hrs" />
+          <Slider label="Average hourly cost" value={rate} onChange={setRate} min={2} max={20} step={1} unit=" KD" />
         </div>
 
         <div style={s.resultsSection}>
