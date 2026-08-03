@@ -77,6 +77,13 @@ button[class*="rounded-full"]:focus-visible {
   outline-offset: 2px;
 }
 
+input:not([type="range"]):not([type="radio"]):not([type="checkbox"]):focus,
+select:focus,
+textarea:focus {
+  border-color: rgba(0, 168, 132, 0.5) !important;
+  box-shadow: 0 0 0 1px rgba(0, 168, 132, 0.2);
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;
@@ -91,6 +98,20 @@ button[class*="rounded-full"]:focus-visible {
   50% {
     background-position: 100% 50%;
   }
+}
+
+.hero-gradient-text {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 0.85) 40%,
+    rgba(0, 168, 132, 0.7) 100%
+  );
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-shift 8s ease infinite;
 }
 
 @keyframes grain {
@@ -169,6 +190,12 @@ button[class*="rounded-full"]:focus-visible {
   -webkit-backdrop-filter: blur(36px) saturate(1.7);
   position: relative;
   overflow: hidden;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-card:hover {
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
 }
 
 .glass-card::before {

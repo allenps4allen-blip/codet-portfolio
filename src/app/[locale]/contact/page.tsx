@@ -145,15 +145,15 @@ export default function ContactPage() {
                   {selectedService === "website" && (
                     <div className="overflow-hidden transition-all duration-300" style={{ animation: "slideDown 0.3s ease-out" }}>
                       <style>{`@keyframes slideDown { from { opacity: 0; max-height: 0; transform: translateY(-8px); } to { opacity: 1; max-height: 100px; transform: translateY(0); } }`}</style>
-                      <p className="mb-3 text-sm font-medium">Do you have existing branding?</p>
+                      <p className="mb-3 text-sm font-medium">{t("form.followUp.branding")}</p>
                       <div className="flex gap-6">
                         <label className="flex items-center gap-2 cursor-pointer text-sm text-foreground/70">
                           <input type="radio" name="branding" value="yes" className="accent-emerald-500" />
-                          Yes
+                          {t("form.followUp.brandingYes")}
                         </label>
                         <label className="flex items-center gap-2 cursor-pointer text-sm text-foreground/70">
                           <input type="radio" name="branding" value="no" className="accent-emerald-500" />
-                          No
+                          {t("form.followUp.brandingNo")}
                         </label>
                       </div>
                     </div>
@@ -162,12 +162,12 @@ export default function ContactPage() {
                   {selectedService === "ai" && (
                     <div className="overflow-hidden transition-all duration-300" style={{ animation: "slideDown 0.3s ease-out" }}>
                       <style>{`@keyframes slideDown { from { opacity: 0; max-height: 0; transform: translateY(-8px); } to { opacity: 1; max-height: 200px; transform: translateY(0); } }`}</style>
-                      <p className="mb-3 text-sm font-medium">Which channels do you need?</p>
+                      <p className="mb-3 text-sm font-medium">{t("form.followUp.channels")}</p>
                       <div className="flex flex-wrap gap-4">
-                        {["Website", "WhatsApp", "Telegram", "Instagram"].map((ch) => (
-                          <label key={ch} className="flex items-center gap-2 cursor-pointer text-sm text-foreground/70">
-                            <input type="checkbox" name="channels" value={ch.toLowerCase()} className="accent-emerald-500 rounded" />
-                            {ch}
+                        {(["channelWebsite", "channelWhatsApp", "channelTelegram", "channelInstagram"] as const).map((key) => (
+                          <label key={key} className="flex items-center gap-2 cursor-pointer text-sm text-foreground/70">
+                            <input type="checkbox" name="channels" value={key.replace("channel", "").toLowerCase()} className="accent-emerald-500 rounded" />
+                            {t(`form.followUp.${key}`)}
                           </label>
                         ))}
                       </div>
@@ -179,13 +179,13 @@ export default function ContactPage() {
                       <style>{`@keyframes slideDown { from { opacity: 0; max-height: 0; transform: translateY(-8px); } to { opacity: 1; max-height: 100px; transform: translateY(0); } }`}</style>
                       <div>
                         <label htmlFor="tools" className="mb-2 block text-sm font-medium">
-                          Which tools do you currently use?
+                          {t("form.followUp.tools")}
                         </label>
                         <input
                           type="text"
                           id="tools"
                           name="tools"
-                          placeholder="e.g., Zapier, Slack, Google Sheets…"
+                          placeholder={t("form.followUp.toolsPlaceholder")}
                           className="w-full rounded-xl border border-white/[0.08] bg-white/[0.03] px-4 py-3 text-sm text-foreground placeholder:text-foreground/30 focus:border-white/20 focus:outline-none focus:ring-0 transition-colors"
                         />
                       </div>

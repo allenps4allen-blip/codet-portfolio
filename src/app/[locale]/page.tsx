@@ -31,7 +31,7 @@ export default function HomePage() {
               initial={{ opacity: 0, y: 40, filter: "blur(10px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="text-balance text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl"
+              className="hero-gradient-text text-balance text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl lg:text-7xl"
             >
               {t("heading")}
             </motion.h1>

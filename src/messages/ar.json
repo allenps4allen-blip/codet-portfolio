@@ -271,7 +271,19 @@
       "namePlaceholder": "اسمك",
       "emailPlaceholder": "you@company.com",
       "messagePlaceholder": "صف مشروعك وأهدافك والجدول الزمني...",
-      "error": "حدث خطأ. يرجى المحاولة مرة أخرى أو التواصل عبر الواتساب."
+      "error": "حدث خطأ. يرجى المحاولة مرة أخرى أو التواصل عبر الواتساب.",
+      "followUp": {
+        "branding": "هل لديك هوية بصرية حالية؟",
+        "brandingYes": "نعم",
+        "brandingNo": "لا",
+        "channels": "ما القنوات التي تحتاجها؟",
+        "channelWebsite": "موقع إلكتروني",
+        "channelWhatsApp": "واتساب",
+        "channelTelegram": "تيليجرام",
+        "channelInstagram": "إنستغرام",
+        "tools": "ما الأدوات التي تستخدمها حاليًا؟",
+        "toolsPlaceholder": "مثال: Zapier، Slack، Google Sheets…"
+      }
     },
     "info": {
       "title": "معلومات التواصل",

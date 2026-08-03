@@ -271,7 +271,19 @@
       "namePlaceholder": "Your name",
       "emailPlaceholder": "you@company.com",
       "messagePlaceholder": "Describe your project, goals, and timeline...",
-      "error": "Something went wrong. Please try again or reach out via WhatsApp."
+      "error": "Something went wrong. Please try again or reach out via WhatsApp.",
+      "followUp": {
+        "branding": "Do you have existing branding?",
+        "brandingYes": "Yes",
+        "brandingNo": "No",
+        "channels": "Which channels do you need?",
+        "channelWebsite": "Website",
+        "channelWhatsApp": "WhatsApp",
+        "channelTelegram": "Telegram",
+        "channelInstagram": "Instagram",
+        "tools": "Which tools do you currently use?",
+        "toolsPlaceholder": "e.g., Zapier, Slack, Google Sheets…"
+      }
     },
     "info": {
       "title": "Contact Info",
