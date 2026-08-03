@@ -119,6 +119,24 @@
         "5": "Ongoing maintenance & support"
       }
     },
+    "compare": {
+      "title": "Compare Services",
+      "bestFor": "Best for",
+      "price": "Starting price",
+      "timeline": "Typical timeline",
+      "website": {
+        "bestFor": "Businesses needing an online presence or web app",
+        "timeline": "1–2 weeks"
+      },
+      "aiAgents": {
+        "bestFor": "Businesses with high customer inquiry volume",
+        "timeline": "1–3 weeks"
+      },
+      "automations": {
+        "bestFor": "Teams drowning in repetitive manual tasks",
+        "timeline": "1–4 weeks"
+      }
+    },
     "faq": {
       "title": "Frequently Asked Questions",
       "items": {

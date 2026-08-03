@@ -9,6 +9,8 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import LiveAIWidget from "@/components/LiveAIWidget";
+import BackToTop from "@/components/BackToTop";
+import CookieConsent from "@/components/CookieConsent";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "../globals.css";
@@ -150,6 +152,8 @@ export default async function LocaleLayout({
           <Footer />
           <WhatsAppButton />
           <LiveAIWidget />
+          <BackToTop />
+          <CookieConsent />
           <Analytics />
           <SpeedInsights />
         </NextIntlClientProvider>

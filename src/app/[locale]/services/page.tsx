@@ -210,6 +210,71 @@ export default function ServicesPage() {
 
       <div className="section-divider mx-6 sm:mx-12" />
 
+      {/* Comparison Table */}
+      <section className="relative overflow-hidden py-24 sm:py-32">
+        <div className="dot-matrix absolute inset-0" />
+        <div className="relative z-10 mx-auto max-w-4xl px-6">
+          <FadeIn>
+            <h2 className="text-center text-2xl font-bold tracking-tight sm:text-3xl">
+              {t("compare.title")}
+            </h2>
+          </FadeIn>
+          <FadeIn delay={0.1}>
+            <div className="mt-12 overflow-x-auto rounded-2xl" style={{ WebkitOverflowScrolling: "touch" }}>
+              <table className="w-full border-collapse text-sm" style={{ minWidth: 600 }}>
+                <thead>
+                  <tr>
+                    <th className="p-4 text-start text-xs font-semibold uppercase tracking-wider text-foreground/40" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>&nbsp;</th>
+                    {serviceKeys.map((key) => (
+                      <th key={key} className="p-4 text-center font-semibold" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+                        <div className="flex items-center justify-center gap-2">
+                          <span className="text-foreground/80">{serviceIcons[key]}</span>
+                          <span>{t(`${key}.title`)}</span>
+                        </div>
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td className="p-4 text-foreground/50 font-medium" style={{ borderBottom: "1px solid rgba(255,255,255,0.04)" }}>{t("compare.price")}</td>
+                    {serviceKeys.map((key) => (
+                      <td key={key} className="p-4 text-center" style={{ borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
+                        {t(`${key}.price`) ? (
+                          <span className="rounded-full bg-white/[0.06] px-3 py-1 text-sm font-semibold" style={{ border: "0.5px solid rgba(255,255,255,0.1)" }}>
+                            {t(`${key}.price`)}
+                          </span>
+                        ) : (
+                          <span className="text-foreground/40">{t("customPricing")}</span>
+                        )}
+                      </td>
+                    ))}
+                  </tr>
+                  <tr>
+                    <td className="p-4 text-foreground/50 font-medium" style={{ borderBottom: "1px solid rgba(255,255,255,0.04)" }}>{t("compare.timeline")}</td>
+                    {serviceKeys.map((key) => (
+                      <td key={key} className="p-4 text-center text-foreground/70" style={{ borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
+                        {t(`compare.${key}.timeline`)}
+                      </td>
+                    ))}
+                  </tr>
+                  <tr>
+                    <td className="p-4 text-foreground/50 font-medium">{t("compare.bestFor")}</td>
+                    {serviceKeys.map((key) => (
+                      <td key={key} className="p-4 text-center text-foreground/60 text-xs leading-relaxed">
+                        {t(`compare.${key}.bestFor`)}
+                      </td>
+                    ))}
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
+      <div className="section-divider mx-6 sm:mx-12" />
+
       {/* FAQ */}
       <section className="relative overflow-hidden py-24 sm:py-32">
         <div className="dot-matrix absolute inset-0" />
