@@ -50,7 +50,7 @@ export default function HomePage() {
               className="mt-10"
             >
               <a
-                href="https://wa.me/96566565517"
+                href="https://wa.me/96566565517?text=Hi%2C%20I%27m%20interested%20in%20digitalizing%20my%20business.%20Can%20we%20schedule%20a%20consultation%3F"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="glass-card inline-flex items-center gap-2 rounded-full px-8 py-3.5 text-sm font-medium text-foreground transition-all hover:bg-white/[0.12] sm:text-base"

@@ -38,6 +38,12 @@ const accentBorders: Record<string, string> = {
 };
 
 const featureCount = [1, 2, 3, 4, 5] as const;
+
+const whatsappMessages: Record<string, string> = {
+  website: "Hi%2C%20I%27m%20interested%20in%20website%20development.%20Can%20we%20discuss%20my%20project%3F",
+  aiAgents: "Hi%2C%20I%27m%20interested%20in%20an%20AI%20agent%20for%20my%20business.%20Can%20we%20schedule%20a%20consultation%3F",
+  automations: "Hi%2C%20I%27m%20interested%20in%20workflow%20automation.%20Can%20we%20discuss%20my%20needs%3F",
+};
 const faqKeys = [1, 2, 3, 4, 5, 6] as const;
 
 export default function ServicesPage() {
@@ -167,7 +173,7 @@ export default function ServicesPage() {
 
                       <div className="mt-8">
                         <a
-                          href="https://wa.me/96566565517"
+                          href={`https://wa.me/96566565517?text=${whatsappMessages[key]}`}
                           target="_blank"
                           rel="noopener noreferrer"
                           onClick={(e) => e.stopPropagation()}

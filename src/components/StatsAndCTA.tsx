@@ -103,7 +103,7 @@ function CTASection() {
         </p>
 
         <a
-          href="https://wa.me/96566565517"
+          href="https://wa.me/96566565517?text=Hi%2C%20I%27d%20like%20to%20book%20a%20free%20consultation%20to%20discuss%20my%20project."
           target="_blank"
           rel="noopener noreferrer"
           style={{
