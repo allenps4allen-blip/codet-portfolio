@@ -85,7 +85,7 @@ function PhoneFrame({ children, scale = 1, label, labelColor, opacity = 1, redBo
   return (
     <div className="hero-phone-frame" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 18, opacity, transition: "opacity 0.5s ease" }}>
       {label && (
-        <div style={{ fontSize: 12, fontWeight: 600, letterSpacing: 1.8, textTransform: "uppercase" as const, color: labelColor || "rgba(255,255,255,0.4)" }}>
+        <div style={{ fontSize: 10, fontWeight: 600, letterSpacing: 1.5, textTransform: "uppercase" as const, color: labelColor || "rgba(255,255,255,0.4)" }}>
           {label}
         </div>
       )}
@@ -136,6 +136,14 @@ function ChatHeader({ name, status, statusColor }: { name: string; status: strin
 export default function HeroScrollDemo() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -179,8 +187,8 @@ export default function HeroScrollDemo() {
         <div style={{ ...s.glow, right: "8%", left: "auto", background: "radial-gradient(circle, rgba(0,168,132,0.12) 0%, transparent 70%)" }} />
 
         {/* Headline */}
-        <div style={s.headline} className="hero-headline">
-          <h1 style={s.h1}>
+        <div style={{ ...s.headline, marginBottom: isMobile ? 10 : 22 }} className="hero-headline">
+          <h1 style={{ ...s.h1, fontSize: isMobile ? 16 : 21 }}>
             <span style={{ color: "rgba(255,255,255,0.3)", fontWeight: 400 }}>Without AI</span>
             <span style={{ margin: "0 18px", color: "rgba(255,255,255,0.12)", fontSize: 18 }}>vs</span>
             <span style={{ color: "#00a884" }}>With CODET</span>
@@ -192,95 +200,97 @@ export default function HeroScrollDemo() {
         </div>
 
         {/* Phones */}
-        <div style={s.phonePair} className="hero-phone-pair">
-          {/* LEFT — no agent */}
-          <PhoneFrame label="Without AI Agent" labelColor="rgba(255,100,100,0.55)" opacity={leftOpacity} scale={leftScale} redBorder={redIntensity}>
-            <ChatHeader name="Business Support" status="last seen 3 hours ago" statusColor="rgba(255,255,255,0.3)" />
-            <div style={s.chatArea}>
-              <div style={s.encNotice}>
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="rgba(255,255,255,0.25)"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z" /></svg>
-                <span>Messages are end-to-end encrypted</span>
-              </div>
-              <div style={s.dateChip}>TODAY</div>
+        <div style={isMobile ? { transform: "scale(0.5)", transformOrigin: "top center", marginBottom: -320 } : undefined}>
+          <div style={{ ...s.phonePair, gap: isMobile ? 12 : 44 }} className="hero-phone-pair">
+            {/* LEFT — no agent */}
+            <PhoneFrame label="Without AI Agent" labelColor="rgba(255,100,100,0.55)" opacity={leftOpacity} scale={leftScale} redBorder={redIntensity}>
+              <ChatHeader name="Business Support" status="last seen 3 hours ago" statusColor="rgba(255,255,255,0.3)" />
+              <div style={s.chatArea}>
+                <div style={s.encNotice}>
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="rgba(255,255,255,0.25)"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z" /></svg>
+                  <span>Messages are end-to-end encrypted</span>
+                </div>
+                <div style={s.dateChip}>TODAY</div>
 
-              {visibleLeftMessages.map((msg, i) => (
-                <div key={i}>
-                  <div style={{ display: "flex", justifyContent: msg.sender === "customer" ? "flex-end" : "flex-start", padding: "2px 16px", animation: "fadeSlideIn 0.35s ease-out" }}>
-                    <div style={{ ...s.bubble, ...(msg.sender === "customer" ? s.customerBubble : s.systemBubble) }}>
+                {visibleLeftMessages.map((msg, i) => (
+                  <div key={i}>
+                    <div style={{ display: "flex", justifyContent: msg.sender === "customer" ? "flex-end" : "flex-start", padding: "2px 16px", animation: "fadeSlideIn 0.35s ease-out" }}>
+                      <div style={{ ...s.bubble, ...(msg.sender === "customer" ? s.customerBubble : s.systemBubble) }}>
+                        <div style={{ whiteSpace: "pre-wrap", lineHeight: 1.45 }}>{msg.text}</div>
+                        <div style={s.timestamp}>
+                          {formatTime(642, msg.sender === "customer" ? (i === 0 ? 0 : i === 2 ? 18 : 32) : 0)}
+                          {msg.sender === "customer" && (
+                            <svg width="16" height="10" viewBox="0 0 20 12" style={{ marginLeft: 2 }}>
+                              <path d="M1.5 6.5l3.5 3.5 8-8" stroke={showSeen ? "#53bdeb" : "rgba(255,255,255,0.35)"} strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+                              <path d="M5 6.5l3.5 3.5 8-8" stroke={showSeen ? "#53bdeb" : "rgba(255,255,255,0.35)"} strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+                            </svg>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                    {msg.sender === "customer" && i === 0 && showSeen && visibleLeftMessages.length <= 2 && (
+                      <SeenReceipt />
+                    )}
+                  </div>
+                ))}
+
+                {showWaiting && <WaitingClock elapsed={waitMinutes} />}
+
+                {waitMinutes > 30 && (
+                  <div style={{ textAlign: "center" as const, padding: "14px 20px 0", animation: "fadeSlideIn 0.5s ease-out" }}>
+                    <span style={{ fontSize: 10.5, color: "rgba(255,70,70,0.4)", fontStyle: "italic" }}>Customer left the chat.</span>
+                  </div>
+                )}
+              </div>
+            </PhoneFrame>
+
+            {/* RIGHT — AI agent */}
+            <PhoneFrame scale={rightScale} label="With AI Agent" labelColor="#00a884">
+              <ChatHeader name="CODET AI Agent" status="online" statusColor="#00a884" />
+              <div style={s.chatArea}>
+                <div style={s.encNotice}>
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="rgba(255,255,255,0.25)"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z" /></svg>
+                  <span>Messages are end-to-end encrypted</span>
+                </div>
+                <div style={s.dateChip}>TODAY</div>
+
+                {visibleAgentMessages.map((msg, i) => (
+                  <div key={i} style={{ display: "flex", justifyContent: msg.sender === "customer" ? "flex-end" : "flex-start", padding: "2px 16px", animation: "fadeSlideIn 0.35s ease-out" }}>
+                    <div style={{ ...s.bubble, ...(msg.sender === "customer" ? s.customerBubble : s.agentBubble) }}>
                       <div style={{ whiteSpace: "pre-wrap", lineHeight: 1.45 }}>{msg.text}</div>
                       <div style={s.timestamp}>
-                        {formatTime(642, msg.sender === "customer" ? (i === 0 ? 0 : i === 2 ? 18 : 32) : 0)}
+                        {formatTime(642, i)}
                         {msg.sender === "customer" && (
                           <svg width="16" height="10" viewBox="0 0 20 12" style={{ marginLeft: 2 }}>
-                            <path d="M1.5 6.5l3.5 3.5 8-8" stroke={showSeen ? "#53bdeb" : "rgba(255,255,255,0.35)"} strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-                            <path d="M5 6.5l3.5 3.5 8-8" stroke={showSeen ? "#53bdeb" : "rgba(255,255,255,0.35)"} strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+                            <path d="M1.5 6.5l3.5 3.5 8-8" stroke="#53bdeb" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+                            <path d="M5 6.5l3.5 3.5 8-8" stroke="#53bdeb" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
                           </svg>
                         )}
                       </div>
-                    </div>
-                  </div>
-                  {msg.sender === "customer" && i === 0 && showSeen && visibleLeftMessages.length <= 2 && (
-                    <SeenReceipt />
-                  )}
-                </div>
-              ))}
-
-              {showWaiting && <WaitingClock elapsed={waitMinutes} />}
-
-              {waitMinutes > 30 && (
-                <div style={{ textAlign: "center" as const, padding: "14px 20px 0", animation: "fadeSlideIn 0.5s ease-out" }}>
-                  <span style={{ fontSize: 10.5, color: "rgba(255,70,70,0.4)", fontStyle: "italic" }}>Customer left the chat.</span>
-                </div>
-              )}
-            </div>
-          </PhoneFrame>
-
-          {/* RIGHT — AI agent */}
-          <PhoneFrame scale={rightScale} label="With AI Agent" labelColor="#00a884">
-            <ChatHeader name="CODET AI Agent" status="online" statusColor="#00a884" />
-            <div style={s.chatArea}>
-              <div style={s.encNotice}>
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="rgba(255,255,255,0.25)"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z" /></svg>
-                <span>Messages are end-to-end encrypted</span>
-              </div>
-              <div style={s.dateChip}>TODAY</div>
-
-              {visibleAgentMessages.map((msg, i) => (
-                <div key={i} style={{ display: "flex", justifyContent: msg.sender === "customer" ? "flex-end" : "flex-start", padding: "2px 16px", animation: "fadeSlideIn 0.35s ease-out" }}>
-                  <div style={{ ...s.bubble, ...(msg.sender === "customer" ? s.customerBubble : s.agentBubble) }}>
-                    <div style={{ whiteSpace: "pre-wrap", lineHeight: 1.45 }}>{msg.text}</div>
-                    <div style={s.timestamp}>
-                      {formatTime(642, i)}
-                      {msg.sender === "customer" && (
-                        <svg width="16" height="10" viewBox="0 0 20 12" style={{ marginLeft: 2 }}>
-                          <path d="M1.5 6.5l3.5 3.5 8-8" stroke="#53bdeb" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-                          <path d="M5 6.5l3.5 3.5 8-8" stroke="#53bdeb" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-                        </svg>
+                      {i === agentConversation.length - 1 && (
+                        <div style={{ display: "flex", alignItems: "center", gap: 6, paddingTop: 4, fontSize: 11, color: "#00a884", animation: "fadeSlideIn 0.4s ease-out" }}>
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                            <path d="M2 12l5.5 5.5L20 5" stroke="#00a884" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                              <animate attributeName="stroke-dasharray" from="0 30" to="30 30" dur="0.5s" fill="freeze" />
+                            </path>
+                          </svg>
+                          Confirmed
+                        </div>
                       )}
                     </div>
-                    {i === agentConversation.length - 1 && (
-                      <div style={{ display: "flex", alignItems: "center", gap: 6, paddingTop: 4, fontSize: 11, color: "#00a884", animation: "fadeSlideIn 0.4s ease-out" }}>
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                          <path d="M2 12l5.5 5.5L20 5" stroke="#00a884" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                            <animate attributeName="stroke-dasharray" from="0 30" to="30 30" dur="0.5s" fill="freeze" />
-                          </path>
-                        </svg>
-                        Confirmed
-                      </div>
-                    )}
                   </div>
-                </div>
-              ))}
+                ))}
 
-              {showAgentTyping && <TypingIndicator />}
+                {showAgentTyping && <TypingIndicator />}
 
-              {allDone && (
-                <div style={{ textAlign: "center" as const, padding: "14px 20px 0", animation: "fadeSlideIn 0.6s ease-out" }}>
-                  <span style={{ fontSize: 10.5, color: "rgba(0,168,132,0.5)", fontStyle: "italic" }}>Booked in under 30 seconds.</span>
-                </div>
-              )}
-            </div>
-          </PhoneFrame>
+                {allDone && (
+                  <div style={{ textAlign: "center" as const, padding: "14px 20px 0", animation: "fadeSlideIn 0.6s ease-out" }}>
+                    <span style={{ fontSize: 10.5, color: "rgba(0,168,132,0.5)", fontStyle: "italic" }}>Booked in under 30 seconds.</span>
+                  </div>
+                )}
+              </div>
+            </PhoneFrame>
+          </div>
         </div>
 
         {/* Progress */}
