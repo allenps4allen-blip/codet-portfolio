@@ -118,6 +118,35 @@
         "4": "Data pipeline & ETL workflows",
         "5": "Ongoing maintenance & support"
       }
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "items": {
+        "1": {
+          "q": "How long does a typical project take?",
+          "a": "Most websites are delivered within 1–2 weeks. AI agents take 1–3 weeks depending on complexity and training data. Automations vary based on the number of integrations — we'll give you a timeline after the discovery call."
+        },
+        "2": {
+          "q": "Do you work with clients outside Kuwait?",
+          "a": "Absolutely. While we're based in Kuwait, we work with businesses across the Gulf and internationally. Everything is managed remotely with regular video check-ins."
+        },
+        "3": {
+          "q": "What languages do your AI agents support?",
+          "a": "Our agents support English and Arabic out of the box, including Kuwaiti dialect. Additional languages can be added based on your needs."
+        },
+        "4": {
+          "q": "What happens after my project is delivered?",
+          "a": "We provide ongoing maintenance and support. For websites, this includes hosting and updates. For AI agents, your subscription covers continuous training, monitoring, and improvements."
+        },
+        "5": {
+          "q": "Can I try the AI agent before committing?",
+          "a": "Yes! Check out our live demo to see how an AI agent works. We also offer a free consultation where we can discuss your specific use case and show you what's possible."
+        },
+        "6": {
+          "q": "Do you offer custom pricing for larger projects?",
+          "a": "Yes. Our listed prices are starting points — we tailor pricing based on scope, complexity, and ongoing needs. Book a free consultation and we'll provide an accurate quote."
+        }
+      }
     }
   },
   "work": {
@@ -239,6 +268,99 @@
       "description": "Chat with us directly for a faster response.",
       "button": "Open WhatsApp"
     }
+  },
+  "testimonials": {
+    "title": "What Our Clients Say",
+    "items": {
+      "1": {
+        "quote": "CODET built our website in under two weeks — it loads fast, looks premium, and our conversion rate jumped 40% in the first month.",
+        "name": "Ahmed K.",
+        "role": "CEO, Retail Startup",
+        "rating": "5"
+      },
+      "2": {
+        "quote": "The AI agent handles 80% of our customer inquiries on WhatsApp automatically. Our support team finally has time to focus on complex cases.",
+        "name": "Sarah M.",
+        "role": "Operations Manager",
+        "rating": "5"
+      },
+      "3": {
+        "quote": "They automated our entire invoicing pipeline — what used to take 3 hours a day now runs on its own. Highly recommend.",
+        "name": "Faisal A.",
+        "role": "Founder, F&B Chain",
+        "rating": "5"
+      }
+    }
+  },
+  "demo": {
+    "eyebrow": "Live Demo",
+    "heading": "See the AI agent in action",
+    "subtitle": "This is a simulated preview. Your agent will be custom-trained on your business data.",
+    "tryAsking": "Try asking:",
+    "prompts": {
+      "1": "Book an appointment for Thursday",
+      "2": "What are your working hours?",
+      "3": "I want to cancel my booking",
+      "4": "Do you speak Arabic?",
+      "5": "What services do you offer?",
+      "6": "Can I reschedule to next week?"
+    },
+    "agentName": "CODET AI Agent",
+    "agentStatus": "online · responds instantly",
+    "greeting": "Hi! 👋 I'm CODET's AI assistant. Try asking me anything — book an appointment, ask about services, or switch to Arabic!",
+    "placeholder": "Type a message…",
+    "brainTitle": "Agent Brain",
+    "processing": "Processing…",
+    "brainEmpty": "Send a message to see the agent think…",
+    "thinking": {
+      "analyzingIntent": "Analyzing intent…",
+      "retrievingContext": "Retrieving context…",
+      "composingResponse": "Composing response…",
+      "intentBooking": "Intent: appointment booking",
+      "checkingCalendar": "Checking calendar availability…",
+      "slotsFound": "3 slots found for Thursday",
+      "intentCancel": "Intent: cancellation request",
+      "lookingUpBooking": "Looking up booking records…",
+      "checkingPolicy": "Checking cancellation policy…",
+      "intentHours": "Intent: business hours inquiry",
+      "retrievingBusiness": "Retrieving business info…",
+      "intentLanguage": "Intent: language capability",
+      "langDetection": "Language detection: English",
+      "arabicEnabled": "Arabic support: enabled",
+      "composingBilingual": "Composing bilingual response…"
+    },
+    "responses": {
+      "book": "I'd be happy to help you book! We have the following slots available on Thursday:\n\n🕐 10:00 AM\n🕑 2:00 PM\n🕓 4:30 PM\n\nWhich time works best for you?",
+      "hours": "We're open Sunday through Thursday, 9:00 AM to 6:00 PM (AST). Our AI support is available 24/7 though — so feel free to reach out anytime!",
+      "cancel": "I can help with that. Could you share your booking reference number or the name the appointment was booked under? I'll look it up right away.",
+      "arabic": "Yes! I'm fully bilingual. أقدر أساعدك بالعربي بعد! Just switch to Arabic anytime and I'll respond accordingly. 😊",
+      "services": "We offer three core services:\n\n🌐 Website Development — custom, high-performance sites\n🤖 AI Agents — intelligent chatbots for support & bookings\n⚡ Automations — workflow optimization & tool integration\n\nWould you like details on any of these?",
+      "reschedule": "Of course! Please share your booking reference or the name it's under, and I'll check availability for next week. Any preferred day or time?",
+      "default": "I'm here to help! I can assist with bookings, answer questions about our services, or help you get in touch with our team. What would you like to know?"
+    },
+    "pricing": {
+      "eyebrow": "Pricing",
+      "heading": "AI Agent for your business",
+      "subtitle": "Deploy an intelligent assistant that works 24/7 — no holidays, no wait times.",
+      "cardTitle": "AI Agent",
+      "cardDesc": "Custom-trained on your business data, deployed across WhatsApp, web, and Telegram.",
+      "startingFrom": "Starting from",
+      "price": "49",
+      "currency": "KD",
+      "perMonth": "per month",
+      "features": {
+        "1": "Custom-trained on your business data",
+        "2": "Multi-channel: WhatsApp, web, Telegram",
+        "3": "Lead qualification & CRM integration",
+        "4": "Multilingual support (English & Arabic)",
+        "5": "Analytics dashboard & conversation logs"
+      },
+      "cta": "Get Started",
+      "ctaNote": "Free setup consultation included",
+      "note": "Pricing may vary based on complexity. Book a free consultation for an accurate quote."
+    },
+    "back": "Back",
+    "widgetTooltip": "Try our AI agent"
   },
   "footer": {
     "navigationTitle": "Navigation",

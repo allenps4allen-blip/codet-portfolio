@@ -12,6 +12,7 @@ import ProcessPipeline from "@/components/ProcessPipeline";
 import ROICalculator from "@/components/ROICalculator";
 import StatsAndCTA from "@/components/StatsAndCTA";
 import LogoMarquee from "@/components/LogoMarquee";
+import Testimonials from "@/components/Testimonials";
 
 export default function HomePage() {
   const t = useTranslations("home");
@@ -140,6 +141,9 @@ export default function HomePage() {
           </FadeIn>
         </div>
       </section>
+
+      {/* Testimonials */}
+      <Testimonials />
 
       {/* Stats + CTA */}
       <StatsAndCTA />

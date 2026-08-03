@@ -38,10 +38,12 @@ const accentBorders: Record<string, string> = {
 };
 
 const featureCount = [1, 2, 3, 4, 5] as const;
+const faqKeys = [1, 2, 3, 4, 5, 6] as const;
 
 export default function ServicesPage() {
   const t = useTranslations("services");
   const [expandedCard, setExpandedCard] = useState<string | null>("aiAgents");
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   return (
     <>
@@ -187,7 +189,7 @@ export default function ServicesPage() {
       </section>
 
       {/* Pricing note */}
-      <section className="relative overflow-hidden pb-24 sm:pb-32">
+      <section className="relative overflow-hidden pb-16 sm:pb-20">
         <div className="dot-matrix absolute inset-0" />
         <FadeIn scale>
           <div className="relative z-10 mx-auto max-w-3xl px-6 text-center">
@@ -198,6 +200,66 @@ export default function ServicesPage() {
             </div>
           </div>
         </FadeIn>
+      </section>
+
+      <div className="section-divider mx-6 sm:mx-12" />
+
+      {/* FAQ */}
+      <section className="relative overflow-hidden py-24 sm:py-32">
+        <div className="dot-matrix absolute inset-0" />
+        <div className="relative z-10 mx-auto max-w-3xl px-6">
+          <FadeIn>
+            <h2 className="text-center text-2xl font-bold tracking-tight sm:text-3xl">
+              {t("faq.title")}
+            </h2>
+          </FadeIn>
+          <div className="mt-12 space-y-3">
+            {faqKeys.map((num, idx) => {
+              const isOpen = openFaq === num;
+              return (
+                <FadeIn key={num} delay={idx * 0.06}>
+                  <div
+                    className="glass-card overflow-hidden rounded-xl cursor-pointer transition-all duration-300"
+                    style={{
+                      border: `1px solid ${isOpen ? "rgba(0, 168, 132, 0.25)" : "rgba(255,255,255,0.08)"}`,
+                    }}
+                    onClick={() => setOpenFaq(isOpen ? null : num)}
+                  >
+                    <div className="flex items-center justify-between gap-4 p-5">
+                      <h3 className="text-sm font-semibold sm:text-base">
+                        {t(`faq.items.${num}.q`)}
+                      </h3>
+                      <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                        className="h-5 w-5 flex-shrink-0 text-foreground/30 transition-transform duration-300"
+                        style={{ transform: isOpen ? "rotate(180deg)" : "rotate(0deg)" }}
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                      </svg>
+                    </div>
+                    <div
+                      style={{
+                        maxHeight: isOpen ? 300 : 0,
+                        opacity: isOpen ? 1 : 0,
+                        overflow: "hidden",
+                        transition: "max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease",
+                      }}
+                    >
+                      <div className="border-t border-white/[0.06] px-5 pb-5 pt-4">
+                        <p className="text-sm leading-relaxed text-foreground/60">
+                          {t(`faq.items.${num}.a`)}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </FadeIn>
+              );
+            })}
+          </div>
+        </div>
       </section>
     </>
   );

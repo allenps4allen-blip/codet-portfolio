@@ -2,10 +2,12 @@
 
 import { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 export default function LiveAIWidget() {
   const pathname = usePathname();
   const router = useRouter();
+  const t = useTranslations("demo");
   const [showPulse, setShowPulse] = useState(true);
   const [hovered, setHovered] = useState(false);
 
@@ -31,7 +33,7 @@ export default function LiveAIWidget() {
         onClick={() => router.push(`/${locale}/demo`)}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
-        aria-label="Try our AI agent"
+        aria-label={t("widgetTooltip")}
         style={{
           position: "fixed",
           bottom: "calc(max(1.5rem, env(safe-area-inset-bottom, 1.5rem)) + 68px)",
@@ -70,7 +72,7 @@ export default function LiveAIWidget() {
             pointerEvents: "none",
             fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
           }}>
-            Try our AI agent
+            {t("widgetTooltip")}
           </span>
         )}
       </button>

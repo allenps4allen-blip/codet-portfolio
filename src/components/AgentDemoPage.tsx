@@ -2,74 +2,74 @@
 
 import { useState, useRef, useEffect } from "react";
 
-const promptSuggestions = [
-  "Book an appointment for Thursday",
-  "What are your working hours?",
-  "I want to cancel my booking",
-  "Do you speak Arabic?",
-  "What services do you offer?",
-  "Can I reschedule to next week?",
-];
-
 interface ThinkingStep {
   icon: string;
   text: string;
   duration: number;
 }
 
-const thinkingSteps: Record<string, ThinkingStep[]> = {
-  default: [
-    { icon: "\u{1F50D}", text: "Analyzing intent…", duration: 400 },
-    { icon: "\u{1F9E0}", text: "Retrieving context…", duration: 600 },
-    { icon: "✍️", text: "Composing response…", duration: 500 },
-  ],
-  book: [
-    { icon: "\u{1F50D}", text: "Intent: appointment booking", duration: 400 },
-    { icon: "\u{1F4C5}", text: "Checking calendar availability…", duration: 700 },
-    { icon: "✅", text: "3 slots found for Thursday", duration: 400 },
-    { icon: "✍️", text: "Composing response…", duration: 500 },
-  ],
-  cancel: [
-    { icon: "\u{1F50D}", text: "Intent: cancellation request", duration: 400 },
-    { icon: "\u{1F50E}", text: "Looking up booking records…", duration: 600 },
-    { icon: "⚠️", text: "Checking cancellation policy…", duration: 500 },
-    { icon: "✍️", text: "Composing response…", duration: 400 },
-  ],
-  hours: [
-    { icon: "\u{1F50D}", text: "Intent: business hours inquiry", duration: 400 },
-    { icon: "\u{1F4CB}", text: "Retrieving business info…", duration: 500 },
-    { icon: "✍️", text: "Composing response…", duration: 400 },
-  ],
-  arabic: [
-    { icon: "\u{1F50D}", text: "Intent: language capability", duration: 400 },
-    { icon: "\u{1F310}", text: "Language detection: English", duration: 400 },
-    { icon: "\u{1F1F0}\u{1F1FC}", text: "Arabic support: enabled", duration: 400 },
-    { icon: "✍️", text: "Composing bilingual response…", duration: 500 },
-  ],
-};
+interface DemoTranslations {
+  eyebrow: string;
+  heading: string;
+  subtitle: string;
+  tryAsking: string;
+  prompts: string[];
+  agentName: string;
+  agentStatus: string;
+  greeting: string;
+  placeholder: string;
+  brainTitle: string;
+  processing: string;
+  brainEmpty: string;
+  thinking: Record<string, string>;
+  responses: Record<string, string>;
+}
 
-const responses: Record<string, string> = {
-  book: "I'd be happy to help you book! We have the following slots available on Thursday:\n\n\u{1F550} 10:00 AM\n\u{1F551} 2:00 PM\n\u{1F553} 4:30 PM\n\nWhich time works best for you?",
-  hours: "We're open Sunday through Thursday, 9:00 AM to 6:00 PM (AST). Our AI support is available 24/7 though — so feel free to reach out anytime!",
-  cancel: "I can help with that. Could you share your booking reference number or the name the appointment was booked under? I'll look it up right away.",
-  arabic: "Yes! I'm fully bilingual. أقدر أساعدك بالعربي بعد! Just switch to Arabic anytime and I'll respond accordingly. \u{1F60A}",
-  services: "We offer three core services:\n\n\u{1F310} Website Development — custom, high-performance sites\n\u{1F916} AI Agents — intelligent chatbots for support & bookings\n⚡ Automations — workflow optimization & tool integration\n\nWould you like details on any of these?",
-  reschedule: "Of course! Please share your booking reference or the name it's under, and I'll check availability for next week. Any preferred day or time?",
-  default: "I'm here to help! I can assist with bookings, answer questions about our services, or help you get in touch with our team. What would you like to know?",
-};
+function buildThinkingSteps(t: Record<string, string>): Record<string, ThinkingStep[]> {
+  return {
+    default: [
+      { icon: "\u{1F50D}", text: t.analyzingIntent, duration: 400 },
+      { icon: "\u{1F9E0}", text: t.retrievingContext, duration: 600 },
+      { icon: "✍️", text: t.composingResponse, duration: 500 },
+    ],
+    book: [
+      { icon: "\u{1F50D}", text: t.intentBooking, duration: 400 },
+      { icon: "\u{1F4C5}", text: t.checkingCalendar, duration: 700 },
+      { icon: "✅", text: t.slotsFound, duration: 400 },
+      { icon: "✍️", text: t.composingResponse, duration: 500 },
+    ],
+    cancel: [
+      { icon: "\u{1F50D}", text: t.intentCancel, duration: 400 },
+      { icon: "\u{1F50E}", text: t.lookingUpBooking, duration: 600 },
+      { icon: "⚠️", text: t.checkingPolicy, duration: 500 },
+      { icon: "✍️", text: t.composingResponse, duration: 400 },
+    ],
+    hours: [
+      { icon: "\u{1F50D}", text: t.intentHours, duration: 400 },
+      { icon: "\u{1F4CB}", text: t.retrievingBusiness, duration: 500 },
+      { icon: "✍️", text: t.composingResponse, duration: 400 },
+    ],
+    arabic: [
+      { icon: "\u{1F50D}", text: t.intentLanguage, duration: 400 },
+      { icon: "\u{1F310}", text: t.langDetection, duration: 400 },
+      { icon: "\u{1F1F0}\u{1F1FC}", text: t.arabicEnabled, duration: 400 },
+      { icon: "✍️", text: t.composingBilingual, duration: 500 },
+    ],
+  };
+}
 
 function getResponseKey(text: string): string {
   const lower = text.toLowerCase();
-  if (lower.includes("book") || lower.includes("appointment")) return "book";
-  if (lower.includes("cancel")) return "cancel";
-  if (lower.includes("hour") || lower.includes("open") || lower.includes("when")) return "hours";
-  if (lower.includes("arabic") || lower.includes("عربي")) return "arabic";
-  if (lower.includes("service") || lower.includes("offer")) return "services";
-  if (lower.includes("reschedule") || lower.includes("next week")) return "reschedule";
+  if (lower.includes("book") || lower.includes("appointment") || lower.includes("حجز") || lower.includes("موعد")) return "book";
+  if (lower.includes("cancel") || lower.includes("إلغاء")) return "cancel";
+  if (lower.includes("hour") || lower.includes("open") || lower.includes("when") || lower.includes("ساعات")) return "hours";
+  if (lower.includes("arabic") || lower.includes("عربي") || lower.includes("العربية")) return "arabic";
+  if (lower.includes("service") || lower.includes("offer") || lower.includes("خدم")) return "services";
+  if (lower.includes("reschedule") || lower.includes("next week") || lower.includes("تأجيل") || lower.includes("الأسبوع")) return "reschedule";
   return "default";
 }
 
-function BrainPanel({ steps, isThinking }: { steps: ThinkingStep[]; isThinking: boolean }) {
+function BrainPanel({ steps, isThinking, t }: { steps: ThinkingStep[]; isThinking: boolean; t: DemoTranslations }) {
   const [visibleSteps, setVisibleSteps] = useState<number[]>([]);
   const timeoutRefs = useRef<NodeJS.Timeout[]>([]);
 
@@ -86,10 +86,10 @@ function BrainPanel({ steps, isThinking }: { steps: ThinkingStep[]; isThinking: 
     let cumDelay = 0;
     steps.forEach((step, i) => {
       cumDelay += (i === 0 ? 200 : steps[i - 1].duration);
-      const t = setTimeout(() => {
+      const timeout = setTimeout(() => {
         setVisibleSteps((prev) => [...prev, i]);
       }, cumDelay);
-      timeoutRefs.current.push(t);
+      timeoutRefs.current.push(timeout);
     });
 
     return () => timeoutRefs.current.forEach(clearTimeout);
@@ -100,9 +100,9 @@ function BrainPanel({ steps, isThinking }: { steps: ThinkingStep[]; isThinking: 
       <div style={st.brainHeader}>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
           <div style={{ width: 8, height: 8, borderRadius: "50%", background: isThinking ? "#00a884" : "rgba(255,255,255,0.15)", boxShadow: isThinking ? "0 0 8px rgba(0,168,132,0.5)" : "none", transition: "all 0.3s ease" }} />
-          <span style={{ fontSize: 11, fontWeight: 600, color: "rgba(255,255,255,0.5)", letterSpacing: 1, textTransform: "uppercase" }}>Agent Brain</span>
+          <span style={{ fontSize: 11, fontWeight: 600, color: "rgba(255,255,255,0.5)", letterSpacing: 1, textTransform: "uppercase" }}>{t.brainTitle}</span>
         </div>
-        {isThinking && <span style={{ fontSize: 10, color: "#00a884", animation: "agentPulse 1.5s infinite" }}>Processing…</span>}
+        {isThinking && <span style={{ fontSize: 10, color: "#00a884", animation: "agentPulse 1.5s infinite" }}>{t.processing}</span>}
       </div>
       <div style={st.brainBody}>
         {visibleSteps.map((stepIdx) => {
@@ -124,7 +124,7 @@ function BrainPanel({ steps, isThinking }: { steps: ThinkingStep[]; isThinking: 
         })}
         {!isThinking && visibleSteps.length === 0 && (
           <div style={{ padding: 20, textAlign: "center" }}>
-            <span style={{ fontSize: 12, color: "rgba(255,255,255,0.2)" }}>Send a message to see the agent think…</span>
+            <span style={{ fontSize: 12, color: "rgba(255,255,255,0.2)" }}>{t.brainEmpty}</span>
           </div>
         )}
       </div>
@@ -132,9 +132,12 @@ function BrainPanel({ steps, isThinking }: { steps: ThinkingStep[]; isThinking: 
   );
 }
 
-export default function AgentDemoPage() {
+export default function AgentDemoPage({ translations }: { translations: DemoTranslations }) {
+  const t = translations;
+  const thinkingSteps = buildThinkingSteps(t.thinking);
+
   const [messages, setMessages] = useState([
-    { from: "agent", text: "Hi! \u{1F44B} I'm CODET's AI assistant. Try asking me anything — book an appointment, ask about services, or switch to Arabic!" },
+    { from: "agent", text: t.greeting },
   ]);
   const [input, setInput] = useState("");
   const [isThinking, setIsThinking] = useState(false);
@@ -171,7 +174,7 @@ export default function AgentDemoPage() {
 
     setTimeout(() => {
       setIsThinking(false);
-      setMessages((prev) => [...prev, { from: "agent", text: responses[key] || responses.default }]);
+      setMessages((prev) => [...prev, { from: "agent", text: t.responses[key] || t.responses.default }]);
     }, totalDuration);
   };
 
@@ -180,14 +183,14 @@ export default function AgentDemoPage() {
       <style>{css}</style>
 
       <div style={st.header}>
-        <span style={st.eyebrow}>Live Demo</span>
-        <h2 style={{ ...st.h1, fontSize: isMobile ? 24 : 32 }}>See the AI agent in action</h2>
-        <p style={st.subtitle}>This is a simulated preview. Your agent will be custom-trained on your business data.</p>
+        <span style={st.eyebrow}>{t.eyebrow}</span>
+        <h2 style={{ ...st.h1, fontSize: isMobile ? 24 : 32 }}>{t.heading}</h2>
+        <p style={st.subtitle}>{t.subtitle}</p>
       </div>
 
       <div style={{ ...st.pillsRow, display: isMobile ? "none" : "flex" }}>
-        <span style={{ fontSize: 11, color: "rgba(255,255,255,0.25)", marginRight: 8 }}>Try asking:</span>
-        {promptSuggestions.map((prompt, i) => (
+        <span style={{ fontSize: 11, color: "rgba(255,255,255,0.25)", marginRight: 8 }}>{t.tryAsking}</span>
+        {t.prompts.map((prompt, i) => (
           <button
             key={i}
             onClick={() => sendMessage(prompt)}
@@ -201,7 +204,7 @@ export default function AgentDemoPage() {
 
       {isMobile && (
         <div style={{ display: "flex", gap: 6, flexWrap: "wrap", justifyContent: "center", marginBottom: 16 }}>
-          {promptSuggestions.slice(0, 3).map((prompt, i) => (
+          {t.prompts.slice(0, 3).map((prompt, i) => (
             <button key={i} onClick={() => sendMessage(prompt)} style={{ ...st.pill, fontSize: 11, padding: "5px 10px" }} disabled={isThinking}>
               {prompt}
             </button>
@@ -217,8 +220,8 @@ export default function AgentDemoPage() {
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5"><circle cx="12" cy="9" r="2.5" /><path d="M9.5 15.5a3.5 3.5 0 117 0" strokeLinecap="round" /></svg>
               </div>
               <div>
-                <div style={{ fontSize: 13, fontWeight: 600, color: "#e9edef" }}>CODET AI Agent</div>
-                <div style={{ fontSize: 10, color: "#00a884" }}>online · responds instantly</div>
+                <div style={{ fontSize: 13, fontWeight: 600, color: "#e9edef" }}>{t.agentName}</div>
+                <div style={{ fontSize: 10, color: "#00a884" }}>{t.agentStatus}</div>
               </div>
             </div>
           </div>
@@ -257,7 +260,7 @@ export default function AgentDemoPage() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && sendMessage(input)}
-              placeholder="Type a message…"
+              placeholder={t.placeholder}
               disabled={isThinking}
               style={st.inputField}
             />
@@ -271,7 +274,7 @@ export default function AgentDemoPage() {
           </div>
         </div>
 
-        <BrainPanel steps={brainSteps} isThinking={isThinking} />
+        <BrainPanel steps={brainSteps} isThinking={isThinking} t={t} />
       </div>
     </div>
   );
