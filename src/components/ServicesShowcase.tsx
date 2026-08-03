@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 function WebsiteDemo() {
   const [loadProgress, setLoadProgress] = useState(0);
@@ -177,6 +177,8 @@ const services = [
 
 export default function ServicesShowcase() {
   const router = useRouter();
+  const pathname = usePathname();
+  const locale = pathname.split("/")[1] || "en";
 
   return (
     <div className="services-section" style={s.section}>
@@ -192,7 +194,7 @@ export default function ServicesShowcase() {
           <div
             key={i}
             style={{ ...s.card, cursor: svc.href ? "pointer" : "default" }}
-            onClick={() => svc.href && router.push(svc.href)}
+            onClick={() => svc.href && router.push(`/${locale}${svc.href}`)}
           >
             <div style={s.demoArea}>
               <svc.Demo />
