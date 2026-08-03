@@ -102,6 +102,7 @@ export default function DemoPage() {
                 </p>
               </div>
               <div style={p.priceBlock}>
+                <span style={p.startingFrom}>Starting from</span>
                 <div style={{ display: "flex", alignItems: "baseline", gap: 4 }}>
                   <span className="pricing-price" style={p.price}>49</span>
                   <span style={p.currency}>KD</span>
@@ -163,6 +164,7 @@ const p: Record<string, React.CSSProperties> = {
   cardTitle: { fontSize: 20, fontWeight: 600, color: "#e9edef", margin: 0 },
   cardDesc: { fontSize: 13, lineHeight: 1.6, color: "rgba(255,255,255,0.4)", margin: "8px 0 0", maxWidth: 280 },
   priceBlock: { textAlign: "right", flexShrink: 0 },
+  startingFrom: { fontSize: 10, fontWeight: 500, letterSpacing: 1, textTransform: "uppercase", color: "rgba(255,255,255,0.3)", display: "block", marginBottom: 4 },
   price: { fontSize: 48, fontWeight: 700, color: "#00a884", letterSpacing: -2, lineHeight: 1 },
   currency: { fontSize: 18, fontWeight: 600, color: "#00a884", opacity: 0.7 },
   priceLabel: { fontSize: 12, color: "rgba(255,255,255,0.3)", fontWeight: 500, display: "block", marginTop: 2 },

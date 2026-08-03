@@ -141,6 +141,7 @@ export default function AgentDemoPage() {
   const [brainSteps, setBrainSteps] = useState<ThinkingStep[]>([]);
   const [isMobile, setIsMobile] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
@@ -150,7 +151,9 @@ export default function AgentDemoPage() {
   }, []);
 
   useEffect(() => {
-    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
   }, [messages, isThinking]);
 
   const sendMessage = (text: string) => {
@@ -220,7 +223,7 @@ export default function AgentDemoPage() {
             </div>
           </div>
 
-          <div style={st.chatMessages}>
+          <div ref={chatContainerRef} style={st.chatMessages}>
             {messages.map((msg, i) => (
               <div key={i} style={{ display: "flex", justifyContent: msg.from === "user" ? "flex-end" : "flex-start", animation: "agentFadeSlideIn 0.3s ease-out" }}>
                 <div style={{
