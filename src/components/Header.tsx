@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/routing";
 import { motion, AnimatePresence } from "framer-motion";
@@ -20,6 +20,8 @@ export default function Header() {
   const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const hamburgerRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     function onScroll() {
@@ -37,6 +39,35 @@ export default function Header() {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
   }, [mobileOpen]);
+
+  const handleMenuKeyDown = useCallback((e: KeyboardEvent) => {
+    if (e.key === "Escape") {
+      setMobileOpen(false);
+      hamburgerRef.current?.focus();
+      return;
+    }
+    if (e.key !== "Tab" || !mobileMenuRef.current) return;
+    const focusable = mobileMenuRef.current.querySelectorAll<HTMLElement>(
+      'a[href], button, [tabindex]:not([tabindex="-1"])'
+    );
+    if (focusable.length === 0) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
+    }
+  }, []);
+
+  useEffect(() => {
+    if (mobileOpen) {
+      document.addEventListener("keydown", handleMenuKeyDown);
+      return () => document.removeEventListener("keydown", handleMenuKeyDown);
+    }
+  }, [mobileOpen, handleMenuKeyDown]);
 
   return (
     <header
@@ -100,9 +131,11 @@ export default function Header() {
 
         {/* Mobile hamburger */}
         <button
+          ref={hamburgerRef}
           onClick={() => setMobileOpen(!mobileOpen)}
           className="relative z-10 flex h-10 w-10 items-center justify-center md:hidden"
           aria-label="Toggle menu"
+          aria-expanded={mobileOpen}
         >
           <div className="flex w-5 flex-col gap-1.5">
             <span
@@ -123,11 +156,15 @@ export default function Header() {
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
+            ref={mobileMenuRef}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
             className="fixed inset-0 top-0 z-[49] flex flex-col bg-background md:hidden"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Navigation menu"
           >
             <div className="flex flex-1 flex-col items-center justify-center gap-2 px-6">
               {navLinks.map(({ href, key }, i) => {

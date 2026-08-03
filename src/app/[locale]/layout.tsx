@@ -136,6 +136,10 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} dir={isArabic ? "rtl" : "ltr"}>
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://wa.me" />
+        <link rel="dns-prefetch" href="https://vitals.vercel-insights.com" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -147,8 +151,14 @@ export default async function LocaleLayout({
         } antialiased`}
       >
         <NextIntlClientProvider messages={messages}>
+          <a
+            href="#main-content"
+            className="skip-to-content"
+          >
+            {isArabic ? "تخطي إلى المحتوى" : "Skip to content"}
+          </a>
           <Header />
-          <main>{children}</main>
+          <main id="main-content">{children}</main>
           <Footer />
           <WhatsAppButton />
           <LiveAIWidget />
