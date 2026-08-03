@@ -11,6 +11,7 @@ import ServicesShowcase from "@/components/ServicesShowcase";
 import ProcessPipeline from "@/components/ProcessPipeline";
 import ROICalculator from "@/components/ROICalculator";
 import StatsAndCTA from "@/components/StatsAndCTA";
+import LogoMarquee from "@/components/LogoMarquee";
 
 export default function HomePage() {
   const t = useTranslations("home");
@@ -64,6 +65,9 @@ export default function HomePage() {
       </section>
 
       <div className="section-divider mx-6 sm:mx-12" />
+
+      {/* Logo Marquee */}
+      <LogoMarquee />
 
       {/* Services — Interactive demos */}
       <ServicesShowcase />

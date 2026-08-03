@@ -8,6 +8,7 @@ import { routing } from "@/i18n/routing";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import LiveAIWidget from "@/components/LiveAIWidget";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import "../globals.css";
@@ -148,6 +149,7 @@ export default async function LocaleLayout({
           <main>{children}</main>
           <Footer />
           <WhatsAppButton />
+          <LiveAIWidget />
           <Analytics />
           <SpeedInsights />
         </NextIntlClientProvider>

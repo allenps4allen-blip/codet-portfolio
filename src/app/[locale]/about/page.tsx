@@ -4,6 +4,8 @@ import { useTranslations } from "next-intl";
 import { Link } from "@/i18n/routing";
 import { motion } from "framer-motion";
 import FadeIn from "@/components/FadeIn";
+import TechStackOrbit from "@/components/TechStackOrbit";
+import CompanyTimeline from "@/components/CompanyTimeline";
 
 const valueIds = ["1", "2", "3", "4"] as const;
 
@@ -101,6 +103,16 @@ export default function AboutPage() {
           </FadeIn>
         </div>
       </section>
+
+      <div className="section-divider mx-6 sm:mx-12" />
+
+      {/* Tech Stack Orbit */}
+      <TechStackOrbit />
+
+      <div className="section-divider mx-6 sm:mx-12" />
+
+      {/* Company Timeline */}
+      <CompanyTimeline />
 
       <div className="section-divider mx-6 sm:mx-12" />
 
