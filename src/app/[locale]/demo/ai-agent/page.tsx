@@ -7,13 +7,16 @@ export default function AIAgentDemoPage() {
   const router = useRouter();
 
   return (
-    <div style={{ background: "#050505", minHeight: "100vh" }}>
+    <div style={{ background: "#050505", minHeight: "100vh", animation: "fadeIn 0.3s ease-out" }}>
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+      `}} />
       <button
         onClick={() => router.back()}
         style={{
           position: "fixed",
-          top: 24,
-          left: 24,
+          top: 80,
+          left: 20,
           zIndex: 100,
           display: "flex",
           alignItems: "center",
