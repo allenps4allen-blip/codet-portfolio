@@ -113,24 +113,24 @@ export default function ROICalculator() {
           <Slider label="Average hourly cost" value={rate} onChange={setRate} min={2} max={20} step={1} unit=" KD" />
         </div>
 
-        <div style={s.resultsSection}>
-          <div style={s.resultCard}>
+        <div className="roi-results-row" style={s.resultsSection}>
+          <div className="roi-result-card" style={s.resultCard}>
             <span style={s.resultCardLabel}>Monthly savings</span>
-            <div style={s.resultCardValue}>
+            <div className="roi-result-value" style={s.resultCardValue}>
               <AnimatedNumber value={monthlySavings} suffix=" KD" />
             </div>
           </div>
 
-          <div style={s.resultCard}>
+          <div className="roi-result-card" style={s.resultCard}>
             <span style={s.resultCardLabel}>Yearly savings</span>
-            <div style={{ ...s.resultCardValue, color: "#e9edef", fontSize: 28 }}>
+            <div className="roi-result-value" style={{ ...s.resultCardValue, color: "#e9edef", fontSize: 28 }}>
               <AnimatedNumber value={yearlySavings} suffix=" KD" />
             </div>
           </div>
 
-          <div style={s.resultCard}>
+          <div className="roi-result-card" style={s.resultCard}>
             <span style={s.resultCardLabel}>Hours reclaimed / month</span>
-            <div style={{ ...s.resultCardValue, color: "#e9edef", fontSize: 28 }}>
+            <div className="roi-result-value" style={{ ...s.resultCardValue, color: "#e9edef", fontSize: 28 }}>
               <AnimatedNumber value={hoursReclaimed} suffix=" hrs" />
             </div>
           </div>
