@@ -1,5 +1,6 @@
 "use client";
 
+import HeroScrollDemo from "@/components/HeroScrollDemo";
 import AgentDemoPage from "@/components/AgentDemoPage";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
@@ -123,6 +124,8 @@ export default function DemoPage() {
         {t("back")}
       </button>
 
+      <HeroScrollDemo />
+
       <AgentDemoPage translations={translations} />
 
       {/* Pricing Section */}
@@ -193,6 +196,9 @@ const p: Record<string, React.CSSProperties> = {
     flexDirection: "column",
     alignItems: "center",
     fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+    position: "relative",
+    zIndex: 1,
+    background: "#050505",
   },
   eyebrowWrap: { textAlign: "center", marginBottom: 12 },
   eyebrow: { fontSize: 11, fontWeight: 600, letterSpacing: 2.5, textTransform: "uppercase", color: "#00a884" },

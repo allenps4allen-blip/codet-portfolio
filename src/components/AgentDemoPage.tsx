@@ -301,6 +301,8 @@ const st: Record<string, React.CSSProperties> = {
   page: {
     padding: "80px 40px 100px",
     background: "#050505",
+    position: "relative",
+    zIndex: 1,
     fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
   },
   header: {
