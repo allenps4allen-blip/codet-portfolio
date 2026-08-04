@@ -96,7 +96,7 @@ export default function Header() {
               <li key={key}>
                 <Link
                   href={href}
-                  className={`relative text-sm transition-colors duration-300 hover:text-foreground ${
+                  className={`nav-link-hover relative text-sm transition-colors duration-300 hover:text-foreground ${
                     isActive ? "text-foreground" : "text-foreground/70"
                   }`}
                 >

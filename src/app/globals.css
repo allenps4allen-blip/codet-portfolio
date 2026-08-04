@@ -84,6 +84,26 @@ textarea:focus {
   box-shadow: 0 0 0 1px rgba(0, 168, 132, 0.2);
 }
 
+.nav-link-hover {
+  position: relative;
+}
+
+.nav-link-hover::after {
+  content: "";
+  position: absolute;
+  bottom: -2px;
+  left: 50%;
+  width: 0;
+  height: 1px;
+  background: currentColor;
+  transition: width 0.3s ease, left 0.3s ease;
+}
+
+.nav-link-hover:hover::after {
+  width: 100%;
+  left: 0;
+}
+
 @layer utilities {
   .text-balance {
     text-wrap: balance;

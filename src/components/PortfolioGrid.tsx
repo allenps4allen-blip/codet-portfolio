@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { useTranslations } from "next-intl";
 
 interface MockupBlock {
   w: string;
@@ -108,12 +109,8 @@ const projects: Project[] = [
   },
 ];
 
-const filters = [
-  { key: "all", label: "All" },
-  { key: "websites", label: "Websites" },
-  { key: "ai", label: "AI Agents" },
-  { key: "automations", label: "Automations" },
-];
+const filterKeys = ["all", "websites", "ai", "automations"] as const;
+const filterTranslationKeys = ["filterAll", "filterWebsites", "filterAI", "filterAutomations"] as const;
 
 function ProjectCard({ project }: { project: Project }) {
   const [hovered, setHovered] = useState(false);
@@ -193,6 +190,7 @@ function ProjectCard({ project }: { project: Project }) {
 }
 
 export default function PortfolioGrid() {
+  const t = useTranslations("work.portfolio");
   const [activeFilter, setActiveFilter] = useState("all");
   const [isMobile, setIsMobile] = useState(false);
   const filtered = activeFilter === "all" ? projects : projects.filter((p) => p.category === activeFilter);
@@ -209,23 +207,23 @@ export default function PortfolioGrid() {
       <style>{css}</style>
 
       <div style={s.header}>
-        <span style={s.eyebrow}>Portfolio</span>
-        <h2 style={s.h2}>Selected Work</h2>
+        <span style={s.eyebrow}>{t("eyebrow")}</span>
+        <h2 style={s.h2}>{t("heading")}</h2>
       </div>
 
       <div style={s.filters}>
-        {filters.map((f) => (
+        {filterKeys.map((key, i) => (
           <button
-            key={f.key}
-            onClick={() => setActiveFilter(f.key)}
+            key={key}
+            onClick={() => setActiveFilter(key)}
             style={{
               ...s.filterBtn,
-              background: activeFilter === f.key ? "rgba(0,168,132,0.15)" : "transparent",
-              color: activeFilter === f.key ? "#00a884" : "rgba(255,255,255,0.35)",
-              borderColor: activeFilter === f.key ? "rgba(0,168,132,0.3)" : "rgba(255,255,255,0.08)",
+              background: activeFilter === key ? "rgba(0,168,132,0.15)" : "transparent",
+              color: activeFilter === key ? "#00a884" : "rgba(255,255,255,0.35)",
+              borderColor: activeFilter === key ? "rgba(0,168,132,0.3)" : "rgba(255,255,255,0.08)",
             }}
           >
-            {f.label}
+            {t(filterTranslationKeys[i])}
           </button>
         ))}
       </div>

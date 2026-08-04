@@ -69,6 +69,11 @@
       "heading": "Ready to digitalize?",
       "subtext": "Let's discuss how we can transform your business with the right technology.",
       "button": "Start Your Project"
+    },
+    "servicesSection": {
+      "eyebrow": "Services",
+      "heading": "What we build",
+      "seeDemo": "See demo"
     }
   },
   "services": {
@@ -207,6 +212,14 @@
       "heading": "Have a project in mind?",
       "subtext": "Let's build something great together.",
       "button": "Start a Conversation"
+    },
+    "portfolio": {
+      "eyebrow": "Portfolio",
+      "heading": "Selected Work",
+      "filterAll": "All",
+      "filterWebsites": "Websites",
+      "filterAI": "AI Agents",
+      "filterAutomations": "Automations"
     }
   },
   "about": {

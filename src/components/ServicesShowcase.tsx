@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 function WebsiteDemo() {
   const [loadProgress, setLoadProgress] = useState(0);
@@ -169,49 +170,53 @@ function AutomationDemo() {
   );
 }
 
-const services = [
-  { title: "Websites", desc: "Lightning-fast, conversion-optimized sites built with modern frameworks. Every pixel earns its place.", Demo: WebsiteDemo, href: null },
-  { title: "AI Agents", desc: "Intelligent agents that handle support, bookings, and lead gen around the clock — in any language.", Demo: AgentDemo, href: "/demo/ai-agent" },
-  { title: "Automations", desc: "End-to-end workflows that eliminate busywork. Your systems talk to each other so your team doesn’t have to.", Demo: AutomationDemo, href: null },
-];
+const serviceKeys = ["websites", "aiAgents", "automations"] as const;
+const serviceDemos = [WebsiteDemo, AgentDemo, AutomationDemo];
+const serviceHrefs = [null, "/demo/ai-agent", null];
 
 export default function ServicesShowcase() {
   const router = useRouter();
   const pathname = usePathname();
   const locale = pathname.split("/")[1] || "en";
+  const tSection = useTranslations("home.servicesSection");
+  const tServices = useTranslations("home.services");
 
   return (
     <div className="services-section" style={s.section}>
       <style dangerouslySetInnerHTML={{ __html: keyframes }} />
 
       <div style={s.header}>
-        <span style={s.eyebrow}>Services</span>
-        <h2 style={s.h2}>What we build</h2>
+        <span style={s.eyebrow}>{tSection("eyebrow")}</span>
+        <h2 style={s.h2}>{tSection("heading")}</h2>
       </div>
 
       <div className="services-grid" style={s.grid}>
-        {services.map((svc, i) => (
-          <div
-            key={i}
-            style={{ ...s.card, cursor: svc.href ? "pointer" : "default" }}
-            onClick={() => svc.href && router.push(`/${locale}${svc.href}`)}
-          >
-            <div style={s.demoArea}>
-              <svc.Demo />
+        {serviceKeys.map((key, i) => {
+          const Demo = serviceDemos[i];
+          const href = serviceHrefs[i];
+          return (
+            <div
+              key={key}
+              style={{ ...s.card, cursor: href ? "pointer" : "default" }}
+              onClick={() => href && router.push(`/${locale}${href}`)}
+            >
+              <div style={s.demoArea}>
+                <Demo />
+              </div>
+              <div style={s.cardContent}>
+                <h3 style={s.cardTitle}>
+                  {tServices(`${key}.title`)}
+                  {href && (
+                    <span style={{ marginInlineStart: 8, fontSize: 12, color: "#00a884", fontWeight: 500 }}>
+                      {tSection("seeDemo")} &#x2192;
+                    </span>
+                  )}
+                </h3>
+                <p style={s.cardDesc}>{tServices(`${key}.description`)}</p>
+              </div>
             </div>
-            <div style={s.cardContent}>
-              <h3 style={s.cardTitle}>
-                {svc.title}
-                {svc.href && (
-                  <span style={{ marginLeft: 8, fontSize: 12, color: "#00a884", fontWeight: 500 }}>
-                    See demo &#x2192;
-                  </span>
-                )}
-              </h3>
-              <p style={s.cardDesc}>{svc.desc}</p>
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );

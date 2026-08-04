@@ -69,6 +69,11 @@
       "heading": "مستعد للتحول الرقمي؟",
       "subtext": "دعنا نناقش كيف يمكننا تحويل عملك بالتقنية المناسبة.",
       "button": "ابدأ مشروعك"
+    },
+    "servicesSection": {
+      "eyebrow": "خدماتنا",
+      "heading": "ماذا نبني",
+      "seeDemo": "شاهد العرض"
     }
   },
   "services": {
@@ -207,6 +212,14 @@
       "heading": "لديك مشروع في ذهنك؟",
       "subtext": "دعنا نبني شيئاً رائعاً معاً.",
       "button": "ابدأ محادثة"
+    },
+    "portfolio": {
+      "eyebrow": "أعمالنا",
+      "heading": "مشاريع مختارة",
+      "filterAll": "الكل",
+      "filterWebsites": "مواقع إلكترونية",
+      "filterAI": "وكلاء ذكاء اصطناعي",
+      "filterAutomations": "أتمتة"
     }
   },
   "about": {
