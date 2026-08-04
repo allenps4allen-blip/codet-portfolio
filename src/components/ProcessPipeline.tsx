@@ -1,39 +1,13 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { useTranslations } from "next-intl";
 
-const steps = [
-  {
-    id: 1,
-    title: "Discovery",
-    desc: "We learn your business inside out — goals, pain points, and what success looks like for you.",
-    icon: "🔍",
-    detail: "Stakeholder interviews · Competitor audit · Technical assessment",
-  },
-  {
-    id: 2,
-    title: "Design & Plan",
-    desc: "We architect the solution, design every screen, and align on scope before writing a single line of code.",
-    icon: "✏️",
-    detail: "Wireframes · System architecture · Project timeline",
-  },
-  {
-    id: 3,
-    title: "Build & Test",
-    desc: "Clean code, weekly demos, and relentless testing. You see progress every step of the way.",
-    icon: "⚡",
-    detail: "Agile sprints · QA automation · Staging previews",
-  },
-  {
-    id: 4,
-    title: "Launch & Support",
-    desc: "We deploy, monitor, and stay with you. Your growth is our growth.",
-    icon: "🚀",
-    detail: "Zero-downtime deploy · Performance monitoring · 24/7 support",
-  },
-];
+const stepIcons = ["🔍", "✏️", "⚡", "🚀"];
+const stepIds = [1, 2, 3, 4];
 
 export default function ProcessPipeline() {
+  const t = useTranslations("home.process");
   const sectionRef = useRef<HTMLDivElement>(null);
   const [progress, setProgress] = useState(0);
 
@@ -51,7 +25,7 @@ export default function ProcessPipeline() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const activeStep = Math.floor(progress * (steps.length + 0.5));
+  const activeStep = Math.floor(progress * (stepIds.length + 0.5));
   const lineProgress = Math.min(1, progress * 1.15);
 
   return (
@@ -59,8 +33,8 @@ export default function ProcessPipeline() {
       <style dangerouslySetInnerHTML={{ __html: keyframes }} />
 
       <div style={s.header}>
-        <span style={s.eyebrow}>Process</span>
-        <h2 style={s.h2}>How we bring your project to life</h2>
+        <span style={s.eyebrow}>{t("eyebrow")}</span>
+        <h2 style={s.h2}>{t("heading")}</h2>
       </div>
 
       <div style={s.timeline}>
@@ -82,13 +56,13 @@ export default function ProcessPipeline() {
           }} />
         </div>
 
-        {steps.map((step, i) => {
+        {stepIds.map((id, i) => {
           const isActive = i < activeStep;
           const isCurrent = i === activeStep - 1;
 
           return (
             <div
-              key={step.id}
+              key={id}
               style={{
                 ...s.step,
                 opacity: isActive ? 1 : 0.25,
@@ -103,16 +77,16 @@ export default function ProcessPipeline() {
                 boxShadow: isCurrent ? "0 0 24px rgba(0,168,132,0.4)" : "none",
                 transition: "all 0.4s ease",
               }}>
-                <span style={{ fontSize: 20 }}>{step.icon}</span>
+                <span style={{ fontSize: 20 }}>{stepIcons[i]}</span>
               </div>
 
               <div style={s.stepContent}>
                 <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
                   <h3 style={{ ...s.stepTitle, color: isActive ? "#e9edef" : "rgba(255,255,255,0.3)" }}>
-                    {step.title}
+                    {t(`steps.${id}.title`)}
                   </h3>
                   {isCurrent && (
-                    <div style={s.activeBadge}>In Progress</div>
+                    <div style={s.activeBadge}>{t("inProgress")}</div>
                   )}
                   {isActive && !isCurrent && (
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="#00a884" style={{ animation: "fadeSlideIn 0.3s ease-out" }}>
@@ -121,11 +95,11 @@ export default function ProcessPipeline() {
                   )}
                 </div>
                 <p style={{ ...s.stepDesc, color: isActive ? "rgba(255,255,255,0.55)" : "rgba(255,255,255,0.15)" }}>
-                  {step.desc}
+                  {t(`steps.${id}.desc`)}
                 </p>
                 {isActive && (
                   <div style={{ ...s.detail, animation: "fadeSlideIn 0.4s ease-out" }}>
-                    {step.detail}
+                    {t(`steps.${id}.detail`)}
                   </div>
                 )}
               </div>

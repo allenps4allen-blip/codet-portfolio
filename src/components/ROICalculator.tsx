@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { useTranslations } from "next-intl";
 
 function AnimatedNumber({ value, prefix = "", suffix = "" }: {
   value: number;
@@ -73,6 +74,7 @@ function Slider({ label, value, onChange, min, max, step = 1, unit = "" }: {
 }
 
 export default function ROICalculator() {
+  const t = useTranslations("home.roiCalculator");
   const [employees, setEmployees] = useState(8);
   const [hours, setHours] = useState(10);
   const [rate, setRate] = useState(5);
@@ -96,9 +98,9 @@ export default function ROICalculator() {
   return (
     <div ref={sectionRef} className="roi-section" style={s.section}>
       <div style={s.header}>
-        <span style={s.eyebrow}>ROI Calculator</span>
-        <h2 style={s.h2}>See your potential savings</h2>
-        <p style={s.subtitle}>Adjust the sliders to match your team. Results update instantly.</p>
+        <span style={s.eyebrow}>{t("eyebrow")}</span>
+        <h2 style={s.h2}>{t("heading")}</h2>
+        <p style={s.subtitle}>{t("subtitle")}</p>
       </div>
 
       <div style={{
@@ -108,48 +110,48 @@ export default function ROICalculator() {
         transition: "all 0.7s cubic-bezier(0.16, 1, 0.3, 1)",
       }}>
         <div style={s.slidersSection}>
-          <Slider label="Team size" value={employees} onChange={setEmployees} min={1} max={10} unit=" people" />
-          <Slider label="Hours wasted on manual tasks / week" value={hours} onChange={setHours} min={1} max={30} unit=" hrs" />
-          <Slider label="Average hourly cost" value={rate} onChange={setRate} min={2} max={20} step={1} unit=" KD" />
+          <Slider label={t("teamSize")} value={employees} onChange={setEmployees} min={1} max={10} unit={t("teamSizeUnit")} />
+          <Slider label={t("hoursWasted")} value={hours} onChange={setHours} min={1} max={30} unit={t("hoursUnit")} />
+          <Slider label={t("hourlyCost")} value={rate} onChange={setRate} min={2} max={20} step={1} unit={t("costUnit")} />
         </div>
 
         <div className="roi-results-row" style={s.resultsSection}>
           <div className="roi-result-card" style={s.resultCard}>
-            <span style={s.resultCardLabel}>Monthly savings</span>
+            <span style={s.resultCardLabel}>{t("monthlySavings")}</span>
             <div className="roi-result-value" style={s.resultCardValue}>
-              <AnimatedNumber value={monthlySavings} suffix=" KD" />
+              <AnimatedNumber value={monthlySavings} suffix={t("costUnit")} />
             </div>
           </div>
 
           <div className="roi-result-card" style={s.resultCard}>
-            <span style={s.resultCardLabel}>Yearly savings</span>
+            <span style={s.resultCardLabel}>{t("yearlySavings")}</span>
             <div className="roi-result-value" style={{ ...s.resultCardValue, color: "#e9edef", fontSize: 28 }}>
-              <AnimatedNumber value={yearlySavings} suffix=" KD" />
+              <AnimatedNumber value={yearlySavings} suffix={t("costUnit")} />
             </div>
           </div>
 
           <div className="roi-result-card" style={s.resultCard}>
-            <span style={s.resultCardLabel}>Hours reclaimed / month</span>
+            <span style={s.resultCardLabel}>{t("hoursReclaimed")}</span>
             <div className="roi-result-value" style={{ ...s.resultCardValue, color: "#e9edef", fontSize: 28 }}>
-              <AnimatedNumber value={hoursReclaimed} suffix=" hrs" />
+              <AnimatedNumber value={hoursReclaimed} suffix={t("hoursUnit")} />
             </div>
           </div>
         </div>
 
         <div style={s.comparison}>
           <div style={s.compRow}>
-            <span style={s.compLabel}>Current weekly cost</span>
+            <span style={s.compLabel}>{t("currentCost")}</span>
             <div style={s.compBarTrack}>
               <div style={{ ...s.compBar, width: "100%", background: "rgba(255,70,70,0.2)" }}>
-                <span style={s.compBarText}>{weeklyWaste.toLocaleString()} KD</span>
+                <span style={s.compBarText}>{weeklyWaste.toLocaleString()}{t("costUnit")}</span>
               </div>
             </div>
           </div>
           <div style={s.compRow}>
-            <span style={s.compLabel}>With CODET automation</span>
+            <span style={s.compLabel}>{t("withCodet")}</span>
             <div style={s.compBarTrack}>
               <div style={{ ...s.compBar, width: `${Math.max(10, 15)}%`, background: "rgba(0,168,132,0.25)" }}>
-                <span style={s.compBarText}>{Math.round(weeklyWaste * 0.15).toLocaleString()} KD</span>
+                <span style={s.compBarText}>{Math.round(weeklyWaste * 0.15).toLocaleString()}{t("costUnit")}</span>
               </div>
             </div>
           </div>

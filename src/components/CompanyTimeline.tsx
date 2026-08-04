@@ -1,15 +1,12 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
 
-const milestones = [
-  { date: "2025 Q3", title: "Founded", desc: "CODET was established with a mission to digitalize businesses in the Gulf." },
-  { date: "2025 Q4", title: "First 10 clients", desc: "Delivered websites, automations, and AI agents for our first batch of clients." },
-  { date: "2026 Q1", title: "Launched AI Agent platform", desc: "Released our custom AI agent builder with multi-channel deployment." },
-  { date: "2026 Q2", title: "50+ projects delivered", desc: "Crossed the 50-project milestone across websites, AI, and automations." },
-];
+const milestoneIds = [1, 2, 3, 4];
 
-function TimelineItem({ milestone, index }: { milestone: typeof milestones[0]; index: number }) {
+function TimelineItem({ id, index, total }: { id: number; index: number; total: number }) {
+  const t = useTranslations("about.timeline.milestones");
   const ref = useRef<HTMLDivElement>(null);
   const [visible, setVisible] = useState(false);
 
@@ -45,7 +42,7 @@ function TimelineItem({ milestone, index }: { milestone: typeof milestones[0]; i
           position: "relative",
           zIndex: 1,
         }} />
-        {index < milestones.length - 1 && (
+        {index < total - 1 && (
           <div style={{
             width: 2,
             flex: 1,
@@ -62,7 +59,7 @@ function TimelineItem({ milestone, index }: { milestone: typeof milestones[0]; i
           textTransform: "uppercase",
           color: "#00a884",
         }}>
-          {milestone.date}
+          {t(`${id}.date`)}
         </span>
         <h3 style={{
           fontSize: 18,
@@ -70,7 +67,7 @@ function TimelineItem({ milestone, index }: { milestone: typeof milestones[0]; i
           color: "#e9edef",
           margin: "6px 0 6px",
         }}>
-          {milestone.title}
+          {t(`${id}.title`)}
         </h3>
         <p style={{
           fontSize: 13,
@@ -78,7 +75,7 @@ function TimelineItem({ milestone, index }: { milestone: typeof milestones[0]; i
           color: "rgba(255,255,255,0.4)",
           margin: 0,
         }}>
-          {milestone.desc}
+          {t(`${id}.desc`)}
         </p>
       </div>
     </div>
@@ -86,15 +83,17 @@ function TimelineItem({ milestone, index }: { milestone: typeof milestones[0]; i
 }
 
 export default function CompanyTimeline() {
+  const t = useTranslations("about.timeline");
+
   return (
     <div style={s.section}>
       <div style={s.header}>
-        <span style={s.eyebrow}>Our Journey</span>
-        <h2 style={s.h2}>Company Timeline</h2>
+        <span style={s.eyebrow}>{t("eyebrow")}</span>
+        <h2 style={s.h2}>{t("heading")}</h2>
       </div>
       <div style={s.timeline}>
-        {milestones.map((m, i) => (
-          <TimelineItem key={i} milestone={m} index={i} />
+        {milestoneIds.map((id, i) => (
+          <TimelineItem key={id} id={id} index={i} total={milestoneIds.length} />
         ))}
       </div>
     </div>

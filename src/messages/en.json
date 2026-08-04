@@ -45,30 +45,63 @@
       "viewAll": "View All Projects"
     },
     "process": {
-      "title": "How We Work",
+      "eyebrow": "Process",
+      "heading": "How we bring your project to life",
+      "inProgress": "In Progress",
       "steps": {
         "1": {
           "title": "Discovery",
-          "description": "We learn about your business, goals, and challenges to define the right solution."
+          "desc": "We learn your business inside out — goals, pain points, and what success looks like for you.",
+          "detail": "Stakeholder interviews · Competitor audit · Technical assessment"
         },
         "2": {
           "title": "Design & Plan",
-          "description": "We map out the architecture, design the interface, and align on scope and timeline."
+          "desc": "We architect the solution, design every screen, and align on scope before writing a single line of code.",
+          "detail": "Wireframes · System architecture · Project timeline"
         },
         "3": {
           "title": "Build & Test",
-          "description": "We develop your solution with clean code, test thoroughly, and iterate based on your feedback."
+          "desc": "Clean code, weekly demos, and relentless testing. You see progress every step of the way.",
+          "detail": "Agile sprints · QA automation · Staging previews"
         },
         "4": {
           "title": "Launch & Support",
-          "description": "We deploy to production, monitor performance, and provide ongoing maintenance."
+          "desc": "We deploy, monitor, and stay with you. Your growth is our growth.",
+          "detail": "Zero-downtime deploy · Performance monitoring · 24/7 support"
         }
       }
     },
+    "roiCalculator": {
+      "eyebrow": "ROI Calculator",
+      "heading": "See your potential savings",
+      "subtitle": "Adjust the sliders to match your team. Results update instantly.",
+      "teamSize": "Team size",
+      "teamSizeUnit": " people",
+      "hoursWasted": "Hours wasted on manual tasks / week",
+      "hoursUnit": " hrs",
+      "hourlyCost": "Average hourly cost",
+      "costUnit": " KD",
+      "monthlySavings": "Monthly savings",
+      "yearlySavings": "Yearly savings",
+      "hoursReclaimed": "Hours reclaimed / month",
+      "currentCost": "Current weekly cost",
+      "withCodet": "With CODET automation"
+    },
+    "statsBar": {
+      "projectsDelivered": "Projects Delivered",
+      "clientSatisfaction": "Client Satisfaction",
+      "apiCalls": "API Calls Handled",
+      "agentUptime": "Agent Uptime"
+    },
     "ctaSection": {
-      "heading": "Ready to digitalize?",
-      "subtext": "Let's discuss how we can transform your business with the right technology.",
-      "button": "Start Your Project"
+      "eyebrow": "Ready?",
+      "headingLine1": "Let's build something",
+      "headingLine2": "your competitors can't ignore",
+      "description": "Free consultation. No commitments. Just a conversation about what's possible.",
+      "button": "Start Your Project",
+      "trust1": "Free consultation",
+      "trust2": "48hr response",
+      "trust3": "Based in Kuwait"
     },
     "servicesSection": {
       "eyebrow": "Services",
@@ -261,6 +294,32 @@
     "cta": {
       "heading": "Ready to work together?",
       "button": "Get in Touch"
+    },
+    "timeline": {
+      "eyebrow": "Our Journey",
+      "heading": "Company Timeline",
+      "milestones": {
+        "1": {
+          "date": "2025 Q3",
+          "title": "Founded",
+          "desc": "CODET was established with a mission to digitalize businesses in the Gulf."
+        },
+        "2": {
+          "date": "2025 Q4",
+          "title": "First 10 clients",
+          "desc": "Delivered websites, automations, and AI agents for our first batch of clients."
+        },
+        "3": {
+          "date": "2026 Q1",
+          "title": "Launched AI Agent platform",
+          "desc": "Released our custom AI agent builder with multi-channel deployment."
+        },
+        "4": {
+          "date": "2026 Q2",
+          "title": "50+ projects delivered",
+          "desc": "Crossed the 50-project milestone across websites, AI, and automations."
+        }
+      }
     }
   },
   "contact": {
