@@ -4,10 +4,12 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import FadeIn from "@/components/FadeIn";
+import { useAgentAnalytics } from "@/hooks/useAgentAnalytics";
 
 export default function ContactPage() {
   const t = useTranslations("contact");
   const tFooter = useTranslations("footer");
+  const { trackContactSubmit } = useAgentAnalytics();
   const [submitted, setSubmitted] = useState(false);
   const [sending, setSending] = useState(false);
   const [error, setError] = useState(false);
@@ -34,6 +36,7 @@ export default function ContactPage() {
       });
 
       if (res.ok) {
+        trackContactSubmit();
         setSubmitted(true);
       } else {
         setError(true);

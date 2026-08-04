@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import { useAgentAnalytics } from "@/hooks/useAgentAnalytics";
 
 interface ThinkingStep {
   icon: string;
@@ -135,6 +136,7 @@ function BrainPanel({ steps, isThinking, t }: { steps: ThinkingStep[]; isThinkin
 export default function AgentDemoPage({ translations }: { translations: DemoTranslations }) {
   const t = translations;
   const thinkingSteps = buildThinkingSteps(t.thinking);
+  const { trackDemoVisit, trackMessage, trackPromptClick } = useAgentAnalytics();
 
   const [messages, setMessages] = useState([
     { from: "agent", text: t.greeting },
@@ -145,6 +147,14 @@ export default function AgentDemoPage({ translations }: { translations: DemoTran
   const [isMobile, setIsMobile] = useState(false);
   const chatEndRef = useRef<HTMLDivElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
+  const hasTrackedVisit = useRef(false);
+
+  useEffect(() => {
+    if (!hasTrackedVisit.current) {
+      hasTrackedVisit.current = true;
+      trackDemoVisit();
+    }
+  }, [trackDemoVisit]);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
@@ -159,13 +169,15 @@ export default function AgentDemoPage({ translations }: { translations: DemoTran
     }
   }, [messages, isThinking]);
 
-  const sendMessage = (text: string) => {
+  const sendMessage = (text: string, fromPrompt = false) => {
     if (!text.trim() || isThinking) return;
     const userMsg = text.trim();
     setInput("");
     setMessages((prev) => [...prev, { from: "user", text: userMsg }]);
 
     const key = getResponseKey(userMsg);
+    trackMessage(key);
+    if (fromPrompt) trackPromptClick(userMsg);
     const steps = thinkingSteps[key] || thinkingSteps.default;
     setBrainSteps(steps);
     setIsThinking(true);
@@ -193,7 +205,7 @@ export default function AgentDemoPage({ translations }: { translations: DemoTran
         {t.prompts.map((prompt, i) => (
           <button
             key={i}
-            onClick={() => sendMessage(prompt)}
+            onClick={() => sendMessage(prompt, true)}
             style={st.pill}
             disabled={isThinking}
           >
@@ -205,7 +217,7 @@ export default function AgentDemoPage({ translations }: { translations: DemoTran
       {isMobile && (
         <div style={{ display: "flex", gap: 6, flexWrap: "wrap", justifyContent: "center", marginBottom: 16 }}>
           {t.prompts.slice(0, 3).map((prompt, i) => (
-            <button key={i} onClick={() => sendMessage(prompt)} style={{ ...st.pill, fontSize: 11, padding: "5px 10px" }} disabled={isThinking}>
+            <button key={i} onClick={() => sendMessage(prompt, true)} style={{ ...st.pill, fontSize: 11, padding: "5px 10px" }} disabled={isThinking}>
               {prompt}
             </button>
           ))}

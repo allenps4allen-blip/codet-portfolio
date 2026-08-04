@@ -1,12 +1,19 @@
 "use client";
 
+import { usePathname } from "next/navigation";
+import { useAgentAnalytics } from "@/hooks/useAgentAnalytics";
+
 export default function WhatsAppButton() {
+  const pathname = usePathname();
+  const { trackWhatsAppClick } = useAgentAnalytics();
+
   return (
     <a
       href="https://wa.me/96566565517?text=Hi%2C%20I%27m%20interested%20in%20CODET%27s%20services.%20Can%20we%20chat%3F"
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Chat on WhatsApp"
+      onClick={() => trackWhatsAppClick(pathname || "/")}
       className="fixed bottom-[max(1.5rem,env(safe-area-inset-bottom,1.5rem))] end-[max(1.5rem,env(safe-area-inset-right,1.5rem))] z-50 flex h-14 w-14 items-center justify-center rounded-full bg-[#25D366] shadow-lg shadow-[#25D366]/25 transition-all duration-300 hover:scale-110 hover:shadow-xl hover:shadow-[#25D366]/30 active:scale-95 animate-whatsapp-in"
     >
       <svg viewBox="0 0 24 24" fill="white" className="h-7 w-7">

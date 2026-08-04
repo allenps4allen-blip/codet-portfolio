@@ -3,11 +3,13 @@
 import { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { useAgentAnalytics } from "@/hooks/useAgentAnalytics";
 
 export default function LiveAIWidget() {
   const pathname = usePathname();
   const router = useRouter();
   const t = useTranslations("demo");
+  const { trackWidgetClick } = useAgentAnalytics();
   const [showPulse, setShowPulse] = useState(true);
   const [hovered, setHovered] = useState(false);
 
@@ -30,7 +32,10 @@ export default function LiveAIWidget() {
         }
       `}</style>
       <button
-        onClick={() => router.push(`/${locale}/demo`)}
+        onClick={() => {
+          trackWidgetClick(pathname || "/");
+          router.push(`/${locale}/demo`);
+        }}
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         aria-label={t("widgetTooltip")}
