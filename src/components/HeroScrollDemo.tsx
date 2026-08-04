@@ -1,22 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-
-const agentConversation = [
-  { sender: "customer", text: "Hi, I'd like to book an appointment for Thursday" },
-  { sender: "agent", text: "Of course! Let me check Thursday's availability for you…" },
-  { sender: "agent", text: "We have three slots open:\n\n🕐 10:00 AM\n🕑 2:00 PM\n🕓 4:30 PM\n\nWhich one works best?" },
-  { sender: "customer", text: "2 PM please 👍" },
-  { sender: "agent", text: "Perfect — you're all set!" },
-  { sender: "agent", text: "✅ Appointment confirmed\n📅 Thursday, Aug 6 at 2:00 PM\n📍 CODET Office, Kuwait City\n\nA calendar invite has been sent to your email." },
-];
-
-const noAgentConversation = [
-  { sender: "customer", text: "Hi, I'd like to book an appointment for Thursday" },
-  { sender: "system", text: "Thank you for your message. An agent will be with you shortly." },
-  { sender: "customer", text: "Hello? Still waiting…" },
-  { sender: "customer", text: "Can someone help me please?" },
-];
+import { useTranslations } from "next-intl";
 
 const formatTime = (base: number, offset: number) => {
   const minutes = base + offset;
@@ -37,10 +22,10 @@ function TypingIndicator() {
   );
 }
 
-function SeenReceipt() {
+function SeenReceipt({ label }: { label: string }) {
   return (
     <div style={{ display: "flex", alignItems: "center", justifyContent: "flex-end", gap: 3, padding: "0 16px 2px", animation: "fadeSlideIn 0.3s ease-out" }}>
-      <span style={{ fontSize: 9.5, color: "rgba(255,255,255,0.3)" }}>Seen</span>
+      <span style={{ fontSize: 9.5, color: "rgba(255,255,255,0.3)" }}>{label}</span>
       <svg width="16" height="10" viewBox="0 0 20 12">
         <path d="M1.5 6.5l3.5 3.5 8-8" stroke="#53bdeb" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
         <path d="M5 6.5l3.5 3.5 8-8" stroke="#53bdeb" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
@@ -49,7 +34,7 @@ function SeenReceipt() {
   );
 }
 
-function WaitingClock({ elapsed }: { elapsed: number }) {
+function WaitingClock({ elapsed, waitingText, queueText }: { elapsed: number; waitingText: string; queueText: string }) {
   const urgent = elapsed > 20;
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "24px 16px 10px", gap: 8, animation: "fadeSlideIn 0.5s ease-out" }}>
@@ -62,20 +47,21 @@ function WaitingClock({ elapsed }: { elapsed: number }) {
           <svg width="16" height="16" viewBox="0 0 24 24" fill={urgent ? "rgba(255,70,70,0.8)" : "rgba(255,100,100,0.5)"}><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z" /></svg>
         </div>
       </div>
-      <span style={{ fontSize: 11, color: "rgba(255,255,255,0.25)", fontWeight: 500 }}>Waiting for a human agent…</span>
+      <span style={{ fontSize: 11, color: "rgba(255,255,255,0.25)", fontWeight: 500 }}>{waitingText}</span>
       <span style={{ fontSize: 22, color: urgent ? "rgba(255,70,70,0.85)" : "rgba(255,100,100,0.65)", fontWeight: 700, fontVariantNumeric: "tabular-nums", transition: "color 0.4s ease" }}>{elapsed} min</span>
-      {urgent && <span style={{ fontSize: 10, color: "rgba(255,70,70,0.45)", marginTop: -2 }}>Your position in queue: 7</span>}
+      {urgent && <span style={{ fontSize: 10, color: "rgba(255,70,70,0.45)", marginTop: -2 }}>{queueText}</span>}
     </div>
   );
 }
 
-function PhoneFrame({ children, scale = 1, label, labelColor, opacity = 1, redBorder = 0 }: {
+function PhoneFrame({ children, scale = 1, label, labelColor, opacity = 1, redBorder = 0, inputPlaceholder = "Type a message" }: {
   children: React.ReactNode;
   scale?: number;
   label?: string;
   labelColor?: string;
   opacity?: number;
   redBorder?: number;
+  inputPlaceholder?: string;
 }) {
   const borderColor = redBorder ? `rgba(255,70,70,${0.15 + redBorder * 0.4})` : "#2a2a2a";
   const shadow = redBorder
@@ -103,7 +89,7 @@ function PhoneFrame({ children, scale = 1, label, labelColor, opacity = 1, redBo
           <div style={s.inputBar}>
             <div style={s.inputRow}>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="rgba(255,255,255,0.4)"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z" /></svg>
-              <div style={{ flex: 1, fontSize: 13, color: "rgba(255,255,255,0.3)" }}>Type a message</div>
+              <div style={{ flex: 1, fontSize: 13, color: "rgba(255,255,255,0.3)" }}>{inputPlaceholder}</div>
             </div>
             <div style={s.micButton}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.48 6-3.3 6-6.72h-1.7z" /></svg>
@@ -134,9 +120,26 @@ function ChatHeader({ name, status, statusColor }: { name: string; status: strin
 }
 
 export default function HeroScrollDemo() {
+  const t = useTranslations("demo.heroDemo");
   const containerRef = useRef<HTMLDivElement>(null);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+
+  const agentConversation = [
+    { sender: "customer", text: t("withAgent.1") },
+    { sender: "agent", text: t("withAgent.2") },
+    { sender: "agent", text: t("withAgent.3") },
+    { sender: "customer", text: t("withAgent.4") },
+    { sender: "agent", text: t("withAgent.5") },
+    { sender: "agent", text: t("withAgent.6") },
+  ];
+
+  const noAgentConversation = [
+    { sender: "customer", text: t("noAgent.1") },
+    { sender: "system", text: t("noAgent.2") },
+    { sender: "customer", text: t("noAgent.3") },
+    { sender: "customer", text: t("noAgent.4") },
+  ];
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
@@ -189,12 +192,12 @@ export default function HeroScrollDemo() {
         {/* Headline */}
         <div style={{ ...s.headline, marginBottom: isMobile ? 10 : 22 }} className="hero-headline">
           <h1 style={{ ...s.h1, fontSize: isMobile ? 16 : 21 }}>
-            <span style={{ color: "rgba(255,255,255,0.3)", fontWeight: 400 }}>Without AI</span>
-            <span style={{ margin: "0 18px", color: "rgba(255,255,255,0.12)", fontSize: 18 }}>vs</span>
-            <span style={{ color: "#00a884" }}>With CODET</span>
+            <span style={{ color: "rgba(255,255,255,0.3)", fontWeight: 400 }}>{t("withoutAI")}</span>
+            <span style={{ margin: "0 18px", color: "rgba(255,255,255,0.12)", fontSize: 18 }}>{t("vs")}</span>
+            <span style={{ color: "#00a884" }}>{t("withCodet")}</span>
           </h1>
           <div style={{ ...s.scrollHint, opacity: scrollProgress > 0.15 ? 0 : 1, transition: "opacity 0.5s ease" }}>
-            <span>Scroll to see the difference</span>
+            <span>{t("scrollHint")}</span>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style={{ animation: "bounce 2s infinite" }}><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z" /></svg>
           </div>
         </div>
@@ -203,14 +206,14 @@ export default function HeroScrollDemo() {
         <div style={isMobile ? { transform: "scale(0.5)", transformOrigin: "top center", marginBottom: -320 } : undefined}>
           <div style={{ ...s.phonePair, gap: isMobile ? 12 : 44 }} className="hero-phone-pair">
             {/* LEFT — no agent */}
-            <PhoneFrame label="Without AI Agent" labelColor="rgba(255,100,100,0.55)" opacity={leftOpacity} scale={leftScale} redBorder={redIntensity}>
-              <ChatHeader name="Business Support" status="last seen 3 hours ago" statusColor="rgba(255,255,255,0.3)" />
+            <PhoneFrame label={t("withoutLabel")} labelColor="rgba(255,100,100,0.55)" opacity={leftOpacity} scale={leftScale} redBorder={redIntensity} inputPlaceholder={t("typeMessage")}>
+              <ChatHeader name={t("supportName")} status={t("supportStatus")} statusColor="rgba(255,255,255,0.3)" />
               <div style={s.chatArea}>
                 <div style={s.encNotice}>
                   <svg width="11" height="11" viewBox="0 0 24 24" fill="rgba(255,255,255,0.25)"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z" /></svg>
-                  <span>Messages are end-to-end encrypted</span>
+                  <span>{t("encrypted")}</span>
                 </div>
-                <div style={s.dateChip}>TODAY</div>
+                <div style={s.dateChip}>{t("today")}</div>
 
                 {visibleLeftMessages.map((msg, i) => (
                   <div key={i}>
@@ -229,30 +232,30 @@ export default function HeroScrollDemo() {
                       </div>
                     </div>
                     {msg.sender === "customer" && i === 0 && showSeen && visibleLeftMessages.length <= 2 && (
-                      <SeenReceipt />
+                      <SeenReceipt label={t("seen")} />
                     )}
                   </div>
                 ))}
 
-                {showWaiting && <WaitingClock elapsed={waitMinutes} />}
+                {showWaiting && <WaitingClock elapsed={waitMinutes} waitingText={t("waiting")} queueText={t("queuePosition")} />}
 
                 {waitMinutes > 30 && (
                   <div style={{ textAlign: "center" as const, padding: "14px 20px 0", animation: "fadeSlideIn 0.5s ease-out" }}>
-                    <span style={{ fontSize: 10.5, color: "rgba(255,70,70,0.4)", fontStyle: "italic" }}>Customer left the chat.</span>
+                    <span style={{ fontSize: 10.5, color: "rgba(255,70,70,0.4)", fontStyle: "italic" }}>{t("customerLeft")}</span>
                   </div>
                 )}
               </div>
             </PhoneFrame>
 
             {/* RIGHT — AI agent */}
-            <PhoneFrame scale={rightScale} label="With AI Agent" labelColor="#00a884">
-              <ChatHeader name="CODET AI Agent" status="online" statusColor="#00a884" />
+            <PhoneFrame scale={rightScale} label={t("withLabel")} labelColor="#00a884" inputPlaceholder={t("typeMessage")}>
+              <ChatHeader name={t("agentName")} status={t("agentStatus")} statusColor="#00a884" />
               <div style={s.chatArea}>
                 <div style={s.encNotice}>
                   <svg width="11" height="11" viewBox="0 0 24 24" fill="rgba(255,255,255,0.25)"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z" /></svg>
-                  <span>Messages are end-to-end encrypted</span>
+                  <span>{t("encrypted")}</span>
                 </div>
-                <div style={s.dateChip}>TODAY</div>
+                <div style={s.dateChip}>{t("today")}</div>
 
                 {visibleAgentMessages.map((msg, i) => (
                   <div key={i} style={{ display: "flex", justifyContent: msg.sender === "customer" ? "flex-end" : "flex-start", padding: "2px 16px", animation: "fadeSlideIn 0.35s ease-out" }}>
@@ -274,7 +277,7 @@ export default function HeroScrollDemo() {
                               <animate attributeName="stroke-dasharray" from="0 30" to="30 30" dur="0.5s" fill="freeze" />
                             </path>
                           </svg>
-                          Confirmed
+                          {t("confirmed")}
                         </div>
                       )}
                     </div>
@@ -285,7 +288,7 @@ export default function HeroScrollDemo() {
 
                 {allDone && (
                   <div style={{ textAlign: "center" as const, padding: "14px 20px 0", animation: "fadeSlideIn 0.6s ease-out" }}>
-                    <span style={{ fontSize: 10.5, color: "rgba(0,168,132,0.5)", fontStyle: "italic" }}>Booked in under 30 seconds.</span>
+                    <span style={{ fontSize: 10.5, color: "rgba(0,168,132,0.5)", fontStyle: "italic" }}>{t("bookedIn")}</span>
                   </div>
                 )}
               </div>
