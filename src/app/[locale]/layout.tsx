@@ -11,8 +11,7 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import LiveAIWidget from "@/components/LiveAIWidget";
 import BackToTop from "@/components/BackToTop";
 import CookieConsent from "@/components/CookieConsent";
-import { Analytics } from "@vercel/analytics/next";
-import { SpeedInsights } from "@vercel/speed-insights/next";
+import ConsentAnalytics from "@/components/ConsentAnalytics";
 import "../globals.css";
 
 const inter = Inter({
@@ -164,8 +163,7 @@ export default async function LocaleLayout({
           <LiveAIWidget />
           <BackToTop />
           <CookieConsent />
-          <Analytics />
-          <SpeedInsights />
+          <ConsentAnalytics />
         </NextIntlClientProvider>
       </body>
     </html>

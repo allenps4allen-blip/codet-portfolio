@@ -3,6 +3,10 @@ import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
+const rateLimit = new Map<string, number[]>();
+const RATE_LIMIT_WINDOW = 60_000;
+const RATE_LIMIT_MAX = 3;
+
 function escapeHtml(str: string): string {
   return str
     .replace(/&/g, "&amp;")
@@ -17,6 +21,15 @@ const VALID_SERVICES = ["website", "ai", "automation", "other"];
 
 export async function POST(request: Request) {
   try {
+    const ip = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
+    const now = Date.now();
+    const timestamps = rateLimit.get(ip)?.filter((t) => now - t < RATE_LIMIT_WINDOW) || [];
+    if (timestamps.length >= RATE_LIMIT_MAX) {
+      return NextResponse.json({ error: "Too many requests. Please try again later." }, { status: 429 });
+    }
+    timestamps.push(now);
+    rateLimit.set(ip, timestamps);
+
     const body = await request.json();
     const name = typeof body.name === "string" ? body.name.trim().slice(0, 200) : "";
     const email = typeof body.email === "string" ? body.email.trim().slice(0, 320) : "";
