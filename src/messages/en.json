@@ -507,13 +507,57 @@
   },
   "footer": {
     "navigationTitle": "Navigation",
+    "legalTitle": "Legal",
     "socialTitle": "Social",
     "email": "codet.kuwait@gmail.com",
     "phone": "+965 6656 5517",
     "location": "Kuwait",
     "copyright": "© {year} CODET. All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
     "social": {
       "instagram": "Instagram"
     }
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "lastUpdated": "Last updated: August 2026",
+    "intro": "CODET (\"we\", \"us\", or \"our\") respects your privacy. This policy explains how we collect, use, and protect your information when you use our website codet-kw.com.",
+    "section1Title": "Information We Collect",
+    "section1Text": "We collect only the information you voluntarily provide through our contact form: your name, email address, service interest, and message. We also use Vercel Analytics and Speed Insights, which collect anonymous, aggregated usage data (page views, performance metrics). No cookies are used for tracking. The only cookie stored is your cookie consent preference.",
+    "section2Title": "How We Use Your Information",
+    "section2Text": "We use the information you provide through our contact form solely to respond to your inquiry and discuss potential services. We do not sell, rent, or share your personal information with any third parties.",
+    "section3Title": "Third-Party Services",
+    "section3Text": "We use the following services to operate our website:",
+    "service1": "Resend — to deliver contact form emails",
+    "service2": "Vercel — for website hosting and anonymous analytics",
+    "service3": "Google Fonts — for web font delivery",
+    "section4Title": "Data Retention",
+    "section4Text": "Contact form submissions are retained only as long as necessary to respond to your inquiry. You may request deletion of your data at any time by emailing us at codet.kuwait@gmail.com.",
+    "section5Title": "Your Rights",
+    "section5Text": "You have the right to access, correct, or delete any personal data we hold about you. To exercise these rights, contact us at codet.kuwait@gmail.com.",
+    "section6Title": "Changes to This Policy",
+    "section6Text": "We may update this privacy policy from time to time. Changes will be posted on this page with an updated revision date.",
+    "section7Title": "Contact",
+    "section7Text": "For questions about this privacy policy, email us at codet.kuwait@gmail.com."
+  },
+  "terms": {
+    "title": "Terms of Service",
+    "lastUpdated": "Last updated: August 2026",
+    "intro": "These terms govern your use of the CODET website at codet-kw.com. By accessing or using our website, you agree to these terms.",
+    "section1Title": "Services",
+    "section1Text": "CODET provides website development, AI agent development, and workflow automation services. All project details, pricing, timelines, and deliverables are agreed upon separately through a project proposal or contract.",
+    "section2Title": "Intellectual Property",
+    "section2Text": "All content on this website — including text, graphics, logos, and design — is the property of CODET and protected by applicable intellectual property laws. You may not reproduce, distribute, or use any content without our written permission.",
+    "section3Title": "Contact Form",
+    "section3Text": "When you submit a contact form inquiry, you confirm that the information you provide is accurate. We use this information solely to respond to your inquiry.",
+    "section4Title": "Limitation of Liability",
+    "section4Text": "This website is provided \"as is\" without warranties of any kind. CODET is not liable for any damages arising from your use of or inability to use this website.",
+    "section5Title": "Governing Law",
+    "section5Text": "These terms are governed by the laws of the State of Kuwait. Any disputes shall be resolved in the courts of Kuwait.",
+    "section6Title": "Changes to Terms",
+    "section6Text": "We reserve the right to update these terms at any time. Continued use of the website after changes constitutes acceptance of the updated terms.",
+    "section7Title": "Contact",
+    "section7Text": "For questions about these terms, email us at codet.kuwait@gmail.com."
   }
 }

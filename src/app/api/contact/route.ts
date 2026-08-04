@@ -3,13 +3,43 @@ import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
+function escapeHtml(str: string): string {
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+}
+
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const VALID_SERVICES = ["website", "ai", "automation", "other"];
+
 export async function POST(request: Request) {
   try {
-    const { name, email, service, message } = await request.json();
+    const body = await request.json();
+    const name = typeof body.name === "string" ? body.name.trim().slice(0, 200) : "";
+    const email = typeof body.email === "string" ? body.email.trim().slice(0, 320) : "";
+    const service = typeof body.service === "string" ? body.service.trim() : "";
+    const message = typeof body.message === "string" ? body.message.trim().slice(0, 5000) : "";
 
     if (!name || !email || !service || !message) {
       return NextResponse.json(
         { error: "All fields are required" },
+        { status: 400 }
+      );
+    }
+
+    if (!EMAIL_REGEX.test(email)) {
+      return NextResponse.json(
+        { error: "Invalid email address" },
+        { status: 400 }
+      );
+    }
+
+    if (!VALID_SERVICES.includes(service)) {
+      return NextResponse.json(
+        { error: "Invalid service selection" },
         { status: 400 }
       );
     }
@@ -21,18 +51,22 @@ export async function POST(request: Request) {
       other: "Other",
     };
 
+    const safeName = escapeHtml(name);
+    const safeEmail = escapeHtml(email);
+    const safeMessage = escapeHtml(message).replace(/\n/g, "<br>");
+
     await resend.emails.send({
       from: "CODET Contact Form <onboarding@resend.dev>",
       to: "codet.kuwait@gmail.com",
       replyTo: email,
-      subject: `New inquiry from ${name} — ${serviceLabels[service] || service}`,
+      subject: `New inquiry from ${safeName} — ${serviceLabels[service]}`,
       html: `
         <h2>New Contact Form Submission</h2>
-        <p><strong>Name:</strong> ${name}</p>
-        <p><strong>Email:</strong> ${email}</p>
-        <p><strong>Service:</strong> ${serviceLabels[service] || service}</p>
+        <p><strong>Name:</strong> ${safeName}</p>
+        <p><strong>Email:</strong> ${safeEmail}</p>
+        <p><strong>Service:</strong> ${serviceLabels[service]}</p>
         <p><strong>Message:</strong></p>
-        <p>${message.replace(/\n/g, "<br>")}</p>
+        <p>${safeMessage}</p>
       `,
     });
 

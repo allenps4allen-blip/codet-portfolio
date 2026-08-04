@@ -77,9 +77,31 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Social */}
+          {/* Legal */}
           <div className="space-y-4">
             <h3 className="text-sm font-semibold uppercase tracking-wider text-foreground/50">
+              {t("legalTitle")}
+            </h3>
+            <ul className="space-y-3 sm:space-y-2">
+              <li>
+                <Link
+                  href="/privacy"
+                  className="inline-block py-1 text-sm text-foreground/70 transition-colors hover:text-foreground"
+                >
+                  {t("privacy")}
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/terms"
+                  className="inline-block py-1 text-sm text-foreground/70 transition-colors hover:text-foreground"
+                >
+                  {t("terms")}
+                </Link>
+              </li>
+            </ul>
+
+            <h3 className="text-sm font-semibold uppercase tracking-wider text-foreground/50 pt-2">
               {t("socialTitle")}
             </h3>
             <ul className="space-y-2 text-sm text-foreground/70">
