@@ -13,24 +13,17 @@ interface MockupBlock {
   inline?: boolean;
 }
 
-interface Project {
-  title: string;
-  type: string;
+interface ProjectVisual {
+  id: number;
   category: string;
-  desc: string;
-  metrics: { label: string; value: string }[];
+  metricValues: string[];
   color: string;
   mockupBlocks: MockupBlock[];
 }
 
-const projects: Project[] = [
+const projects: ProjectVisual[] = [
   {
-    title: "SaaS Analytics Dashboard",
-    type: "Web Application",
-    category: "websites",
-    desc: "Full-stack analytics platform with real-time data visualization, user management, and automated reporting.",
-    metrics: [{ label: "Users", value: "2,847" }, { label: "Performance", value: "94.2%" }],
-    color: "#3178C6",
+    id: 1, category: "websites", metricValues: ["2,847", "94.2%"], color: "#3178C6",
     mockupBlocks: [
       { w: "100%", h: 20, color: "rgba(49,120,198,0.3)" },
       { w: "60%", h: 8, color: "rgba(255,255,255,0.08)", mt: 10 },
@@ -39,12 +32,7 @@ const projects: Project[] = [
     ],
   },
   {
-    title: "AI Customer Support Agent",
-    type: "AI Agent",
-    category: "ai",
-    desc: "Multilingual chatbot trained on 10,000+ support tickets, deployed across web and WhatsApp with 85% resolution rate.",
-    metrics: [{ label: "Resolution", value: "85%" }, { label: "Tickets trained", value: "10K+" }],
-    color: "#00a884",
+    id: 2, category: "ai", metricValues: ["85%", "10K+"], color: "#00a884",
     mockupBlocks: [
       { w: "45%", h: 16, color: "rgba(0,168,132,0.2)", ml: "auto", radius: 10 },
       { w: "55%", h: 16, color: "rgba(255,255,255,0.06)", mt: 8, radius: 10 },
@@ -53,12 +41,7 @@ const projects: Project[] = [
     ],
   },
   {
-    title: "E-Commerce Platform",
-    type: "Website",
-    category: "websites",
-    desc: "High-conversion online store with custom product configurator, payment gateway integration, and inventory automation.",
-    metrics: [{ label: "Conversion", value: "+140%" }, { label: "Load time", value: "1.2s" }],
-    color: "#FFD43B",
+    id: 3, category: "websites", metricValues: ["+140%", "1.2s"], color: "#FFD43B",
     mockupBlocks: [
       { w: "100%", h: 50, color: "rgba(255,212,59,0.1)", radius: 8 },
       { w: "48%", h: 30, color: "rgba(255,255,255,0.05)", mt: 8, radius: 6, inline: true },
@@ -66,12 +49,7 @@ const projects: Project[] = [
     ],
   },
   {
-    title: "Lead Generation Workflow",
-    type: "Automation",
-    category: "automations",
-    desc: "End-to-end automation connecting LinkedIn, CRM, and email sequences — generating 3x more qualified leads.",
-    metrics: [{ label: "Lead increase", value: "3x" }, { label: "Time saved", value: "20hrs/wk" }],
-    color: "#FF4A00",
+    id: 4, category: "automations", metricValues: ["3x", "20hrs/wk"], color: "#FF4A00",
     mockupBlocks: [
       { w: "22%", h: 22, color: "rgba(255,74,0,0.15)", radius: 6, inline: true },
       { w: "12%", h: 2, color: "rgba(255,74,0,0.3)", mt: 10, inline: true, ml: "3%" },
@@ -81,12 +59,7 @@ const projects: Project[] = [
     ],
   },
   {
-    title: "Restaurant Ordering System",
-    type: "Web Application",
-    category: "websites",
-    desc: "Multi-tenant ordering platform with real-time kitchen display, delivery tracking, and POS integration.",
-    metrics: [{ label: "Orders/day", value: "500+" }, { label: "Uptime", value: "99.9%" }],
-    color: "#E44D26",
+    id: 5, category: "websites", metricValues: ["500+", "99.9%"], color: "#E44D26",
     mockupBlocks: [
       { w: "30%", h: 40, color: "rgba(228,77,38,0.1)", radius: 8, inline: true },
       { w: "30%", h: 40, color: "rgba(228,77,38,0.08)", radius: 8, inline: true, ml: "5%" },
@@ -94,12 +67,7 @@ const projects: Project[] = [
     ],
   },
   {
-    title: "Document Processing Pipeline",
-    type: "AI Agent",
-    category: "ai",
-    desc: "AI-powered document extraction and classification system processing 5,000+ invoices monthly with 98% accuracy.",
-    metrics: [{ label: "Accuracy", value: "98%" }, { label: "Invoices/mo", value: "5,000+" }],
-    color: "#8B5CF6",
+    id: 6, category: "ai", metricValues: ["98%", "5,000+"], color: "#8B5CF6",
     mockupBlocks: [
       { w: "100%", h: 30, color: "rgba(139,92,246,0.1)", radius: 6 },
       { w: "70%", h: 6, color: "rgba(139,92,246,0.2)", mt: 10, radius: 3 },
@@ -112,7 +80,8 @@ const projects: Project[] = [
 const filterKeys = ["all", "websites", "ai", "automations"] as const;
 const filterTranslationKeys = ["filterAll", "filterWebsites", "filterAI", "filterAutomations"] as const;
 
-function ProjectCard({ project }: { project: Project }) {
+function ProjectCard({ project }: { project: ProjectVisual }) {
+  const tp = useTranslations("work.projects");
   const [hovered, setHovered] = useState(false);
   const [mouse, setMouse] = useState({ x: 0.5, y: 0.5 });
   const cardRef = useRef<HTMLDivElement>(null);
@@ -173,14 +142,14 @@ function ProjectCard({ project }: { project: Project }) {
       </div>
 
       <div style={s.cardContent}>
-        <span style={{ ...s.typeBadge, color: project.color, borderColor: `${project.color}33` }}>{project.type}</span>
-        <h3 style={s.cardTitle}>{project.title}</h3>
-        <p style={s.cardDesc}>{project.desc}</p>
+        <span style={{ ...s.typeBadge, color: project.color, borderColor: `${project.color}33` }}>{tp(`${project.id}.category`)}</span>
+        <h3 style={s.cardTitle}>{tp(`${project.id}.title`)}</h3>
+        <p style={s.cardDesc}>{tp(`${project.id}.description`)}</p>
         <div style={s.metricsRow}>
-          {project.metrics.map((m, i) => (
+          {project.metricValues.map((value, i) => (
             <div key={i} style={s.metric}>
-              <span style={{ ...s.metricValue, color: project.color }}>{m.value}</span>
-              <span style={s.metricLabel}>{m.label}</span>
+              <span style={{ ...s.metricValue, color: project.color }}>{value}</span>
+              <span style={s.metricLabel}>{tp(`${project.id}.metrics.${i + 1}`)}</span>
             </div>
           ))}
         </div>
@@ -230,7 +199,7 @@ export default function PortfolioGrid() {
 
       <div style={{ ...s.grid, gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)" }}>
         {filtered.map((project, i) => (
-          <div key={project.title} style={{ animation: `fadeSlideIn 0.4s ease-out ${i * 0.08}s both` }}>
+          <div key={project.id} style={{ animation: `fadeSlideIn 0.4s ease-out ${i * 0.08}s both` }}>
             <ProjectCard project={project} />
           </div>
         ))}

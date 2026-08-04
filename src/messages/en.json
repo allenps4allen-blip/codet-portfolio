@@ -213,32 +213,38 @@
       "1": {
         "title": "SaaS Analytics Dashboard",
         "category": "Web Application",
-        "description": "Full-stack analytics platform with real-time data visualization, user management, and automated reporting for a fintech startup."
+        "description": "Full-stack analytics platform with real-time data visualization, user management, and automated reporting for a fintech startup.",
+        "metrics": { "1": "Users", "2": "Performance" }
       },
       "2": {
         "title": "AI Customer Support Agent",
         "category": "AI Agent",
-        "description": "Multilingual chatbot trained on 10,000+ support tickets, deployed across web and WhatsApp with 85% resolution rate."
+        "description": "Multilingual chatbot trained on 10,000+ support tickets, deployed across web and WhatsApp with 85% resolution rate.",
+        "metrics": { "1": "Resolution", "2": "Tickets trained" }
       },
       "3": {
         "title": "E-Commerce Platform",
         "category": "Website",
-        "description": "High-conversion online store with custom product configurator, payment gateway integration, and inventory automation."
+        "description": "High-conversion online store with custom product configurator, payment gateway integration, and inventory automation.",
+        "metrics": { "1": "Conversion", "2": "Load time" }
       },
       "4": {
         "title": "Lead Generation Workflow",
         "category": "Automation",
-        "description": "End-to-end automation connecting LinkedIn, CRM, and email sequences — generating 3x more qualified leads per month."
+        "description": "End-to-end automation connecting LinkedIn, CRM, and email sequences — generating 3x more qualified leads per month.",
+        "metrics": { "1": "Lead increase", "2": "Time saved" }
       },
       "5": {
         "title": "Restaurant Ordering System",
         "category": "Web Application",
-        "description": "Multi-tenant ordering platform with real-time kitchen display, delivery tracking, and POS integration."
+        "description": "Multi-tenant ordering platform with real-time kitchen display, delivery tracking, and POS integration.",
+        "metrics": { "1": "Orders/day", "2": "Uptime" }
       },
       "6": {
         "title": "Document Processing Pipeline",
         "category": "AI Agent",
-        "description": "AI-powered document extraction and classification system processing 5,000+ invoices monthly with 98% accuracy."
+        "description": "AI-powered document extraction and classification system processing 5,000+ invoices monthly with 98% accuracy.",
+        "metrics": { "1": "Accuracy", "2": "Invoices/mo" }
       }
     },
     "cta": {
