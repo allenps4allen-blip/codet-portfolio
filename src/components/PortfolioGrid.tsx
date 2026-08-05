@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useTranslations } from "next-intl";
+import { Link } from "@/i18n/routing";
 
 interface MockupBlock {
   w: string;
@@ -15,6 +16,7 @@ interface MockupBlock {
 
 interface ProjectVisual {
   id: number;
+  slug: string;
   category: string;
   metricValues: string[];
   color: string;
@@ -23,7 +25,7 @@ interface ProjectVisual {
 
 const projects: ProjectVisual[] = [
   {
-    id: 1, category: "websites", metricValues: ["2,847", "94.2%"], color: "#3178C6",
+    id: 1, slug: "saas-analytics-dashboard", category: "websites", metricValues: ["2,847", "94.2%"], color: "#3178C6",
     mockupBlocks: [
       { w: "100%", h: 20, color: "rgba(49,120,198,0.3)" },
       { w: "60%", h: 8, color: "rgba(255,255,255,0.08)", mt: 10 },
@@ -32,7 +34,7 @@ const projects: ProjectVisual[] = [
     ],
   },
   {
-    id: 2, category: "ai", metricValues: ["85%", "10K+"], color: "#00a884",
+    id: 2, slug: "ai-customer-support-agent", category: "ai", metricValues: ["85%", "10K+"], color: "#00a884",
     mockupBlocks: [
       { w: "45%", h: 16, color: "rgba(0,168,132,0.2)", ml: "auto", radius: 10 },
       { w: "55%", h: 16, color: "rgba(255,255,255,0.06)", mt: 8, radius: 10 },
@@ -41,7 +43,7 @@ const projects: ProjectVisual[] = [
     ],
   },
   {
-    id: 3, category: "websites", metricValues: ["+140%", "1.2s"], color: "#FFD43B",
+    id: 3, slug: "e-commerce-platform", category: "websites", metricValues: ["+140%", "1.2s"], color: "#FFD43B",
     mockupBlocks: [
       { w: "100%", h: 50, color: "rgba(255,212,59,0.1)", radius: 8 },
       { w: "48%", h: 30, color: "rgba(255,255,255,0.05)", mt: 8, radius: 6, inline: true },
@@ -49,7 +51,7 @@ const projects: ProjectVisual[] = [
     ],
   },
   {
-    id: 4, category: "automations", metricValues: ["3x", "20hrs/wk"], color: "#FF4A00",
+    id: 4, slug: "lead-generation-workflow", category: "automations", metricValues: ["3x", "20hrs/wk"], color: "#FF4A00",
     mockupBlocks: [
       { w: "22%", h: 22, color: "rgba(255,74,0,0.15)", radius: 6, inline: true },
       { w: "12%", h: 2, color: "rgba(255,74,0,0.3)", mt: 10, inline: true, ml: "3%" },
@@ -59,7 +61,7 @@ const projects: ProjectVisual[] = [
     ],
   },
   {
-    id: 5, category: "websites", metricValues: ["500+", "99.9%"], color: "#E44D26",
+    id: 5, slug: "restaurant-ordering-system", category: "websites", metricValues: ["500+", "99.9%"], color: "#E44D26",
     mockupBlocks: [
       { w: "30%", h: 40, color: "rgba(228,77,38,0.1)", radius: 8, inline: true },
       { w: "30%", h: 40, color: "rgba(228,77,38,0.08)", radius: 8, inline: true, ml: "5%" },
@@ -67,7 +69,7 @@ const projects: ProjectVisual[] = [
     ],
   },
   {
-    id: 6, category: "ai", metricValues: ["98%", "5,000+"], color: "#8B5CF6",
+    id: 6, slug: "document-processing-pipeline", category: "ai", metricValues: ["98%", "5,000+"], color: "#8B5CF6",
     mockupBlocks: [
       { w: "100%", h: 30, color: "rgba(139,92,246,0.1)", radius: 6 },
       { w: "70%", h: 6, color: "rgba(139,92,246,0.2)", mt: 10, radius: 3 },
@@ -200,7 +202,9 @@ export default function PortfolioGrid() {
       <div style={{ ...s.grid, gridTemplateColumns: isMobile ? "1fr" : "repeat(2, 1fr)" }}>
         {filtered.map((project, i) => (
           <div key={project.id} style={{ animation: `fadeSlideIn 0.4s ease-out ${i * 0.08}s both` }}>
-            <ProjectCard project={project} />
+            <Link href={`/work/${project.slug}`} style={{ textDecoration: "none", color: "inherit", display: "block" }}>
+              <ProjectCard project={project} />
+            </Link>
           </div>
         ))}
       </div>
@@ -270,7 +274,7 @@ const s: Record<string, React.CSSProperties> = {
     border: "1px solid rgba(255,255,255,0.06)",
     borderRadius: 16,
     overflow: "hidden",
-    cursor: "default",
+    cursor: "pointer",
     transition: "all 0.35s ease",
     willChange: "transform",
   },

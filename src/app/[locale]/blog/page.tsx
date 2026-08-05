@@ -5,6 +5,7 @@ import { useTranslations, useLocale } from "next-intl";
 import { Link } from "@/i18n/routing";
 import { motion } from "framer-motion";
 import FadeIn from "@/components/FadeIn";
+import NewsletterSignup from "@/components/NewsletterSignup";
 
 interface BlogPost {
   id: string;
@@ -183,6 +184,9 @@ export default function BlogPage() {
             );
           })}
         </div>
+
+        {/* Newsletter */}
+        <NewsletterSignup />
       </section>
     </>
   );
