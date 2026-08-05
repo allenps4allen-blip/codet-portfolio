@@ -288,6 +288,13 @@ export default function AnalyticsDashboard() {
             </p>
           </div>
           <div style={{ display: "flex", gap: 6 }}>
+            <a href="/admin/clients" style={{
+              padding: "6px 14px", borderRadius: 8, border: "1px solid rgba(255,255,255,0.08)",
+              background: "transparent", color: "rgba(255,255,255,0.4)", fontSize: 12, fontWeight: 600,
+              textDecoration: "none", display: "inline-flex", alignItems: "center",
+            }}>
+              Clients →
+            </a>
             {[7, 14, 30].map((d) => (
               <button
                 key={d}

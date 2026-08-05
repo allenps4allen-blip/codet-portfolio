@@ -1,6 +1,8 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 import { getWeeklySummary } from "@/lib/analytics";
+import { listTenants } from "@/lib/tenants";
+import { getClientSummary } from "@/lib/client-analytics";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
@@ -90,7 +92,84 @@ export async function GET(request: Request) {
       html,
     });
 
-    return NextResponse.json({ ok: true, summary });
+    // Send client reports
+    const tenants = await listTenants();
+    let clientEmailsSent = 0;
+
+    for (const tenant of tenants) {
+      if (!tenant.active) continue;
+
+      const clientSummary = await getClientSummary(tenant.id, 7);
+      if (clientSummary.totalConversations === 0 && clientSummary.totalActions === 0) continue;
+
+      const topIntentsHtml = clientSummary.topIntents.length > 0
+        ? clientSummary.topIntents.map((i) =>
+            `<li style="padding:4px 0;color:#d1d5db;text-transform:capitalize;">${i.intent}: <strong style="color:#00a884;">${i.count}</strong></li>`
+          ).join("")
+        : `<li style="color:#6b7280;">No data</li>`;
+
+      const ratingHtml = clientSummary.avgRating > 0
+        ? `<div style="font-size:20px;font-weight:600;color:#f59e0b;">${clientSummary.avgRating.toFixed(1)}/5</div><div style="font-size:11px;color:#6b7280;">customer rating</div>`
+        : "";
+
+      const clientHtml = `
+        <div style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;max-width:500px;margin:0 auto;background:#111;padding:32px;border-radius:16px;">
+          <h1 style="font-size:20px;font-weight:600;color:#e9edef;margin:0 0 4px 0;">Weekly Agent Report</h1>
+          <p style="font-size:12px;color:#6b7280;margin:0 0 24px 0;">${tenant.name} — AI Agent Performance</p>
+
+          <div style="display:flex;gap:12px;margin-bottom:24px;">
+            <div style="flex:1;background:#1a1a1a;padding:16px;border-radius:10px;border:1px solid #222;">
+              <div style="font-size:10px;color:#6b7280;text-transform:uppercase;">Conversations</div>
+              <div style="font-size:28px;font-weight:600;color:#e9edef;margin-top:4px;">${clientSummary.totalConversations}</div>
+              <div style="font-size:11px;color:#6b7280;">handled by agent</div>
+            </div>
+            <div style="flex:1;background:#1a1a1a;padding:16px;border-radius:10px;border:1px solid #222;">
+              <div style="font-size:10px;color:#6b7280;text-transform:uppercase;">Actions</div>
+              <div style="font-size:28px;font-weight:600;color:#00a884;margin-top:4px;">${clientSummary.totalActions}</div>
+              <div style="font-size:11px;color:#6b7280;">completed</div>
+            </div>
+          </div>
+
+          <div style="background:#1a1a1a;padding:16px;border-radius:10px;border:1px solid #222;margin-bottom:16px;">
+            <div style="font-size:12px;font-weight:600;color:#9ca3af;margin-bottom:8px;">Agent Quality</div>
+            <div style="display:flex;gap:20px;">
+              <div>
+                <span style="font-size:20px;font-weight:600;color:${clientSummary.handoffRate > 20 ? '#ff6b6b' : '#e9edef'};">${clientSummary.handoffRate.toFixed(0)}%</span>
+                <span style="font-size:11px;color:#6b7280;margin-left:6px;">handoff rate</span>
+              </div>
+              <div>${ratingHtml}</div>
+            </div>
+          </div>
+
+          <div style="background:#1a1a1a;padding:16px;border-radius:10px;border:1px solid #222;margin-bottom:16px;">
+            <div style="font-size:12px;font-weight:600;color:#9ca3af;margin-bottom:8px;">What Customers Asked About</div>
+            <ul style="list-style:none;padding:0;margin:0;">${topIntentsHtml}</ul>
+          </div>
+
+          <div style="background:#1a1a1a;padding:16px;border-radius:10px;border:1px solid #222;">
+            <div style="font-size:12px;font-weight:600;color:#9ca3af;margin-bottom:4px;">Peak Activity</div>
+            <div style="font-size:16px;color:#e9edef;">${formatHour(clientSummary.peakHour)}</div>
+            <div style="font-size:11px;color:#6b7280;">${clientSummary.totalMessages} total messages</div>
+          </div>
+
+          <p style="font-size:11px;color:#4b5563;margin-top:24px;text-align:center;">
+            <a href="https://www.codet-kw.com/client/dashboard" style="color:#00a884;text-decoration:none;">View full dashboard →</a>
+          </p>
+          <p style="font-size:10px;color:#374151;text-align:center;margin-top:8px;">Powered by CODET · codet-kw.com</p>
+        </div>
+      `;
+
+      await resend.emails.send({
+        from: "CODET Agent Report <onboarding@resend.dev>",
+        to: tenant.email,
+        subject: `Your Agent Report — ${clientSummary.totalConversations} conversations, ${clientSummary.totalActions} actions`,
+        html: clientHtml,
+      });
+
+      clientEmailsSent++;
+    }
+
+    return NextResponse.json({ ok: true, summary, clientEmailsSent });
   } catch {
     return NextResponse.json({ error: "Failed to send summary" }, { status: 500 });
   }
