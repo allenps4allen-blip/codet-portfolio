@@ -2,7 +2,7 @@ import type { MetadataRoute } from "next";
 
 const baseUrl = "https://www.codet-kw.com";
 const locales = ["en", "ar"];
-const pages = ["", "/services", "/work", "/about", "/contact", "/demo", "/privacy", "/terms"];
+const pages = ["", "/services", "/work", "/about", "/blog", "/contact", "/demo", "/privacy", "/terms"];
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const entries: MetadataRoute.Sitemap = [];

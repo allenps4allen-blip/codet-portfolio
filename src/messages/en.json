@@ -10,6 +10,7 @@
     "about": "About",
     "demo": "Demo",
     "contact": "Contact",
+    "blog": "Blog",
     "bookConsultation": "Book Consultation"
   },
   "home": {
@@ -504,6 +505,16 @@
         "6": "✅ Appointment confirmed\n📅 Thursday, Aug 6 at 2:00 PM\n📍 CODET Office, Kuwait City\n\nA calendar invite has been sent to your email."
       }
     }
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Insights, guides, and case studies on AI, web development, and business automation.",
+    "all": "All",
+    "minRead": "min read",
+    "noPosts": "No posts published yet. Check back soon!",
+    "notFound": "Post not found",
+    "backToBlog": "Back to Blog",
+    "by": "By"
   },
   "footer": {
     "navigationTitle": "Navigation",

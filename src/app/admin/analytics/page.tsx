@@ -293,7 +293,14 @@ export default function AnalyticsDashboard() {
               background: "transparent", color: "rgba(255,255,255,0.4)", fontSize: 12, fontWeight: 600,
               textDecoration: "none", display: "inline-flex", alignItems: "center",
             }}>
-              Clients →
+              Clients &rarr;
+            </a>
+            <a href="/admin/blog" style={{
+              padding: "6px 14px", borderRadius: 8, border: "1px solid rgba(255,255,255,0.08)",
+              background: "transparent", color: "rgba(255,255,255,0.4)", fontSize: 12, fontWeight: 600,
+              textDecoration: "none", display: "inline-flex", alignItems: "center",
+            }}>
+              Blog &rarr;
             </a>
             {[7, 14, 30].map((d) => (
               <button
