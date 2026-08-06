@@ -128,6 +128,8 @@ export default function HeroScrollDemo() {
   const [tick, setTick] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const agentChatRef = useRef<HTMLDivElement>(null);
+  const leftChatRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
 
   const agentConversation = [
@@ -198,6 +200,14 @@ export default function HeroScrollDemo() {
   const leftOpacity = Math.max(0.3, 1 - progress * 1.1);
   const leftScale = Math.max(0.92, 1 - progress * 0.1);
 
+  useEffect(() => {
+    agentChatRef.current?.scrollTo({ top: agentChatRef.current.scrollHeight, behavior: "smooth" });
+  }, [visibleAgentCount]);
+
+  useEffect(() => {
+    leftChatRef.current?.scrollTo({ top: leftChatRef.current.scrollHeight, behavior: "smooth" });
+  }, [leftMsgCount, waitMinutes]);
+
   return (
     <div ref={containerRef} style={{ position: "relative", padding: isMobile ? "40px 0" : "60px 0" }}>
       <style dangerouslySetInnerHTML={{ __html: keyframes }} />
@@ -222,7 +232,7 @@ export default function HeroScrollDemo() {
             {/* LEFT — no agent */}
             <PhoneFrame label={t("withoutLabel")} labelColor="rgba(255,100,100,0.55)" opacity={leftOpacity} scale={leftScale} redBorder={redIntensity} inputPlaceholder={t("typeMessage")}>
               <ChatHeader name={t("supportName")} status={t("supportStatus")} statusColor="rgba(255,255,255,0.3)" />
-              <div style={s.chatArea}>
+              <div ref={leftChatRef} style={s.chatArea}>
                 <div style={s.encNotice}>
                   <svg width="11" height="11" viewBox="0 0 24 24" fill="rgba(255,255,255,0.25)"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z" /></svg>
                   <span>{t("encrypted")}</span>
@@ -264,7 +274,7 @@ export default function HeroScrollDemo() {
             {/* RIGHT — AI agent */}
             <PhoneFrame scale={rightScale} label={t("withLabel")} labelColor="#00a884" inputPlaceholder={t("typeMessage")}>
               <ChatHeader name={t("agentName")} status={t("agentStatus")} statusColor="#00a884" />
-              <div style={s.chatArea}>
+              <div ref={agentChatRef} style={s.chatArea}>
                 <div style={s.encNotice}>
                   <svg width="11" height="11" viewBox="0 0 24 24" fill="rgba(255,255,255,0.25)"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z" /></svg>
                   <span>{t("encrypted")}</span>
