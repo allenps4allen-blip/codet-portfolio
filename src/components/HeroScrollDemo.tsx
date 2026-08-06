@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useTranslations } from "next-intl";
 
 const formatTime = (base: number, offset: number) => {
@@ -69,13 +69,13 @@ function PhoneFrame({ children, scale = 1, label, labelColor, opacity = 1, redBo
     : "0 25px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05) inset";
 
   return (
-    <div className="hero-phone-frame" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 18, opacity, transition: "opacity 0.5s ease" }}>
+    <div className="hero-phone-frame" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 18, opacity, transition: "opacity 0.8s ease" }}>
       {label && (
         <div style={{ fontSize: 10, fontWeight: 600, letterSpacing: 1.5, textTransform: "uppercase" as const, color: labelColor || "rgba(255,255,255,0.4)" }}>
           {label}
         </div>
       )}
-      <div style={{ transform: `scale(${scale})`, transition: "transform 0.2s ease-out", transformOrigin: "center center" }}>
+      <div style={{ transform: `scale(${scale})`, transition: "transform 0.8s ease-out", transformOrigin: "center center" }}>
         <div style={{ ...s.phone, border: `3px solid ${borderColor}`, boxShadow: shadow, transition: "border-color 0.5s ease, box-shadow 0.5s ease" }}>
           <div style={s.notch}><div style={s.notchCamera} /></div>
           <div style={s.statusBar}>
@@ -119,11 +119,16 @@ function ChatHeader({ name, status, statusColor }: { name: string; status: strin
   );
 }
 
+// Timeline: array of { time (ms from start), action }
+// Total cycle ~14s, then 3s pause, then reset
+const CYCLE_DURATION = 17000;
+
 export default function HeroScrollDemo() {
   const t = useTranslations("demo.heroDemo");
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const [tick, setTick] = useState(0);
   const [isMobile, setIsMobile] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [isVisible, setIsVisible] = useState(false);
 
   const agentConversation = [
     { sender: "customer", text: t("withAgent.1") },
@@ -149,62 +154,71 @@ export default function HeroScrollDemo() {
   }, []);
 
   useEffect(() => {
-    const handleScroll = () => {
-      if (!containerRef.current) return;
-      const rect = containerRef.current.getBoundingClientRect();
-      const scrollable = containerRef.current.scrollHeight - window.innerHeight;
-      const scrolled = -rect.top;
-      const progress = Math.max(0, Math.min(1, scrolled / scrollable));
-      setScrollProgress(progress);
-    };
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
+    if (!containerRef.current) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting),
+      { threshold: 0.2 }
+    );
+    obs.observe(containerRef.current);
+    return () => obs.disconnect();
   }, []);
 
-  const totalSteps = agentConversation.length + 3;
-  const currentStep = Math.floor(scrollProgress * totalSteps);
-  const visibleAgentMessages = agentConversation.slice(0, currentStep);
-  const showAgentTyping = currentStep > 0 && currentStep <= agentConversation.length && agentConversation[currentStep - 1]?.sender === "customer";
-  const allDone = visibleAgentMessages.length === agentConversation.length;
+  useEffect(() => {
+    if (!isVisible) return;
+    const interval = setInterval(() => {
+      setTick((prev) => {
+        const next = prev + 50;
+        return next >= CYCLE_DURATION ? 0 : next;
+      });
+    }, 50);
+    return () => clearInterval(interval);
+  }, [isVisible]);
 
-  const rightScale = 1 + scrollProgress * 0.22;
+  // Derive state from tick (ms into the cycle)
+  const progress = Math.min(tick / 14000, 1); // 0-1 over 14s, then holds
 
-  const leftMsgCount = scrollProgress < 0.08 ? 0 : scrollProgress < 0.18 ? 1 : scrollProgress < 0.28 ? 2 : scrollProgress < 0.55 ? 3 : 4;
+  // Right phone (AI agent) — messages appear at these progress points
+  const agentSteps = [0.05, 0.15, 0.22, 0.35, 0.45, 0.55];
+  const visibleAgentCount = agentSteps.filter((s) => progress >= s).length;
+  const visibleAgentMessages = agentConversation.slice(0, visibleAgentCount);
+  const showAgentTyping = visibleAgentCount > 0 && visibleAgentCount < agentConversation.length &&
+    agentConversation[visibleAgentCount - 1]?.sender === "customer";
+  const allDone = visibleAgentCount === agentConversation.length;
+
+  const rightScale = 1 + Math.min(progress, 0.7) * 0.22;
+
+  // Left phone (no agent) — messages + waiting
+  const leftMsgCount = progress < 0.08 ? 0 : progress < 0.18 ? 1 : progress < 0.28 ? 2 : progress < 0.55 ? 3 : 4;
   const visibleLeftMessages = noAgentConversation.slice(0, leftMsgCount);
   const showSeen = leftMsgCount >= 1;
-  const showWaiting = scrollProgress > 0.35;
-  const waitMinutes = showWaiting ? Math.min(47, Math.floor((scrollProgress - 0.35) * 90)) : 0;
+  const showWaiting = progress > 0.35;
+  const waitMinutes = showWaiting ? Math.min(47, Math.floor((progress - 0.35) * 90)) : 0;
   const redIntensity = Math.min(1, Math.max(0, (waitMinutes - 10) / 30));
 
-  const leftOpacity = Math.max(0.3, 1 - scrollProgress * 1.1);
-  const leftScale = Math.max(0.92, 1 - scrollProgress * 0.1);
+  const leftOpacity = Math.max(0.3, 1 - progress * 1.1);
+  const leftScale = Math.max(0.92, 1 - progress * 0.1);
 
   return (
-    <div ref={containerRef} style={{ height: "250vh", position: "relative" }}>
+    <div ref={containerRef} style={{ position: "relative", padding: isMobile ? "40px 0" : "60px 0" }}>
       <style dangerouslySetInnerHTML={{ __html: keyframes }} />
 
-      <div style={s.stickyContainer}>
+      <div style={s.container}>
         {/* Glows */}
         <div style={{ ...s.glow, left: "20%", background: `radial-gradient(circle, rgba(255,50,50,${0.04 + redIntensity * 0.08}) 0%, transparent 70%)`, transition: "background 0.5s ease" }} />
         <div style={{ ...s.glow, right: "8%", left: "auto", background: "radial-gradient(circle, rgba(0,168,132,0.12) 0%, transparent 70%)" }} />
 
         {/* Headline */}
-        <div style={{ ...s.headline, marginBottom: isMobile ? 10 : 22 }} className="hero-headline">
-          <h1 style={{ ...s.h1, fontSize: isMobile ? 16 : 21 }}>
+        <div style={{ ...s.headline, marginBottom: isMobile ? 10 : 22 }}>
+          <h2 style={{ ...s.h1, fontSize: isMobile ? 16 : 21 }}>
             <span style={{ color: "rgba(255,255,255,0.3)", fontWeight: 400 }}>{t("withoutAI")}</span>
             <span style={{ margin: "0 18px", color: "rgba(255,255,255,0.12)", fontSize: 18 }}>{t("vs")}</span>
             <span style={{ color: "#00a884" }}>{t("withCodet")}</span>
-          </h1>
-          <div style={{ ...s.scrollHint, opacity: scrollProgress > 0.15 ? 0 : 1, transition: "opacity 0.5s ease" }}>
-            <span>{t("scrollHint")}</span>
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style={{ animation: "bounce 2s infinite" }}><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6z" /></svg>
-          </div>
+          </h2>
         </div>
 
         {/* Phones */}
         <div style={isMobile ? { transform: "scale(0.5)", transformOrigin: "top center", marginBottom: -320 } : undefined}>
-          <div style={{ ...s.phonePair, gap: isMobile ? 12 : 44 }} className="hero-phone-pair">
+          <div style={{ ...s.phonePair, gap: isMobile ? 12 : 44 }}>
             {/* LEFT — no agent */}
             <PhoneFrame label={t("withoutLabel")} labelColor="rgba(255,100,100,0.55)" opacity={leftOpacity} scale={leftScale} redBorder={redIntensity} inputPlaceholder={t("typeMessage")}>
               <ChatHeader name={t("supportName")} status={t("supportStatus")} statusColor="rgba(255,255,255,0.3)" />
@@ -296,9 +310,9 @@ export default function HeroScrollDemo() {
           </div>
         </div>
 
-        {/* Progress */}
+        {/* Progress bar */}
         <div style={s.progressTrack}>
-          <div style={{ ...s.progressFill, height: `${scrollProgress * 100}%` }} />
+          <div style={{ ...s.progressFill, height: `${progress * 100}%` }} />
         </div>
       </div>
     </div>
@@ -318,26 +332,18 @@ const keyframes = `
     0%, 100% { opacity: 0.4; }
     50% { opacity: 0.7; }
   }
-  @keyframes bounce {
-    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-    40% { transform: translateY(5px); }
-    60% { transform: translateY(2px); }
-  }
-  * { scrollbar-width: none; }
-  *::-webkit-scrollbar { display: none; }
 `;
 
 const s: Record<string, React.CSSProperties> = {
-  stickyContainer: {
-    position: "sticky",
-    top: 0,
-    height: "100vh",
+  container: {
+    position: "relative",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
     overflow: "hidden",
     fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+    minHeight: 700,
   },
   headline: {
     textAlign: "center",
@@ -353,16 +359,6 @@ const s: Record<string, React.CSSProperties> = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-  },
-  scrollHint: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    gap: 6,
-    marginTop: 8,
-    fontSize: 11.5,
-    color: "rgba(255,255,255,0.22)",
-    fontWeight: 500,
   },
   phonePair: {
     display: "flex",
@@ -512,7 +508,7 @@ const s: Record<string, React.CSSProperties> = {
     flexShrink: 0,
   },
   progressTrack: {
-    position: "fixed",
+    position: "absolute",
     right: 14,
     top: "50%",
     transform: "translateY(-50%)",
