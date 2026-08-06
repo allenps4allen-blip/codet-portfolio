@@ -34,14 +34,14 @@ export default function NewsletterSignup() {
 
   return (
     <section className="mx-auto max-w-2xl px-6 py-16">
-      <div className="glass-card rounded-2xl border border-white/[0.06] p-8 text-center sm:p-12">
+      <div className="glass-card rounded-2xl border border-white/[0.06] p-6 text-center sm:p-12">
         <h3 className="text-lg font-semibold text-foreground sm:text-xl">{t.heading}</h3>
         <p className="mx-auto mt-2 max-w-md text-sm text-foreground/40">{t.sub}</p>
 
         {status === "success" ? (
           <p className="mt-6 text-sm font-medium text-green-400">{t.success}</p>
         ) : (
-          <form onSubmit={handleSubmit} className="mt-6 flex gap-3 sm:mx-auto sm:max-w-md">
+          <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-3 sm:flex-row sm:mx-auto sm:max-w-md">
             <input
               type="email"
               value={email}

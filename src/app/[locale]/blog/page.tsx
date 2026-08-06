@@ -78,7 +78,7 @@ export default function BlogPage() {
                 <button
                   key={cat}
                   onClick={() => setFilter(cat)}
-                  className={`rounded-full px-4 py-1.5 text-xs font-medium capitalize transition-all duration-200 ${
+                  className={`rounded-full px-4 py-2.5 text-xs font-medium capitalize transition-all duration-200 ${
                     filter === cat
                       ? "bg-foreground text-background"
                       : "border border-white/10 text-foreground/50 hover:text-foreground/80"

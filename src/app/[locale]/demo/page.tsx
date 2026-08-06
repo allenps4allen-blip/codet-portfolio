@@ -103,8 +103,8 @@ export default function DemoPage() {
           .demo-back-btn {
             top: 12px;
             left: 12px;
-            padding: 6px 12px;
-            font-size: 11px;
+            padding: 10px 14px;
+            font-size: 12px;
             border-radius: 8px;
           }
           [dir="rtl"] .demo-back-btn {

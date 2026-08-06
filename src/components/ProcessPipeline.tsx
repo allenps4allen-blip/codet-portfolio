@@ -37,7 +37,7 @@ export default function ProcessPipeline() {
         <h2 style={s.h2}>{t("heading")}</h2>
       </div>
 
-      <div style={s.timeline}>
+      <div className="process-timeline" style={s.timeline}>
         {/* Vertical connector line */}
         <div style={s.lineTrack}>
           <div style={{ ...s.lineFill, height: `${lineProgress * 100}%` }} />
@@ -63,6 +63,7 @@ export default function ProcessPipeline() {
           return (
             <div
               key={id}
+              className="process-step"
               style={{
                 ...s.step,
                 opacity: isActive ? 1 : 0.25,
@@ -70,7 +71,7 @@ export default function ProcessPipeline() {
                 transition: "all 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
               }}
             >
-              <div style={{
+              <div className="process-node" style={{
                 ...s.node,
                 background: isActive ? "#00a884" : "rgba(255,255,255,0.06)",
                 borderColor: isActive ? "#00a884" : "rgba(255,255,255,0.1)",
@@ -82,7 +83,7 @@ export default function ProcessPipeline() {
 
               <div style={s.stepContent}>
                 <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-                  <h3 style={{ ...s.stepTitle, color: isActive ? "#e9edef" : "rgba(255,255,255,0.3)" }}>
+                  <h3 className="process-step-title" style={{ ...s.stepTitle, color: isActive ? "#e9edef" : "rgba(255,255,255,0.3)" }}>
                     {t(`steps.${id}.title`)}
                   </h3>
                   {isCurrent && (
@@ -94,7 +95,7 @@ export default function ProcessPipeline() {
                     </svg>
                   )}
                 </div>
-                <p style={{ ...s.stepDesc, color: isActive ? "rgba(255,255,255,0.55)" : "rgba(255,255,255,0.15)" }}>
+                <p className="process-step-desc" style={{ ...s.stepDesc, color: isActive ? "rgba(255,255,255,0.55)" : "rgba(255,255,255,0.15)" }}>
                   {t(`steps.${id}.desc`)}
                 </p>
                 {isActive && (

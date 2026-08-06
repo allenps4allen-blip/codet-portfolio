@@ -60,7 +60,7 @@ function StatsBar() {
       <div className="stats-grid" style={s.statsGrid}>
         {statKeys.map((key, i) => (
           <div key={key} style={s.statItem}>
-            <div style={s.statValue}>
+            <div className="stat-value" style={s.statValue}>
               <AnimatedCounter end={statValues[i].value} suffix={statValues[i].suffix} duration={1600 + i * 200} />
             </div>
             <div style={s.statLabel}>{t(key)}</div>
@@ -255,6 +255,7 @@ const s: Record<string, React.CSSProperties> = {
     justifyContent: "center",
     gap: 8,
     marginTop: 24,
+    flexWrap: "wrap",
   },
   trustItem: {
     fontSize: 12,

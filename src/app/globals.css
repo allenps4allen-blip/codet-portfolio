@@ -374,6 +374,24 @@ input[type="range"]:active::-webkit-slider-thumb {
   .process-section {
     padding: 60px 16px 80px !important;
   }
+  .process-section .process-timeline {
+    padding-left: 44px !important;
+  }
+  .process-section .process-step {
+    gap: 16px !important;
+    margin-bottom: 40px !important;
+  }
+  .process-section .process-node {
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 12px !important;
+  }
+  .process-section .process-step-title {
+    font-size: 15px !important;
+  }
+  .process-section .process-step-desc {
+    font-size: 13px !important;
+  }
 
   /* ROI Calculator */
   .roi-section {
@@ -381,6 +399,9 @@ input[type="range"]:active::-webkit-slider-thumb {
   }
   .roi-section p {
     font-size: 13px !important;
+  }
+  .roi-card {
+    padding: 24px 16px !important;
   }
   .roi-results-row {
     flex-direction: column !important;
@@ -412,6 +433,9 @@ input[type="range"]:active::-webkit-slider-thumb {
   }
   .stats-section {
     padding: 50px 16px !important;
+  }
+  .stat-value {
+    font-size: 32px !important;
   }
 
   /* CTA */

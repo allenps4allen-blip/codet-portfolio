@@ -60,7 +60,7 @@ export default function CookieConsent() {
         <button
           onClick={accept}
           style={{
-            padding: "8px 20px",
+            padding: "12px 20px",
             fontSize: 12,
             fontWeight: 600,
             borderRadius: 8,
@@ -76,7 +76,7 @@ export default function CookieConsent() {
         <button
           onClick={decline}
           style={{
-            padding: "8px 20px",
+            padding: "12px 20px",
             fontSize: 12,
             fontWeight: 600,
             borderRadius: 8,

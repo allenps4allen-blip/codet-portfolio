@@ -116,6 +116,7 @@ export default function Testimonials() {
                   width: idx === active ? 24 : 8, height: 8, borderRadius: 4,
                   border: "none", cursor: "pointer",
                   background: idx === active ? "#00a884" : "rgba(255,255,255,0.15)",
+                  padding: "18px 0", backgroundClip: "content-box",
                 }}
               />
             ))}

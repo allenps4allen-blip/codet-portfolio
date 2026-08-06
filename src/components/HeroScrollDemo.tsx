@@ -227,8 +227,8 @@ export default function HeroScrollDemo() {
         </div>
 
         {/* Phones */}
-        <div style={isMobile ? { transform: "scale(0.5)", transformOrigin: "top center", marginBottom: -320 } : undefined}>
-          <div style={{ ...s.phonePair, gap: isMobile ? 12 : 44 }}>
+        <div style={isMobile ? { width: "100%", overflow: "hidden" } : undefined}>
+          <div style={isMobile ? { ...s.phonePair, gap: 8, justifyContent: "center", transform: "scale(0.52)", transformOrigin: "top center", height: 340 } : { ...s.phonePair, gap: 44 }}>
             {/* LEFT — no agent */}
             <PhoneFrame label={t("withoutLabel")} labelColor="rgba(255,100,100,0.55)" opacity={leftOpacity} scale={leftScale} redBorder={redIntensity} inputPlaceholder={t("typeMessage")}>
               <ChatHeader name={t("supportName")} status={t("supportStatus")} statusColor="rgba(255,255,255,0.3)" />
@@ -353,7 +353,7 @@ const s: Record<string, React.CSSProperties> = {
     justifyContent: "center",
     overflow: "visible",
     fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
-    minHeight: 700,
+    minHeight: 500,
   },
   headline: {
     textAlign: "center",

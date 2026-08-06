@@ -103,7 +103,7 @@ export default function ROICalculator() {
         <p style={s.subtitle}>{t("subtitle")}</p>
       </div>
 
-      <div style={{
+      <div className="roi-card" style={{
         ...s.card,
         opacity: visible ? 1 : 0,
         transform: visible ? "translateY(0)" : "translateY(30px)",

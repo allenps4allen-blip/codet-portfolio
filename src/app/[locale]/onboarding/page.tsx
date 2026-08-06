@@ -43,7 +43,7 @@ const text = {
 
 function Chip({ label, selected, onClick }: { label: string; selected: boolean; onClick: () => void }) {
   return (
-    <button onClick={onClick} type="button" className={`rounded-full px-4 py-2 text-sm font-medium transition-all duration-200 ${
+    <button onClick={onClick} type="button" className={`rounded-full px-4 py-3 text-sm font-medium transition-all duration-200 ${
       selected ? "bg-foreground text-background" : "border border-white/10 text-foreground/50 hover:text-foreground/80 hover:border-white/20"
     }`}>
       {label}
@@ -214,14 +214,14 @@ export default function OnboardingPage() {
         {/* Navigation */}
         <div className="mt-8 flex justify-between">
           {step > 0 ? (
-            <button onClick={() => setStep(step - 1)} className="rounded-lg border border-white/[0.08] px-6 py-2.5 text-sm text-foreground/50 transition-colors hover:text-foreground/80">
+            <button onClick={() => setStep(step - 1)} className="rounded-lg border border-white/[0.08] px-6 py-3 text-sm text-foreground/50 transition-colors hover:text-foreground/80">
               {t.back}
             </button>
           ) : <div />}
 
           {step < 2 ? (
             <button onClick={() => canNext && setStep(step + 1)} disabled={!canNext}
-              className="rounded-lg bg-foreground px-6 py-2.5 text-sm font-semibold text-background transition-opacity hover:opacity-90 disabled:opacity-30">
+              className="rounded-lg bg-foreground px-6 py-3 text-sm font-semibold text-background transition-opacity hover:opacity-90 disabled:opacity-30">
               {t.next}
             </button>
           ) : (

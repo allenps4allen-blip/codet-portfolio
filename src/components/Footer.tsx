@@ -41,7 +41,7 @@ export default function Footer() {
                 <li key={key}>
                   <Link
                     href={href}
-                    className="inline-block py-1 text-sm text-foreground/70 transition-colors hover:text-foreground"
+                    className="inline-block py-2 text-sm text-foreground/70 transition-colors hover:text-foreground"
                   >
                     {tNav(key)}
                   </Link>
@@ -86,7 +86,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/privacy"
-                  className="inline-block py-1 text-sm text-foreground/70 transition-colors hover:text-foreground"
+                  className="inline-block py-2 text-sm text-foreground/70 transition-colors hover:text-foreground"
                 >
                   {t("privacy")}
                 </Link>
@@ -94,7 +94,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/terms"
-                  className="inline-block py-1 text-sm text-foreground/70 transition-colors hover:text-foreground"
+                  className="inline-block py-2 text-sm text-foreground/70 transition-colors hover:text-foreground"
                 >
                   {t("terms")}
                 </Link>

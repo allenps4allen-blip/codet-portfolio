@@ -255,7 +255,7 @@ const s: Record<string, React.CSSProperties> = {
     flexWrap: "wrap",
   },
   filterBtn: {
-    padding: "7px 18px",
+    padding: "10px 18px",
     borderRadius: 20,
     border: "1px solid",
     fontSize: 13,
