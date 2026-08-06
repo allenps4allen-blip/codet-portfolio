@@ -75,7 +75,7 @@ function PhoneFrame({ children, scale = 1, label, labelColor, opacity = 1, redBo
           {label}
         </div>
       )}
-      <div style={{ transform: `scale(${scale})`, transition: "transform 0.8s ease-out", transformOrigin: "center center" }}>
+      <div style={{ transform: `scale(${scale})`, transition: "transform 0.8s ease-out", transformOrigin: "top center" }}>
         <div style={{ ...s.phone, border: `3px solid ${borderColor}`, boxShadow: shadow, transition: "border-color 0.5s ease, box-shadow 0.5s ease" }}>
           <div style={s.notch}><div style={s.notchCamera} /></div>
           <div style={s.statusBar}>
@@ -121,7 +121,7 @@ function ChatHeader({ name, status, statusColor }: { name: string; status: strin
 
 // Timeline: array of { time (ms from start), action }
 // Total cycle ~14s, then 3s pause, then reset
-const CYCLE_DURATION = 17000;
+const CYCLE_DURATION = 8500;
 
 export default function HeroScrollDemo() {
   const t = useTranslations("demo.heroDemo");
@@ -175,7 +175,7 @@ export default function HeroScrollDemo() {
   }, [isVisible]);
 
   // Derive state from tick (ms into the cycle)
-  const progress = Math.min(tick / 14000, 1); // 0-1 over 14s, then holds
+  const progress = Math.min(tick / 7000, 1); // 0-1 over 7s, then holds
 
   // Right phone (AI agent) — messages appear at these progress points
   const agentSteps = [0.05, 0.15, 0.22, 0.35, 0.45, 0.55];
@@ -185,7 +185,7 @@ export default function HeroScrollDemo() {
     agentConversation[visibleAgentCount - 1]?.sender === "customer";
   const allDone = visibleAgentCount === agentConversation.length;
 
-  const rightScale = 1 + Math.min(progress, 0.7) * 0.22;
+  const rightScale = 1 + Math.min(progress, 0.7) * 0.14;
 
   // Left phone (no agent) — messages + waiting
   const leftMsgCount = progress < 0.08 ? 0 : progress < 0.18 ? 1 : progress < 0.28 ? 2 : progress < 0.55 ? 3 : 4;
@@ -341,7 +341,7 @@ const s: Record<string, React.CSSProperties> = {
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    overflow: "hidden",
+    overflow: "visible",
     fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
     minHeight: 700,
   },
