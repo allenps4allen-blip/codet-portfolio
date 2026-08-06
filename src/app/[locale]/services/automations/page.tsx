@@ -68,7 +68,7 @@ export default function AutomationsLandingPage() {
         <FadeIn>
           <div className="glass-card rounded-2xl border border-white/[0.06] px-8 py-12">
             <h2 className="text-xl font-bold text-foreground">Ready to automate?</h2>
-            <p className="mt-2 text-sm text-foreground/40">Tell us what's slowing you down. We'll build the automation.</p>
+            <p className="mt-2 text-sm text-foreground/40">Tell us what&apos;s slowing you down. We&apos;ll build the automation.</p>
             <Link href="/onboarding" className="mt-6 inline-block rounded-full bg-foreground px-8 py-3 text-sm font-semibold text-background transition-opacity hover:opacity-90">
               Get Started
             </Link>

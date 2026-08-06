@@ -59,7 +59,8 @@ export async function createTenant(name: string, email: string, password: string
   ids.push(id);
   await redis.set("tenant:ids", ids);
 
-  const { passwordHash: _, ...pub } = tenant;
+  const { passwordHash: _hash, ...pub } = tenant;
+  void _hash;
   return pub;
 }
 
@@ -72,7 +73,8 @@ export async function getTenant(id: string): Promise<Tenant | null> {
 export async function getTenantPublic(id: string): Promise<TenantPublic | null> {
   const tenant = await getTenant(id);
   if (!tenant) return null;
-  const { passwordHash: _, ...pub } = tenant;
+  const { passwordHash: _hash, ...pub } = tenant;
+  void _hash;
   return pub;
 }
 
