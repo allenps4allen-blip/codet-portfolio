@@ -83,9 +83,14 @@ export default function Header() {
       <nav className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6 lg:h-20">
         {/* Logo */}
         <Link href="/" className="relative z-10 flex-shrink-0">
-          <span className="text-xl font-bold tracking-tight lg:text-2xl">
+          <motion.span
+            initial={{ opacity: 0, x: -12 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            className="inline-block text-xl font-bold tracking-tight lg:text-2xl"
+          >
             CODET
-          </span>
+          </motion.span>
         </Link>
 
         {/* Desktop nav links */}
@@ -130,11 +135,13 @@ export default function Header() {
           </Link>
         </div>
 
-        {/* Mobile hamburger */}
-        <button
-          ref={hamburgerRef}
-          onClick={() => setMobileOpen(!mobileOpen)}
-          className="relative z-10 flex h-11 w-11 items-center justify-center md:hidden"
+        {/* Mobile right side: language toggle + hamburger */}
+        <div className="relative z-10 flex items-center gap-2 md:hidden">
+          <LanguageToggle />
+          <button
+            ref={hamburgerRef}
+            onClick={() => setMobileOpen(!mobileOpen)}
+            className="flex h-11 w-11 items-center justify-center"
           aria-label="Toggle menu"
           aria-expanded={mobileOpen}
         >
@@ -150,7 +157,8 @@ export default function Header() {
               }`}
             />
           </div>
-        </button>
+          </button>
+        </div>
       </nav>
 
       {/* Mobile menu — full screen overlay */}
