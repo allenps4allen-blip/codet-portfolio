@@ -195,24 +195,26 @@ export default function ServicesShowcase() {
           const Demo = serviceDemos[i];
           const href = serviceHrefs[i];
           return (
-            <div
-              key={key}
-              style={{ ...s.card, cursor: href ? "pointer" : "default" }}
-              onClick={() => href && router.push(`/${locale}${href}`)}
-            >
-              <div style={s.demoArea}>
-                <Demo />
-              </div>
-              <div style={s.cardContent}>
-                <h3 style={s.cardTitle}>
-                  {tServices(`${key}.title`)}
-                  {href && (
-                    <span style={{ marginInlineStart: 8, fontSize: 12, color: "#00a884", fontWeight: 500 }}>
-                      {tSection("seeDemo")} &#x2192;
-                    </span>
-                  )}
-                </h3>
-                <p style={s.cardDesc}>{tServices(`${key}.description`)}</p>
+            <div key={key}>
+              <div
+                className="mobile-tap"
+                style={{ ...s.card, cursor: href ? "pointer" : "default" }}
+                onClick={() => href && router.push(`/${locale}${href}`)}
+              >
+                <div style={s.demoArea}>
+                  <Demo />
+                </div>
+                <div style={s.cardContent}>
+                  <h3 style={s.cardTitle}>
+                    {tServices(`${key}.title`)}
+                    {href && (
+                      <span style={{ marginInlineStart: 8, fontSize: 12, color: "#00a884", fontWeight: 500 }}>
+                        {tSection("seeDemo")} &#x2192;
+                      </span>
+                    )}
+                  </h3>
+                  <p style={s.cardDesc}>{tServices(`${key}.description`)}</p>
+                </div>
               </div>
             </div>
           );

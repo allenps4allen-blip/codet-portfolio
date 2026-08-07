@@ -54,19 +54,26 @@ function WaitingClock({ elapsed, waitingText, queueText }: { elapsed: number; wa
   );
 }
 
-function PhoneFrame({ children, scale = 1, label, labelColor, opacity = 1, redBorder = 0, inputPlaceholder = "Type a message" }: {
+function PhoneFrame({ children, scale = 1, label, labelColor, opacity = 1, redBorder = 0, greenBorder = 0, inputPlaceholder = "Type a message" }: {
   children: React.ReactNode;
   scale?: number;
   label?: string;
   labelColor?: string;
   opacity?: number;
   redBorder?: number;
+  greenBorder?: number;
   inputPlaceholder?: string;
 }) {
-  const borderColor = redBorder ? `rgba(255,70,70,${0.15 + redBorder * 0.4})` : "#2a2a2a";
-  const shadow = redBorder
-    ? `0 25px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05) inset, 0 0 ${30 + redBorder * 30}px rgba(255,50,50,${0.08 + redBorder * 0.12})`
-    : "0 25px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05) inset";
+  const borderColor = greenBorder
+    ? `rgba(0,168,132,${0.15 + greenBorder * 0.4})`
+    : redBorder
+      ? `rgba(255,70,70,${0.15 + redBorder * 0.4})`
+      : "#2a2a2a";
+  const shadow = greenBorder
+    ? `0 25px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05) inset, 0 0 ${30 + greenBorder * 30}px rgba(0,168,132,${0.08 + greenBorder * 0.12})`
+    : redBorder
+      ? `0 25px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05) inset, 0 0 ${30 + redBorder * 30}px rgba(255,50,50,${0.08 + redBorder * 0.12})`
+      : "0 25px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05) inset";
 
   return (
     <div className="hero-phone-frame" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 18, opacity, transition: "opacity 0.8s ease" }}>
@@ -121,7 +128,7 @@ function ChatHeader({ name, status, statusColor }: { name: string; status: strin
 
 // Timeline: array of { time (ms from start), action }
 // Total cycle ~14s, then 3s pause, then reset
-const CYCLE_DURATION = 8500;
+const CYCLE_DURATION = 2000;
 
 export default function HeroScrollDemo() {
   const t = useTranslations("demo.heroDemo");
@@ -176,29 +183,30 @@ export default function HeroScrollDemo() {
     return () => clearInterval(interval);
   }, [isVisible]);
 
-  // Derive state from tick (ms into the cycle)
-  const progress = Math.min(tick / 7000, 1); // 0-1 over 7s, then holds
+  // Derive state from tick — full animation in 1.6s, 0.4s pause
+  const progress = Math.min(tick / 1600, 1);
 
   // Right phone (AI agent) — messages appear at these progress points
-  const agentSteps = [0.05, 0.15, 0.22, 0.35, 0.45, 0.55];
+  const agentSteps = [0.05, 0.15, 0.25, 0.4, 0.55, 0.7];
   const visibleAgentCount = agentSteps.filter((s) => progress >= s).length;
   const visibleAgentMessages = agentConversation.slice(0, visibleAgentCount);
   const showAgentTyping = visibleAgentCount > 0 && visibleAgentCount < agentConversation.length &&
     agentConversation[visibleAgentCount - 1]?.sender === "customer";
   const allDone = visibleAgentCount === agentConversation.length;
 
-  const rightScale = 1 + Math.min(progress, 0.7) * 0.14;
+  const rightScale = 1;
 
   // Left phone (no agent) — messages + waiting
-  const leftMsgCount = progress < 0.08 ? 0 : progress < 0.18 ? 1 : progress < 0.28 ? 2 : progress < 0.55 ? 3 : 4;
+  const leftMsgCount = progress < 0.08 ? 0 : progress < 0.2 ? 1 : progress < 0.35 ? 2 : progress < 0.6 ? 3 : 4;
   const visibleLeftMessages = noAgentConversation.slice(0, leftMsgCount);
   const showSeen = leftMsgCount >= 1;
-  const showWaiting = progress > 0.35;
-  const waitMinutes = showWaiting ? Math.min(47, Math.floor((progress - 0.35) * 90)) : 0;
-  const redIntensity = Math.min(1, Math.max(0, (waitMinutes - 10) / 30));
+  const showWaiting = progress > 0.4;
+  const waitMinutes = showWaiting ? Math.min(47, Math.floor((progress - 0.4) * 120)) : 0;
+  const redIntensity = Math.min(1, Math.max(0, (waitMinutes - 5) / 20));
+  const greenIntensity = redIntensity;
 
-  const leftOpacity = Math.max(0.3, 1 - progress * 1.1);
-  const leftScale = Math.max(0.92, 1 - progress * 0.1);
+  const leftOpacity = 1;
+  const leftScale = 1;
 
   useEffect(() => {
     agentChatRef.current?.scrollTo({ top: agentChatRef.current.scrollHeight, behavior: "smooth" });
@@ -272,7 +280,7 @@ export default function HeroScrollDemo() {
             </PhoneFrame>
 
             {/* RIGHT — AI agent */}
-            <PhoneFrame scale={rightScale} label={t("withLabel")} labelColor="#00a884" inputPlaceholder={t("typeMessage")}>
+            <PhoneFrame scale={rightScale} label={t("withLabel")} labelColor="#00a884" greenBorder={greenIntensity} inputPlaceholder={t("typeMessage")}>
               <ChatHeader name={t("agentName")} status={t("agentStatus")} statusColor="#00a884" />
               <div ref={agentChatRef} style={s.chatArea}>
                 <div style={s.encNotice}>

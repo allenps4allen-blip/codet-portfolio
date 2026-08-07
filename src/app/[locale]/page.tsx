@@ -20,7 +20,7 @@ export default function HomePage() {
   return (
     <>
       {/* Hero — Dot matrix + Aurora blobs */}
-      <section className="relative flex min-h-screen items-center justify-center overflow-hidden pt-20">
+      <section className="relative flex min-h-[80vh] items-center justify-center overflow-hidden pt-20 sm:min-h-screen">
         <div className="dot-matrix absolute inset-0" />
         <div className="aurora-blob" style={{ width: 300, height: 300, background: "rgba(120, 70, 255, 0.14)", top: "-60px", left: "-40px" }} />
         <div className="aurora-blob" style={{ width: 250, height: 250, background: "rgba(0, 190, 220, 0.1)", bottom: "-40px", right: "-20px", animationDelay: "-5s" }} />
@@ -53,7 +53,7 @@ export default function HomePage() {
                 href="https://wa.me/96566565517?text=Hi%2C%20I%27m%20interested%20in%20digitalizing%20my%20business.%20Can%20we%20schedule%20a%20consultation%3F"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="glass-card inline-flex items-center gap-2 rounded-full px-8 py-3.5 text-sm font-medium text-foreground transition-all hover:bg-white/[0.12] sm:text-base"
+                className="mobile-tap glass-card inline-flex w-full items-center justify-center gap-2 rounded-full px-8 py-4 text-sm font-medium text-foreground transition-all hover:bg-white/[0.12] sm:w-auto sm:py-3.5 sm:text-base"
               >
                 {t("cta")}
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} className="h-4 w-4 rtl:rotate-180" aria-hidden="true">

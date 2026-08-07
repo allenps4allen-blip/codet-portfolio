@@ -11,7 +11,9 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import LiveAIWidget from "@/components/LiveAIWidget";
 import BackToTop from "@/components/BackToTop";
 import CookieConsent from "@/components/CookieConsent";
+import MobileCTABar from "@/components/MobileCTABar";
 import ConsentAnalytics from "@/components/ConsentAnalytics";
+import ScrollToTop from "@/components/ScrollToTop";
 import "../globals.css";
 
 const inter = Inter({
@@ -156,9 +158,11 @@ export default async function LocaleLayout({
           >
             {isArabic ? "تخطي إلى المحتوى" : "Skip to content"}
           </a>
+          <ScrollToTop />
           <Header />
           <main id="main-content">{children}</main>
           <Footer />
+          <MobileCTABar />
           <WhatsAppButton />
           <LiveAIWidget />
           <BackToTop />

@@ -10,6 +10,15 @@ export default function ProcessPipeline() {
   const t = useTranslations("home.process");
   const sectionRef = useRef<HTMLDivElement>(null);
   const [progress, setProgress] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+  const [expandedStep, setExpandedStep] = useState<number | null>(null);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -57,28 +66,31 @@ export default function ProcessPipeline() {
         </div>
 
         {stepIds.map((id, i) => {
-          const isActive = i < activeStep;
-          const isCurrent = i === activeStep - 1;
+          const isActive = isMobile ? true : i < activeStep;
+          const isCurrent = isMobile ? false : i === activeStep - 1;
+          const isExpanded = isMobile ? expandedStep === i : isActive;
 
           return (
             <div
               key={id}
-              className="process-step"
+              className="process-step mobile-tap"
               style={{
                 ...s.step,
-                opacity: isActive ? 1 : 0.25,
-                transform: isActive ? "translateY(0)" : "translateY(20px)",
+                opacity: isMobile ? 1 : (isActive ? 1 : 0.25),
+                transform: isMobile ? "none" : (isActive ? "translateY(0)" : "translateY(20px)"),
                 transition: "all 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
+                cursor: isMobile ? "pointer" : "default",
               }}
+              onClick={() => isMobile && setExpandedStep(expandedStep === i ? null : i)}
             >
               <div className="process-node" style={{
                 ...s.node,
-                background: isActive ? "#00a884" : "rgba(255,255,255,0.06)",
-                borderColor: isActive ? "#00a884" : "rgba(255,255,255,0.1)",
+                background: isMobile ? (isExpanded ? "#00a884" : "rgba(255,255,255,0.06)") : (isActive ? "#00a884" : "rgba(255,255,255,0.06)"),
+                borderColor: isMobile ? (isExpanded ? "#00a884" : "rgba(255,255,255,0.1)") : (isActive ? "#00a884" : "rgba(255,255,255,0.1)"),
                 boxShadow: isCurrent ? "0 0 24px rgba(0,168,132,0.4)" : "none",
                 transition: "all 0.4s ease",
               }}>
-                <span style={{ fontSize: 20 }}>{stepIcons[i]}</span>
+                <span style={{ fontSize: isMobile ? 16 : 20 }}>{stepIcons[i]}</span>
               </div>
 
               <div style={s.stepContent}>
@@ -89,20 +101,27 @@ export default function ProcessPipeline() {
                   {isCurrent && (
                     <div style={s.activeBadge}>{t("inProgress")}</div>
                   )}
-                  {isActive && !isCurrent && (
+                  {!isMobile && isActive && !isCurrent && (
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="#00a884" style={{ animation: "fadeSlideIn 0.3s ease-out" }}>
                       <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
                     </svg>
                   )}
+                  {isMobile && (
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginInlineStart: "auto", transition: "transform 0.3s ease", transform: isExpanded ? "rotate(180deg)" : "rotate(0deg)" }}>
+                      <path d="M6 9l6 6 6-6" />
+                    </svg>
+                  )}
                 </div>
-                <p className="process-step-desc" style={{ ...s.stepDesc, color: isActive ? "rgba(255,255,255,0.55)" : "rgba(255,255,255,0.15)" }}>
-                  {t(`steps.${id}.desc`)}
-                </p>
-                {isActive && (
-                  <div style={{ ...s.detail, animation: "fadeSlideIn 0.4s ease-out" }}>
-                    {t(`steps.${id}.detail`)}
-                  </div>
-                )}
+                <div style={{ maxHeight: isExpanded ? 200 : 0, overflow: "hidden", transition: "max-height 0.35s ease" }}>
+                  <p className="process-step-desc" style={{ ...s.stepDesc, color: isActive ? "rgba(255,255,255,0.55)" : "rgba(255,255,255,0.15)" }}>
+                    {t(`steps.${id}.desc`)}
+                  </p>
+                  {isExpanded && (
+                    <div style={{ ...s.detail, animation: "fadeSlideIn 0.4s ease-out" }}>
+                      {t(`steps.${id}.detail`)}
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
           );
