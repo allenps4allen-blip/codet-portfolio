@@ -1,30 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
 
 function WebsiteDemo() {
-  const [loadProgress, setLoadProgress] = useState(0);
-
-  useEffect(() => {
-    let frame: number;
-    let start: number | null = null;
-    const duration = 2000;
-    const pause = 1500;
-
-    const animate = (ts: number) => {
-      if (!start) start = ts;
-      const elapsed = ts - start;
-      const cycle = elapsed % (duration + pause);
-      const p = Math.min(1, cycle / duration);
-      setLoadProgress(p);
-      frame = requestAnimationFrame(animate);
-    };
-    frame = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(frame);
-  }, []);
-
   return (
     <div style={demo.browserWrap}>
       <div style={demo.browserBar}>
@@ -36,136 +15,209 @@ function WebsiteDemo() {
         <div style={demo.urlBar}>yourcompany.com</div>
         <div style={{ width: 36 }} />
       </div>
-      <div style={demo.browserBody}>
-        <div style={{ position: "absolute", top: 0, left: 0, height: 2, background: "#00a884", width: `${loadProgress * 100}%`, transition: "width 0.05s linear", borderRadius: 1, zIndex: 2 }} />
-        <div style={{ ...demo.block, width: "65%", height: 14, opacity: loadProgress > 0.15 ? 1 : 0, transition: "opacity 0.3s ease", background: "rgba(255,255,255,0.15)" }} />
-        <div style={{ ...demo.block, width: "45%", height: 8, marginTop: 6, opacity: loadProgress > 0.25 ? 1 : 0, transition: "opacity 0.3s ease" }} />
-        <div style={{ ...demo.block, width: "30%", height: 22, marginTop: 12, borderRadius: 6, opacity: loadProgress > 0.35 ? 1 : 0, transition: "opacity 0.3s ease", background: "rgba(0,168,132,0.4)" }} />
-        <div style={{ display: "flex", gap: 8, marginTop: 16 }}>
-          {[0.45, 0.55, 0.65].map((t, i) => (
-            <div key={i} style={{ flex: 1, opacity: loadProgress > t ? 1 : 0, transition: "opacity 0.3s ease, transform 0.3s ease", transform: loadProgress > t ? "translateY(0)" : "translateY(8px)" }}>
-              <div style={{ ...demo.block, height: 36, borderRadius: 6 }} />
-              <div style={{ ...demo.block, width: "80%", height: 6, marginTop: 6 }} />
-              <div style={{ ...demo.block, width: "60%", height: 6, marginTop: 4 }} />
-            </div>
+      <div style={{ padding: 0, background: "#0a0a0a" }}>
+        <svg viewBox="0 0 320 200" width="100%" style={{ display: "block" }}>
+          {/* Loading bar */}
+          <rect x="0" y="0" width="0" height="2" fill="#00a884" rx="1">
+            <animate attributeName="width" values="0;320;320;0" dur="4s" repeatCount="indefinite" keyTimes="0;0.4;0.85;1" />
+          </rect>
+
+          {/* Nav bar */}
+          <rect x="12" y="10" width="50" height="8" rx="2" fill="rgba(255,255,255,0.18)" opacity="0">
+            <animate attributeName="opacity" values="0;1;1;0" dur="4s" repeatCount="indefinite" keyTimes="0;0.08;0.85;1" />
+          </rect>
+          <rect x="230" y="10" width="24" height="8" rx="2" fill="rgba(255,255,255,0.06)" opacity="0">
+            <animate attributeName="opacity" values="0;1;1;0" dur="4s" repeatCount="indefinite" keyTimes="0;0.1;0.85;1" />
+          </rect>
+          <rect x="260" y="10" width="24" height="8" rx="2" fill="rgba(255,255,255,0.06)" opacity="0">
+            <animate attributeName="opacity" values="0;1;1;0" dur="4s" repeatCount="indefinite" keyTimes="0;0.12;0.85;1" />
+          </rect>
+          <rect x="290" y="10" width="20" height="8" rx="4" fill="#00a88444" opacity="0">
+            <animate attributeName="opacity" values="0;1;1;0" dur="4s" repeatCount="indefinite" keyTimes="0;0.14;0.85;1" />
+          </rect>
+
+          {/* Hero heading */}
+          <rect x="12" y="36" width="180" height="14" rx="3" fill="rgba(255,255,255,0.2)" opacity="0">
+            <animate attributeName="opacity" values="0;0;1;1;0" dur="4s" repeatCount="indefinite" keyTimes="0;0.12;0.2;0.85;1" />
+          </rect>
+          <rect x="12" y="56" width="140" height="10" rx="2" fill="rgba(255,255,255,0.08)" opacity="0">
+            <animate attributeName="opacity" values="0;0;1;1;0" dur="4s" repeatCount="indefinite" keyTimes="0;0.16;0.24;0.85;1" />
+          </rect>
+
+          {/* CTA button */}
+          <rect x="12" y="76" width="70" height="18" rx="6" fill="#00a88444" stroke="#00a88466" strokeWidth="0.5" opacity="0">
+            <animate attributeName="opacity" values="0;0;1;1;0" dur="4s" repeatCount="indefinite" keyTimes="0;0.22;0.3;0.85;1" />
+          </rect>
+          <text x="47" y="89" fill="#00a884" fontSize="7" fontFamily="system-ui" fontWeight="600" textAnchor="middle" opacity="0">
+            Get Started
+            <animate attributeName="opacity" values="0;0;1;1;0" dur="4s" repeatCount="indefinite" keyTimes="0;0.22;0.3;0.85;1" />
+          </text>
+
+          {/* Hero image placeholder */}
+          <rect x="210" y="32" width="100" height="68" rx="6" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.06)" strokeWidth="0.5" opacity="0">
+            <animate attributeName="opacity" values="0;0;1;1;0" dur="4s" repeatCount="indefinite" keyTimes="0;0.18;0.26;0.85;1" />
+          </rect>
+          <rect x="224" y="48" width="72" height="36" rx="4" fill="#00a88412" opacity="0">
+            <animate attributeName="opacity" values="0;0;0.6;0.6;0" dur="4s" repeatCount="indefinite" keyTimes="0;0.22;0.3;0.85;1" />
+          </rect>
+
+          {/* Three feature cards */}
+          {[0, 1, 2].map(i => (
+            <g key={i} opacity="0">
+              <animate attributeName="opacity" values="0;0;1;1;0" dur="4s" repeatCount="indefinite" keyTimes={`0;${0.32 + i * 0.06};${0.4 + i * 0.06};0.85;1`} />
+              <rect x={12 + i * 102} y="114" width="95" height="74" rx="6" fill="rgba(255,255,255,0.025)" stroke="rgba(255,255,255,0.05)" strokeWidth="0.5" />
+              <circle cx={36 + i * 102} cy="132" r="8" fill={i === 0 ? "#00a88420" : i === 1 ? "#3178C620" : "#FFD43B15"} />
+              <text x={36 + i * 102} y="136" fontSize="8" fontFamily="system-ui" textAnchor="middle" fill="rgba(255,255,255,0.5)">
+                {["⚡", "🎨", "📊"][i]}
+              </text>
+              <rect x={22 + i * 102} y="148" width="55" height="5" rx="1.5" fill="rgba(255,255,255,0.12)" />
+              <rect x={22 + i * 102} y="158" width="70" height="3" rx="1" fill="rgba(255,255,255,0.05)" />
+              <rect x={22 + i * 102} y="165" width="60" height="3" rx="1" fill="rgba(255,255,255,0.05)" />
+              <rect x={22 + i * 102} y="172" width="50" height="3" rx="1" fill="rgba(255,255,255,0.05)" />
+            </g>
           ))}
-        </div>
-        {loadProgress >= 1 && (
-          <div style={{ position: "absolute", bottom: 8, right: 10, display: "flex", alignItems: "center", gap: 5, animation: "popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1)" }}>
-            <svg width="16" height="16" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="#00a884" strokeWidth="2.5" /><path d="M8 12l3 3 5-5" stroke="#00a884" strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round" /></svg>
-            <span style={{ fontSize: 10, color: "#00a884", fontWeight: 700 }}>100 / 100</span>
-          </div>
-        )}
+
+          {/* Lighthouse score badge */}
+          <g opacity="0">
+            <animate attributeName="opacity" values="0;0;1;1;0" dur="4s" repeatCount="indefinite" keyTimes="0;0.7;0.75;0.85;1" />
+            <rect x="248" y="8" width="60" height="14" rx="7" fill="#00a88822" stroke="#00a88844" strokeWidth="0.5" />
+            <circle cx="260" cy="15" r="4" fill="none" stroke="#00a884" strokeWidth="1.2" />
+            <path d="M258 15 l1.5 1.5 3-3" stroke="#00a884" strokeWidth="0.8" fill="none" strokeLinecap="round" />
+            <text x="272" y="18" fill="#00a884" fontSize="6" fontFamily="system-ui" fontWeight="700">100/100</text>
+          </g>
+        </svg>
       </div>
     </div>
   );
 }
 
 function AgentDemo() {
-  const msgs = [
-    { from: "user", text: "What are your hours?" },
-    { from: "bot", text: "Sun–Thu, 9 AM – 6 PM! Need to book?" },
-    { from: "user", text: "Yes, tomorrow at 10" },
-    { from: "bot", text: "✅ Done! See you at 10 AM." },
-  ];
-  const [visibleCount, setVisibleCount] = useState(0);
-
-  useEffect(() => {
-    const msgCount = msgs.length;
-    const stepMs = 800;
-    const pauseMs = 2000;
-    const cycleMs = msgCount * stepMs + pauseMs;
-
-    const tick = () => {
-      const elapsed = Date.now() % cycleMs;
-      setVisibleCount(elapsed > msgCount * stepMs ? msgCount : Math.min(msgCount, Math.floor(elapsed / stepMs) + 1));
-    };
-
-    const interval = setInterval(tick, 200);
-    tick();
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <div style={demo.chatWrap}>
       <div style={demo.chatHeader}>
-        <div style={{ width: 22, height: 22, borderRadius: "50%", background: "linear-gradient(135deg, #00a884, #005c4b)" }} />
+        <div style={{ width: 22, height: 22, borderRadius: "50%", background: "linear-gradient(135deg, #00a884, #005c4b)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+            <path d="M12 3c-4.97 0-9 3.13-9 7 0 2.38 1.42 4.49 3.6 5.83L5 20l4.35-2.17C10.22 17.94 11.1 18 12 18c4.97 0 9-3.13 9-7s-4.03-7-9-7z" fill="#00a884" opacity="0.7"/>
+          </svg>
+        </div>
         <div>
           <div style={{ fontSize: 11, fontWeight: 600, color: "#e9edef" }}>AI Assistant</div>
           <div style={{ fontSize: 9, color: "#00a884" }}>online</div>
         </div>
       </div>
-      <div style={demo.chatBody}>
-        {msgs.slice(0, visibleCount).map((m, i) => (
-          <div key={i} style={{ display: "flex", justifyContent: m.from === "user" ? "flex-end" : "flex-start", animation: "fadeSlideIn 0.3s ease-out" }}>
-            <div style={{ fontSize: 10, lineHeight: 1.4, padding: "5px 8px", borderRadius: 8, maxWidth: "78%", color: "#e9edef", background: m.from === "user" ? "#005c4b" : "rgba(255,255,255,0.08)", ...(m.from === "user" ? { borderBottomRightRadius: 3 } : { borderBottomLeftRadius: 3 }) }}>
-              {m.text}
-            </div>
-          </div>
-        ))}
-        {visibleCount > 0 && visibleCount < msgs.length && visibleCount % 2 === 1 && (
-          <div style={{ display: "flex", gap: 3, padding: "4px 8px", animation: "fadeSlideIn 0.2s ease-out" }}>
-            {[0,1,2].map(i => <div key={i} style={{ width: 5, height: 5, borderRadius: "50%", background: "rgba(255,255,255,0.3)", animation: `typingDot 1.2s ${i*0.2}s infinite` }} />)}
-          </div>
-        )}
+      <div style={{ padding: 0, background: "#0a0a0a" }}>
+        <svg viewBox="0 0 320 180" width="100%" style={{ display: "block" }}>
+          {/* User message 1 */}
+          <g opacity="0">
+            <animate attributeName="opacity" values="0;0;1;1;1;0" dur="7s" repeatCount="indefinite" keyTimes="0;0.01;0.06;0.7;0.88;1" />
+            <rect x="150" y="10" width="158" height="28" rx="10" fill="#005c4b" />
+            <text x="160" y="28" fill="rgba(255,255,255,0.9)" fontSize="8" fontFamily="system-ui">What are your hours?</text>
+            <text x="290" y="32" fill="rgba(255,255,255,0.3)" fontSize="5" fontFamily="system-ui">10:42</text>
+          </g>
+
+          {/* Bot message 1 */}
+          <g opacity="0">
+            <animate attributeName="opacity" values="0;0;1;1;1;0" dur="7s" begin="1s" repeatCount="indefinite" keyTimes="0;0.01;0.06;0.7;0.88;1" />
+            <rect x="10" y="48" width="200" height="38" rx="10" fill="rgba(255,255,255,0.07)" />
+            <text x="20" y="64" fill="rgba(255,255,255,0.85)" fontSize="8" fontFamily="system-ui">Sun–Thu, 9 AM – 6 PM!</text>
+            <text x="20" y="78" fill="rgba(255,255,255,0.85)" fontSize="8" fontFamily="system-ui">Need to book?</text>
+          </g>
+
+          {/* User message 2 */}
+          <g opacity="0">
+            <animate attributeName="opacity" values="0;0;1;1;1;0" dur="7s" begin="2.2s" repeatCount="indefinite" keyTimes="0;0.01;0.06;0.7;0.88;1" />
+            <rect x="190" y="96" width="118" height="28" rx="10" fill="#005c4b" />
+            <text x="200" y="114" fill="rgba(255,255,255,0.9)" fontSize="8" fontFamily="system-ui">Yes, tomorrow at 10</text>
+          </g>
+
+          {/* Bot message 2 */}
+          <g opacity="0">
+            <animate attributeName="opacity" values="0;0;1;1;1;0" dur="7s" begin="3.5s" repeatCount="indefinite" keyTimes="0;0.01;0.06;0.7;0.88;1" />
+            <rect x="10" y="134" width="210" height="28" rx="10" fill="rgba(255,255,255,0.07)" />
+            <text x="20" y="152" fill="rgba(255,255,255,0.85)" fontSize="8" fontFamily="system-ui">✅ Done! See you at 10 AM.</text>
+          </g>
+
+          {/* Resolved badge */}
+          <g opacity="0">
+            <animate attributeName="opacity" values="0;0;1;1;0" dur="7s" begin="4.8s" repeatCount="indefinite" keyTimes="0;0.01;0.06;0.2;0.3" />
+            <rect x="85" y="168" width="150" height="8" rx="4" fill="transparent" />
+            <text x="160" y="175" fill="#00a884" fontSize="6.5" fontFamily="system-ui" textAnchor="middle" fontWeight="600">✓ Resolved in 47 seconds</text>
+          </g>
+        </svg>
       </div>
     </div>
   );
 }
 
 function AutomationDemo() {
-  const [step, setStep] = useState(0);
-  const nodes = ["Email", "Extract", "CRM", "Notify"];
-
-  useEffect(() => {
-    const total = nodes.length;
-    const stepMs = 600;
-    const pauseMs = 2000;
-    const cycleMs = total * stepMs + pauseMs;
-
-    const tick = () => {
-      const elapsed = Date.now() % cycleMs;
-      setStep(elapsed > total * stepMs ? total : Math.min(total, Math.floor(elapsed / stepMs)));
-    };
-
-    const interval = setInterval(tick, 150);
-    tick();
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <div style={demo.autoWrap}>
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 0 }}>
-        {nodes.map((n, i) => (
-          <div key={i} style={{ display: "inline-flex", alignItems: "center" }}>
-            <div style={{
-              padding: "5px 10px",
-              borderRadius: 6,
-              fontSize: 9,
-              fontWeight: 600,
-              whiteSpace: "nowrap" as const,
-              color: i < step ? "#050505" : "rgba(255,255,255,0.3)",
-              background: i < step ? "#00a884" : "rgba(255,255,255,0.06)",
-              border: `1px solid ${i < step ? "#00a884" : "rgba(255,255,255,0.08)"}`,
-              transition: "all 0.4s ease",
-              transform: i < step ? "scale(1.05)" : "scale(1)",
-            }}>
-              {n}
-            </div>
-            {i < nodes.length - 1 && (
-              <svg width="16" height="10" viewBox="0 0 16 10" style={{ flexShrink: 0, margin: "0 2px" }}>
-                <line x1="0" y1="5" x2="11" y2="5" stroke={i < step - 1 ? "#00a884" : "rgba(255,255,255,0.12)"} strokeWidth="1.5" style={{ transition: "stroke 0.4s ease" }} />
-                <path d="M9 2 L13 5 L9 8" fill="none" stroke={i < step - 1 ? "#00a884" : "rgba(255,255,255,0.12)"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ transition: "stroke 0.4s ease" }} />
-              </svg>
-            )}
-          </div>
+      <svg viewBox="0 0 320 140" width="100%" style={{ display: "block" }}>
+        {/* Connection lines */}
+        <line x1="68" y1="48" x2="108" y2="48" stroke="rgba(255,255,255,0.08)" strokeWidth="1.5" strokeDasharray="4 3" />
+        <line x1="168" y1="48" x2="208" y2="48" stroke="rgba(255,255,255,0.08)" strokeWidth="1.5" strokeDasharray="4 3" />
+        <line x1="268" y1="48" x2="300" y2="48" stroke="rgba(255,255,255,0.08)" strokeWidth="1.5" strokeDasharray="4 3" />
+
+        {/* Flow particles */}
+        <circle r="3" fill="#00a884">
+          <animate attributeName="cx" values="68;108" dur="1.2s" repeatCount="indefinite" />
+          <animate attributeName="cy" values="48;48" dur="1.2s" repeatCount="indefinite" />
+          <animate attributeName="opacity" values="0;1;1;0" dur="1.2s" repeatCount="indefinite" keyTimes="0;0.1;0.8;1" />
+        </circle>
+        <circle r="3" fill="#00a884">
+          <animate attributeName="cx" values="168;208" dur="1.2s" begin="0.5s" repeatCount="indefinite" />
+          <animate attributeName="cy" values="48;48" dur="1.2s" repeatCount="indefinite" />
+          <animate attributeName="opacity" values="0;1;1;0" dur="1.2s" begin="0.5s" repeatCount="indefinite" keyTimes="0;0.1;0.8;1" />
+        </circle>
+        <circle r="3" fill="#00a884">
+          <animate attributeName="cx" values="268;300" dur="1.2s" begin="1s" repeatCount="indefinite" />
+          <animate attributeName="cy" values="48;48" dur="1.2s" repeatCount="indefinite" />
+          <animate attributeName="opacity" values="0;1;1;0" dur="1.2s" begin="1s" repeatCount="indefinite" keyTimes="0;0.1;0.8;1" />
+        </circle>
+
+        {/* Nodes */}
+        {[
+          { x: 10, label: "Email", icon: "📧", color: "#00a884" },
+          { x: 110, label: "Extract", icon: "🔍", color: "#3178C6" },
+          { x: 210, label: "CRM", icon: "💼", color: "#FFD43B" },
+          { x: 300, label: "Notify", icon: "🔔", color: "#28c840" },
+        ].map((n, i) => (
+          <g key={i}>
+            <rect x={n.x} y="28" width="56" height="40" rx="8" fill="rgba(255,255,255,0.03)" stroke={`${n.color}55`} strokeWidth="1">
+              <animate attributeName="stroke-opacity" values="0.3;0.7;0.3" dur="2.5s" begin={`${i * 0.3}s`} repeatCount="indefinite" />
+            </rect>
+            <text x={n.x + 28} y="50" fill="rgba(255,255,255,0.7)" fontSize="14" fontFamily="system-ui" textAnchor="middle">{n.icon}</text>
+            <text x={n.x + 28} y="62" fill="rgba(255,255,255,0.5)" fontSize="6" fontFamily="system-ui" textAnchor="middle" fontWeight="500">{n.label}</text>
+            <circle cx={n.x + 50} cy="32" r="3" fill={n.color}>
+              <animate attributeName="opacity" values="0.4;1;0.4" dur="2s" begin={`${i * 0.4}s`} repeatCount="indefinite" />
+            </circle>
+          </g>
         ))}
-      </div>
-      {step >= nodes.length && (
-        <div style={{ textAlign: "center" as const, marginTop: 12, animation: "fadeSlideIn 0.4s ease-out" }}>
-          <span style={{ fontSize: 9, color: "#00a884", fontWeight: 600 }}>&#x2713; Workflow completed in 1.2s</span>
-        </div>
-      )}
+
+        {/* Divider */}
+        <line x1="10" y1="84" x2="310" y2="84" stroke="rgba(255,255,255,0.04)" strokeWidth="0.5" />
+
+        {/* Stats row */}
+        <rect x="10" y="92" width="90" height="24" rx="4" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.04)" strokeWidth="0.5" />
+        <text x="18" y="102" fill="rgba(255,255,255,0.25)" fontSize="5" fontFamily="system-ui">Processed</text>
+        <text x="18" y="112" fill="rgba(255,255,255,0.8)" fontSize="10" fontWeight="700" fontFamily="system-ui">2,847</text>
+        <text x="52" y="112" fill="#28c840" fontSize="5" fontFamily="system-ui">+124</text>
+
+        <rect x="115" y="92" width="90" height="24" rx="4" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.04)" strokeWidth="0.5" />
+        <text x="123" y="102" fill="rgba(255,255,255,0.25)" fontSize="5" fontFamily="system-ui">Success Rate</text>
+        <text x="123" y="112" fill="rgba(255,255,255,0.8)" fontSize="10" fontWeight="700" fontFamily="system-ui">99.8%</text>
+
+        <rect x="220" y="92" width="90" height="24" rx="4" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.04)" strokeWidth="0.5" />
+        <text x="228" y="102" fill="rgba(255,255,255,0.25)" fontSize="5" fontFamily="system-ui">Avg Time</text>
+        <text x="228" y="112" fill="rgba(255,255,255,0.8)" fontSize="10" fontWeight="700" fontFamily="system-ui">1.2s</text>
+
+        {/* Live indicator */}
+        <rect x="10" y="124" width="300" height="12" rx="4" fill="rgba(255,255,255,0.015)" stroke="rgba(255,255,255,0.03)" strokeWidth="0.5" />
+        <circle cx="20" cy="130" r="2" fill="#28c840">
+          <animate attributeName="opacity" values="0.4;1;0.4" dur="1.5s" repeatCount="indefinite" />
+        </circle>
+        <text x="28" y="133" fill="rgba(255,255,255,0.2)" fontSize="5" fontFamily="system-ui">Live: New lead → Extracted → Synced to HubSpot → Slack notified</text>
+      </svg>
     </div>
   );
 }
@@ -264,16 +316,6 @@ const demo: Record<string, React.CSSProperties> = {
     padding: "3px 8px",
     textAlign: "center",
   },
-  browserBody: {
-    padding: 14,
-    minHeight: 130,
-    position: "relative",
-  },
-  block: {
-    height: 8,
-    background: "rgba(255,255,255,0.07)",
-    borderRadius: 3,
-  },
   chatWrap: {
     borderRadius: 8,
     overflow: "hidden",
@@ -288,22 +330,11 @@ const demo: Record<string, React.CSSProperties> = {
     background: "rgba(255,255,255,0.03)",
     borderBottom: "1px solid rgba(255,255,255,0.04)",
   },
-  chatBody: {
-    padding: 10,
-    display: "flex",
-    flexDirection: "column",
-    gap: 6,
-    minHeight: 130,
-  },
   autoWrap: {
     borderRadius: 8,
     border: "1px solid rgba(255,255,255,0.06)",
     background: "#0a0a0a",
-    padding: "24px 10px",
-    minHeight: 130,
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
+    overflow: "hidden",
   },
 };
 
