@@ -142,10 +142,8 @@ export default function HeroScrollDemo() {
   const agentConversation = [
     { sender: "customer", text: t("withAgent.1") },
     { sender: "agent", text: t("withAgent.2") },
-    { sender: "agent", text: t("withAgent.3") },
-    { sender: "customer", text: t("withAgent.4") },
-    { sender: "agent", text: t("withAgent.5") },
-    { sender: "agent", text: t("withAgent.6") },
+    { sender: "customer", text: t("withAgent.3") },
+    { sender: "agent", text: t("withAgent.4") },
   ];
 
   const noAgentConversation = [
@@ -187,7 +185,7 @@ export default function HeroScrollDemo() {
   const progress = Math.min(tick / 3400, 1);
 
   // Right phone (AI agent) — messages appear at these progress points
-  const agentSteps = [0.05, 0.15, 0.25, 0.4, 0.55, 0.7];
+  const agentSteps = [0.05, 0.2, 0.5, 0.7];
   const visibleAgentCount = agentSteps.filter((s) => progress >= s).length;
   const visibleAgentMessages = agentConversation.slice(0, visibleAgentCount);
   const showAgentTyping = visibleAgentCount > 0 && visibleAgentCount < agentConversation.length &&
@@ -240,40 +238,50 @@ export default function HeroScrollDemo() {
             {/* LEFT — no agent */}
             <PhoneFrame label={t("withoutLabel")} labelColor="rgba(255,100,100,0.55)" opacity={leftOpacity} scale={leftScale} redBorder={redIntensity} inputPlaceholder={t("typeMessage")}>
               <ChatHeader name={t("supportName")} status={t("supportStatus")} statusColor="rgba(255,255,255,0.3)" />
-              <div ref={leftChatRef} style={s.chatArea}>
-                <div style={s.encNotice}>
-                  <svg width="11" height="11" viewBox="0 0 24 24" fill="rgba(255,255,255,0.25)"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z" /></svg>
-                  <span>{t("encrypted")}</span>
-                </div>
-                <div style={s.dateChip}>{t("today")}</div>
+              <div style={{ position: "relative", flex: 1, display: "flex", flexDirection: "column" as const, overflow: "hidden" }}>
+                <div ref={leftChatRef} style={s.chatArea}>
+                  <div style={s.encNotice}>
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="rgba(255,255,255,0.25)"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z" /></svg>
+                    <span>{t("encrypted")}</span>
+                  </div>
+                  <div style={s.dateChip}>{t("today")}</div>
 
-                {visibleLeftMessages.map((msg, i) => (
-                  <div key={i}>
-                    <div style={{ display: "flex", justifyContent: msg.sender === "customer" ? "flex-end" : "flex-start", padding: "2px 16px", animation: "fadeSlideIn 0.35s ease-out" }}>
-                      <div style={{ ...s.bubble, ...(msg.sender === "customer" ? s.customerBubble : s.systemBubble) }}>
-                        <div style={{ whiteSpace: "pre-wrap", lineHeight: 1.45 }}>{msg.text}</div>
-                        <div style={s.timestamp}>
-                          {formatTime(642, msg.sender === "customer" ? (i === 0 ? 0 : i === 2 ? 18 : 32) : 0)}
-                          {msg.sender === "customer" && (
-                            <svg width="16" height="10" viewBox="0 0 20 12" style={{ marginLeft: 2 }}>
-                              <path d="M1.5 6.5l3.5 3.5 8-8" stroke={showSeen ? "#53bdeb" : "rgba(255,255,255,0.35)"} strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-                              <path d="M5 6.5l3.5 3.5 8-8" stroke={showSeen ? "#53bdeb" : "rgba(255,255,255,0.35)"} strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
-                            </svg>
-                          )}
+                  {visibleLeftMessages.map((msg, i) => (
+                    <div key={i}>
+                      <div style={{ display: "flex", justifyContent: msg.sender === "customer" ? "flex-end" : "flex-start", padding: "2px 16px", animation: "fadeSlideIn 0.35s ease-out" }}>
+                        <div style={{ ...s.bubble, ...(msg.sender === "customer" ? s.customerBubble : s.systemBubble) }}>
+                          <div style={{ whiteSpace: "pre-wrap", lineHeight: 1.45 }}>{msg.text}</div>
+                          <div style={s.timestamp}>
+                            {formatTime(642, msg.sender === "customer" ? (i === 0 ? 0 : i === 2 ? 18 : 32) : 0)}
+                            {msg.sender === "customer" && (
+                              <svg width="16" height="10" viewBox="0 0 20 12" style={{ marginLeft: 2 }}>
+                                <path d="M1.5 6.5l3.5 3.5 8-8" stroke={showSeen ? "#53bdeb" : "rgba(255,255,255,0.35)"} strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+                                <path d="M5 6.5l3.5 3.5 8-8" stroke={showSeen ? "#53bdeb" : "rgba(255,255,255,0.35)"} strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round" />
+                              </svg>
+                            )}
+                          </div>
                         </div>
                       </div>
+                      {msg.sender === "customer" && i === 0 && showSeen && visibleLeftMessages.length <= 2 && (
+                        <SeenReceipt label={t("seen")} />
+                      )}
                     </div>
-                    {msg.sender === "customer" && i === 0 && showSeen && visibleLeftMessages.length <= 2 && (
-                      <SeenReceipt label={t("seen")} />
-                    )}
-                  </div>
-                ))}
+                  ))}
 
-                {showWaiting && <WaitingClock elapsed={waitMinutes} waitingText={t("waiting")} queueText={t("queuePosition")} />}
+                  {waitMinutes > 30 && (
+                    <div style={{ textAlign: "center" as const, padding: "14px 20px 0", animation: "fadeSlideIn 0.5s ease-out" }}>
+                      <span style={{ fontSize: 10.5, color: "rgba(255,70,70,0.4)", fontStyle: "italic" }}>{t("customerLeft")}</span>
+                    </div>
+                  )}
+                </div>
 
-                {waitMinutes > 30 && (
-                  <div style={{ textAlign: "center" as const, padding: "14px 20px 0", animation: "fadeSlideIn 0.5s ease-out" }}>
-                    <span style={{ fontSize: 10.5, color: "rgba(255,70,70,0.4)", fontStyle: "italic" }}>{t("customerLeft")}</span>
+                {showWaiting && (
+                  <div style={{ position: "absolute", inset: 0, background: `rgba(0,0,0,${Math.min(0.45, redIntensity * 0.45)})`, transition: "background 0.5s ease", zIndex: 3, pointerEvents: "none" }} />
+                )}
+
+                {showWaiting && (
+                  <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", zIndex: 4, pointerEvents: "none" }}>
+                    <WaitingClock elapsed={waitMinutes} waitingText={t("waiting")} queueText={t("queuePosition")} />
                   </div>
                 )}
               </div>

@@ -498,11 +498,9 @@
       },
       "withAgent": {
         "1": "Hi, I'd like to book an appointment for Thursday",
-        "2": "Of course! Let me check Thursday's availability for you…",
-        "3": "We have three slots open:\n\n🕐 10:00 AM\n🕑 2:00 PM\n🕓 4:30 PM\n\nWhich one works best?",
-        "4": "2 PM please 👍",
-        "5": "Perfect — you're all set!",
-        "6": "✅ Appointment confirmed\n📅 Thursday, Aug 6 at 2:00 PM\n📍 CODET Office, Kuwait City\n\nA calendar invite has been sent to your email."
+        "2": "Of course! Here are the available times for Thursday:\n\n🕐 10:00 AM\n🕑 2:00 PM\n🕓 4:30 PM\n\nWhich one works best?",
+        "3": "2 PM please 👍",
+        "4": "Perfect — you're all set!\n\n✅ Appointment confirmed\n📅 Thursday, Aug 6 at 2:00 PM\n📍 CODET Office, Kuwait City"
       }
     }
   },
