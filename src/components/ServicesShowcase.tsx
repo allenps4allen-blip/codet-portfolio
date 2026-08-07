@@ -348,16 +348,16 @@ const s: Record<string, React.CSSProperties> = {
     marginBottom: 60,
   },
   eyebrow: {
-    fontSize: 11,
+    fontSize: 12,
     fontWeight: 600,
     letterSpacing: 2.5,
     textTransform: "uppercase",
     color: "#00a884",
     display: "block",
-    marginBottom: 12,
+    marginBottom: 14,
   },
   h2: {
-    fontSize: 32,
+    fontSize: 40,
     fontWeight: 600,
     color: "#e9edef",
     margin: 0,
@@ -365,8 +365,8 @@ const s: Record<string, React.CSSProperties> = {
   },
   grid: {
     display: "flex",
-    gap: 20,
-    maxWidth: 960,
+    gap: 24,
+    maxWidth: 1280,
     margin: "0 auto",
   },
   card: {
@@ -378,13 +378,13 @@ const s: Record<string, React.CSSProperties> = {
     transition: "all 0.35s ease",
   },
   demoArea: {
-    padding: "16px 16px 0",
+    padding: "20px 20px 0",
   },
   cardContent: {
-    padding: "20px 20px 24px",
+    padding: "24px 24px 28px",
   },
   cardTitle: {
-    fontSize: 18,
+    fontSize: 20,
     fontWeight: 600,
     color: "#e9edef",
     margin: 0,
@@ -392,9 +392,9 @@ const s: Record<string, React.CSSProperties> = {
     alignItems: "center",
   },
   cardDesc: {
-    fontSize: 13,
+    fontSize: 14,
     lineHeight: 1.6,
     color: "rgba(255,255,255,0.4)",
-    margin: "8px 0 0",
+    margin: "10px 0 0",
   },
 };
