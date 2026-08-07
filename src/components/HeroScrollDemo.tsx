@@ -37,19 +37,19 @@ function SeenReceipt({ label }: { label: string }) {
 function WaitingClock({ elapsed, waitingText, queueText }: { elapsed: number; waitingText: string; queueText: string }) {
   const urgent = elapsed > 20;
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "24px 16px 10px", gap: 8, animation: "fadeSlideIn 0.5s ease-out" }}>
-      <div style={{ position: "relative", width: 44, height: 44 }}>
-        <svg width="44" height="44" viewBox="0 0 44 44">
-          <circle cx="22" cy="22" r="19" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="2" />
-          <circle cx="22" cy="22" r="19" fill="none" stroke={urgent ? "rgba(255,70,70,0.6)" : "rgba(255,100,100,0.35)"} strokeWidth="2.5" strokeDasharray="119" strokeDashoffset={119 - (Math.min(elapsed, 50) / 50) * 119} strokeLinecap="round" style={{ transition: "stroke-dashoffset 0.4s ease, stroke 0.4s ease", transform: "rotate(-90deg)", transformOrigin: "center" }} />
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "28px 16px 14px", gap: 10, animation: "fadeSlideIn 0.5s ease-out" }}>
+      <div style={{ position: "relative", width: 56, height: 56 }}>
+        <svg width="56" height="56" viewBox="0 0 56 56">
+          <circle cx="28" cy="28" r="24" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="2.5" />
+          <circle cx="28" cy="28" r="24" fill="none" stroke={urgent ? "rgba(255,70,70,0.6)" : "rgba(255,100,100,0.35)"} strokeWidth="3" strokeDasharray="151" strokeDashoffset={151 - (Math.min(elapsed, 50) / 50) * 151} strokeLinecap="round" style={{ transition: "stroke-dashoffset 0.4s ease, stroke 0.4s ease", transform: "rotate(-90deg)", transformOrigin: "center" }} />
         </svg>
         <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <svg width="16" height="16" viewBox="0 0 24 24" fill={urgent ? "rgba(255,70,70,0.8)" : "rgba(255,100,100,0.5)"}><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z" /></svg>
+          <svg width="22" height="22" viewBox="0 0 24 24" fill={urgent ? "rgba(255,70,70,0.8)" : "rgba(255,100,100,0.5)"}><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z" /></svg>
         </div>
       </div>
-      <span style={{ fontSize: 11, color: "rgba(255,255,255,0.25)", fontWeight: 500 }}>{waitingText}</span>
-      <span style={{ fontSize: 22, color: urgent ? "rgba(255,70,70,0.85)" : "rgba(255,100,100,0.65)", fontWeight: 700, fontVariantNumeric: "tabular-nums", transition: "color 0.4s ease" }}>{elapsed} min</span>
-      {urgent && <span style={{ fontSize: 10, color: "rgba(255,70,70,0.45)", marginTop: -2 }}>{queueText}</span>}
+      <span style={{ fontSize: 13, color: "rgba(255,255,255,0.3)", fontWeight: 500 }}>{waitingText}</span>
+      <span style={{ fontSize: 28, color: urgent ? "rgba(255,70,70,0.85)" : "rgba(255,100,100,0.65)", fontWeight: 700, fontVariantNumeric: "tabular-nums", transition: "color 0.4s ease" }}>{elapsed} min</span>
+      {urgent && <span style={{ fontSize: 12, color: "rgba(255,70,70,0.45)", marginTop: -2 }}>{queueText}</span>}
     </div>
   );
 }
@@ -268,22 +268,14 @@ export default function HeroScrollDemo() {
                     </div>
                   ))}
 
+                  {showWaiting && <WaitingClock elapsed={waitMinutes} waitingText={t("waiting")} queueText={t("queuePosition")} />}
+
                   {waitMinutes > 30 && (
                     <div style={{ textAlign: "center" as const, padding: "14px 20px 0", animation: "fadeSlideIn 0.5s ease-out" }}>
                       <span style={{ fontSize: 10.5, color: "rgba(255,70,70,0.4)", fontStyle: "italic" }}>{t("customerLeft")}</span>
                     </div>
                   )}
                 </div>
-
-                {showWaiting && (
-                  <div style={{ position: "absolute", inset: 0, background: `rgba(0,0,0,${Math.min(0.45, redIntensity * 0.45)})`, transition: "background 0.5s ease", zIndex: 3, pointerEvents: "none" }} />
-                )}
-
-                {showWaiting && (
-                  <div style={{ position: "absolute", top: "50%", left: "50%", transform: "translate(-50%, -50%)", zIndex: 4, pointerEvents: "none" }}>
-                    <WaitingClock elapsed={waitMinutes} waitingText={t("waiting")} queueText={t("queuePosition")} />
-                  </div>
-                )}
               </div>
             </PhoneFrame>
 
