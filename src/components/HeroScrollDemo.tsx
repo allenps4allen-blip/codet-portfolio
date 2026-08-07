@@ -65,14 +65,14 @@ function PhoneFrame({ children, scale = 1, label, labelColor, opacity = 1, redBo
   inputPlaceholder?: string;
 }) {
   const borderColor = greenBorder
-    ? `rgba(0,168,132,${0.15 + greenBorder * 0.4})`
+    ? `rgba(0,168,132,${0.2 + greenBorder * 0.6})`
     : redBorder
-      ? `rgba(255,70,70,${0.15 + redBorder * 0.4})`
+      ? `rgba(255,50,50,${0.2 + redBorder * 0.6})`
       : "#2a2a2a";
   const shadow = greenBorder
-    ? `0 25px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05) inset, 0 0 ${30 + greenBorder * 30}px rgba(0,168,132,${0.08 + greenBorder * 0.12})`
+    ? `0 25px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05) inset, 0 0 ${20 + greenBorder * 40}px rgba(0,168,132,${0.1 + greenBorder * 0.2})`
     : redBorder
-      ? `0 25px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05) inset, 0 0 ${30 + redBorder * 30}px rgba(255,50,50,${0.08 + redBorder * 0.12})`
+      ? `0 25px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05) inset, 0 0 ${20 + redBorder * 40}px rgba(255,40,40,${0.1 + redBorder * 0.2})`
       : "0 25px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.05) inset";
 
   return (
@@ -128,7 +128,7 @@ function ChatHeader({ name, status, statusColor }: { name: string; status: strin
 
 // Timeline: array of { time (ms from start), action }
 // Total cycle ~14s, then 3s pause, then reset
-const CYCLE_DURATION = 2000;
+const CYCLE_DURATION = 4000;
 
 export default function HeroScrollDemo() {
   const t = useTranslations("demo.heroDemo");
@@ -183,8 +183,8 @@ export default function HeroScrollDemo() {
     return () => clearInterval(interval);
   }, [isVisible]);
 
-  // Derive state from tick — full animation in 1.6s, 0.4s pause
-  const progress = Math.min(tick / 1600, 1);
+  // Derive state from tick — full animation in 3.4s, 0.6s pause
+  const progress = Math.min(tick / 3400, 1);
 
   // Right phone (AI agent) — messages appear at these progress points
   const agentSteps = [0.05, 0.15, 0.25, 0.4, 0.55, 0.7];
@@ -202,8 +202,8 @@ export default function HeroScrollDemo() {
   const showSeen = leftMsgCount >= 1;
   const showWaiting = progress > 0.4;
   const waitMinutes = showWaiting ? Math.min(47, Math.floor((progress - 0.4) * 120)) : 0;
-  const redIntensity = Math.min(1, Math.max(0, (waitMinutes - 5) / 20));
-  const greenIntensity = redIntensity;
+  const redIntensity = Math.min(1, Math.max(0, (waitMinutes - 2) / 10));
+  const greenIntensity = Math.min(1, progress * 1.5);
 
   const leftOpacity = 1;
   const leftScale = 1;
