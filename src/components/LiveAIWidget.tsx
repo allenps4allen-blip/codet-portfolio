@@ -30,6 +30,11 @@ export default function LiveAIWidget() {
           70% { box-shadow: 0 0 0 14px rgba(0,168,132,0); }
           100% { box-shadow: 0 0 0 0 rgba(0,168,132,0); }
         }
+        @media (max-width: 767px) {
+          .ai-widget-float {
+            bottom: calc(68px + env(safe-area-inset-bottom, 0px) + 80px) !important;
+          }
+        }
       `}</style>
       <button
         onClick={() => {
@@ -39,10 +44,11 @@ export default function LiveAIWidget() {
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         aria-label={t("widgetTooltip")}
+        className="ai-widget-float"
         style={{
           position: "fixed",
-          bottom: "calc(max(1.5rem, env(safe-area-inset-bottom, 1.5rem)) + 68px)",
-          right: "max(1.5rem, env(safe-area-inset-right, 1.5rem))",
+          bottom: 92,
+          right: 24,
           zIndex: 999,
           width: 56,
           height: 56,
