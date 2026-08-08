@@ -12,10 +12,17 @@ export default function LiveAIWidget() {
   const { trackWidgetClick } = useAgentAnalytics();
   const [showPulse, setShowPulse] = useState(true);
   const [hovered, setHovered] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     const timer = setTimeout(() => setShowPulse(false), 3000);
-    return () => clearTimeout(timer);
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener("resize", check);
+    };
   }, []);
 
   if (pathname.includes("/demo")) return null;
@@ -30,11 +37,6 @@ export default function LiveAIWidget() {
           70% { box-shadow: 0 0 0 14px rgba(0,168,132,0); }
           100% { box-shadow: 0 0 0 0 rgba(0,168,132,0); }
         }
-        @media (max-width: 767px) {
-          .ai-widget-float {
-            bottom: calc(68px + env(safe-area-inset-bottom, 0px) + 80px) !important;
-          }
-        }
       `}</style>
       <button
         onClick={() => {
@@ -44,10 +46,9 @@ export default function LiveAIWidget() {
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
         aria-label={t("widgetTooltip")}
-        className="ai-widget-float"
         style={{
           position: "fixed",
-          bottom: 92,
+          bottom: isMobile ? 148 : 92,
           right: 24,
           zIndex: 999,
           width: 56,

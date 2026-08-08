@@ -4,11 +4,18 @@ import { useState, useEffect } from "react";
 
 export default function BackToTop() {
   const [visible, setVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
     const onScroll = () => setVisible(window.scrollY > 600);
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("resize", checkMobile);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", checkMobile);
+    };
   }, []);
 
   if (!visible) return null;
@@ -20,22 +27,15 @@ export default function BackToTop() {
           from { opacity: 0; transform: translateY(8px); }
           to { opacity: 1; transform: translateY(0); }
         }
-        @media (max-width: 767px) {
-          .back-to-top-float {
-            bottom: calc(68px + env(safe-area-inset-bottom, 0px) + 12px) !important;
-            right: auto !important;
-            left: 24px !important;
-          }
-        }
       `}</style>
       <button
         onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
         aria-label="Back to top"
-        className="back-to-top-float"
         style={{
           position: "fixed",
-          bottom: 160,
-          right: 24,
+          bottom: isMobile ? 80 : 160,
+          right: isMobile ? "auto" : 24,
+          left: isMobile ? 24 : "auto",
           zIndex: 998,
           width: 44,
           height: 44,
