@@ -20,7 +20,7 @@ export default function HomePage() {
   return (
     <>
       {/* Hero — Dot matrix + Aurora blobs */}
-      <section className="relative flex min-h-[80vh] items-center justify-center overflow-hidden pt-20 sm:min-h-screen">
+      <section className="relative flex min-h-[75vh] items-center justify-center overflow-hidden px-4 pt-16 sm:min-h-screen sm:px-0 sm:pt-20">
         <div className="dot-matrix absolute inset-0" />
         <div className="aurora-blob" style={{ width: 300, height: 300, background: "rgba(120, 70, 255, 0.14)", top: "-60px", left: "-40px" }} />
         <div className="aurora-blob" style={{ width: 250, height: 250, background: "rgba(0, 190, 220, 0.1)", bottom: "-40px", right: "-20px", animationDelay: "-5s" }} />
@@ -39,7 +39,7 @@ export default function HomePage() {
               initial={{ opacity: 0, y: 30, filter: "blur(8px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               transition={{ duration: 0.8, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
-              className="mx-auto mt-6 max-w-2xl text-base text-foreground/70 sm:text-lg md:text-xl"
+              className="mx-auto mt-4 max-w-2xl text-sm text-foreground/70 sm:mt-6 sm:text-lg md:text-xl"
             >
               {t("subtext")}
             </motion.p>
@@ -47,7 +47,7 @@ export default function HomePage() {
               initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               transition={{ duration: 0.8, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
-              className="mt-10"
+              className="mt-8 sm:mt-10"
             >
               <a
                 href="https://wa.me/96566565517?text=Hi%2C%20I%27m%20interested%20in%20digitalizing%20my%20business.%20Can%20we%20schedule%20a%20consultation%3F"

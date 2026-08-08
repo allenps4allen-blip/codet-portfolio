@@ -489,6 +489,14 @@ input[type="range"]:active::-webkit-slider-thumb {
   );
 }
 
+/* ── Hero mobile optimizations ── */
+@media (max-width: 640px) {
+  .aurora-blob {
+    transform: scale(0.5);
+    filter: blur(40px);
+  }
+}
+
 /* ── Tap micro-interactions ── */
 .mobile-tap {
   transition: transform 0.15s ease;
