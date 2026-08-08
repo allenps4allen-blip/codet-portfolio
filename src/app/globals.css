@@ -471,6 +471,24 @@ input[type="range"]:active::-webkit-slider-thumb {
   }
 }
 
+/* ── Section depth gradients ── */
+.section-gradient-down {
+  background: linear-gradient(
+    180deg,
+    #050505 0%,
+    rgba(0, 168, 132, 0.02) 50%,
+    #050505 100%
+  );
+}
+.section-gradient-up {
+  background: linear-gradient(
+    180deg,
+    #050505 0%,
+    rgba(120, 70, 255, 0.02) 50%,
+    #050505 100%
+  );
+}
+
 /* ── Tap micro-interactions ── */
 .mobile-tap {
   transition: transform 0.15s ease;

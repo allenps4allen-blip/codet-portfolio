@@ -38,7 +38,7 @@ export default function ProcessPipeline() {
   const lineProgress = Math.min(1, progress * 1.15);
 
   return (
-    <div ref={sectionRef} className="process-section" style={s.section}>
+    <div ref={sectionRef} className="process-section section-gradient-up" style={s.section}>
       <style dangerouslySetInnerHTML={{ __html: keyframes }} />
 
       <div style={s.header}>

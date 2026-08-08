@@ -52,11 +52,34 @@ const statValues = [
   { value: 24, suffix: "/7" },
 ];
 
+const statsResponsive = `
+  @media (max-width: 640px) {
+    .stats-grid {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 32px 24px !important;
+    }
+    .stats-section {
+      padding: 60px 24px !important;
+    }
+    .stat-value {
+      font-size: 32px !important;
+    }
+    .cta-section {
+      padding: 80px 24px 100px !important;
+    }
+    .cta-h2 {
+      font-size: 28px !important;
+    }
+  }
+`;
+
 function StatsBar() {
   const t = useTranslations("home.statsBar");
 
   return (
     <div className="stats-section" style={s.statsSection}>
+      <style dangerouslySetInnerHTML={{ __html: statsResponsive }} />
       <div className="stats-grid" style={s.statsGrid}>
         {statKeys.map((key, i) => (
           <div key={key} style={s.statItem}>
@@ -141,7 +164,7 @@ function CTASection() {
 
 export default function StatsAndCTA() {
   return (
-    <div style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
+    <div className="section-gradient-up" style={{ fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif' }}>
       <style dangerouslySetInnerHTML={{ __html: keyframes }} />
       <StatsBar />
       <CTASection />

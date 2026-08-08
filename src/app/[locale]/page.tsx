@@ -80,7 +80,7 @@ export default function HomePage() {
       <ROICalculator />
 
       {/* Portfolio Preview */}
-      <section className="relative overflow-hidden py-24 sm:py-32" style={{ background: "#050505" }}>
+      <section className="section-gradient-down relative overflow-hidden py-24 sm:py-32">
         <div className="dot-matrix absolute inset-0" />
         <div className="pointer-events-none absolute -right-10 -top-10 h-[250px] w-[250px] rounded-full" style={{ background: "radial-gradient(circle, rgba(140, 60, 255, 0.06), transparent)", filter: "blur(20px)" }} />
         <div className="pointer-events-none absolute -left-5 bottom-0 h-[200px] w-[200px] rounded-full" style={{ background: "radial-gradient(circle, rgba(0, 180, 200, 0.05), transparent)", filter: "blur(20px)" }} />

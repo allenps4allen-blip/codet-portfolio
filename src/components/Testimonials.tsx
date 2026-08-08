@@ -1,7 +1,7 @@
 "use client";
 
 import { useTranslations, useLocale } from "next-intl";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import FadeIn from "./FadeIn";
 
 interface Testimonial {
@@ -34,15 +34,39 @@ export default function Testimonials() {
   const useFallback = testimonials.length === 0;
   const count = useFallback ? fallbackKeys.length : testimonials.length;
 
-  useEffect(() => {
-    const interval = setInterval(() => {
+  const touchStartRef = useRef(0);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+  const startAutoRotate = () => {
+    if (timerRef.current) clearInterval(timerRef.current);
+    timerRef.current = setInterval(() => {
       setActive((prev) => (prev + 1) % count);
     }, 5000);
-    return () => clearInterval(interval);
+  };
+
+  useEffect(() => {
+    startAutoRotate();
+    return () => { if (timerRef.current) clearInterval(timerRef.current); };
   }, [count]);
 
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartRef.current = e.touches[0].clientX;
+    if (timerRef.current) clearInterval(timerRef.current);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    const diff = touchStartRef.current - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) {
+      setActive((prev) => diff > 0
+        ? (prev + 1) % count
+        : (prev - 1 + count) % count
+      );
+    }
+    startAutoRotate();
+  };
+
   return (
-    <section className="relative overflow-hidden py-24 sm:py-32" style={{ background: "#050505" }}>
+    <section className="section-gradient-down relative overflow-hidden py-24 sm:py-32">
       <div className="dot-matrix absolute inset-0" />
       <div className="pointer-events-none absolute left-1/2 top-0 h-[300px] w-[400px] -translate-x-1/2 rounded-full" style={{ background: "radial-gradient(ellipse, rgba(0, 168, 132, 0.06) 0%, transparent 70%)" }} />
 
@@ -54,7 +78,12 @@ export default function Testimonials() {
         </FadeIn>
 
         <div className="mt-16 flex flex-col items-center">
-          <div className="relative w-full" style={{ minHeight: 200 }}>
+          <div
+            className="relative w-full"
+            style={{ minHeight: 200 }}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+          >
             {Array.from({ length: count }).map((_, idx) => {
               let quote: string, name: string, role: string, rating: number;
 

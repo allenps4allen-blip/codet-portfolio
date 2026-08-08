@@ -340,7 +340,7 @@ export default function ServicesShowcase() {
     return (
       <div
         key={key}
-        className="mobile-tap"
+        className="mobile-tap service-card"
         style={{
           ...s.card,
           cursor: "pointer",
@@ -369,7 +369,7 @@ export default function ServicesShowcase() {
   };
 
   return (
-    <div className="services-section" style={{ ...s.section, ...(isMobile ? { padding: "60px 16px" } : {}) }}>
+    <div className="services-section section-gradient-down" style={{ ...s.section, ...(isMobile ? { padding: "60px 16px" } : {}) }}>
       <style dangerouslySetInnerHTML={{ __html: keyframes }} />
 
       <div style={{ ...s.header, ...(isMobile ? { marginBottom: 24 } : {}) }}>
@@ -435,6 +435,11 @@ const keyframes = `
   @keyframes fadeSlideIn {
     from { opacity: 0; transform: translateY(6px); }
     to { opacity: 1; transform: translateY(0); }
+  }
+  .service-card:hover {
+    border-color: rgba(0, 168, 132, 0.25) !important;
+    box-shadow: 0 0 30px rgba(0, 168, 132, 0.08), 0 8px 32px rgba(0, 0, 0, 0.2);
+    transform: translateY(-4px);
   }
 `;
 

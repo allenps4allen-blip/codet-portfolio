@@ -96,7 +96,7 @@ export default function ROICalculator() {
   const hoursReclaimed = employees * hours * 4;
 
   return (
-    <div ref={sectionRef} className="roi-section" style={s.section}>
+    <div ref={sectionRef} className="roi-section section-gradient-up" style={s.section}>
       <div style={s.header}>
         <span style={s.eyebrow}>{t("eyebrow")}</span>
         <h2 style={s.h2}>{t("heading")}</h2>
