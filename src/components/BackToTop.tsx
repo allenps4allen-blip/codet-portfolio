@@ -17,9 +17,8 @@ export default function BackToTop() {
     <button
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       aria-label="Back to top"
+      className="fixed bottom-[calc(env(safe-area-inset-bottom,0px)+140px)] md:bottom-[calc(max(1.5rem,env(safe-area-inset-bottom,1.5rem))+68px)]"
       style={{
-        position: "fixed",
-        bottom: "calc(max(1.5rem, env(safe-area-inset-bottom, 1.5rem)) + 136px)",
         right: "max(1.5rem, env(safe-area-inset-right, 1.5rem))",
         zIndex: 998,
         width: 44,

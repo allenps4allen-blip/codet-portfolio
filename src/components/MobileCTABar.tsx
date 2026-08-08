@@ -21,13 +21,14 @@ export default function MobileCTABar() {
   if (!visible) return null;
 
   return (
-    <div className="fixed inset-x-0 bottom-0 z-[998] md:hidden" style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}>
+    <div className="fixed inset-x-0 bottom-0 z-[998] md:hidden">
       <div style={{
         background: "rgba(5,5,5,0.92)",
         backdropFilter: "blur(20px)",
         WebkitBackdropFilter: "blur(20px)",
         borderTop: "1px solid rgba(255,255,255,0.08)",
         padding: "10px 16px",
+        paddingBottom: "calc(10px + env(safe-area-inset-bottom, 0px))",
         display: "flex",
         gap: 10,
       }}>
