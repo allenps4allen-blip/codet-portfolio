@@ -141,7 +141,6 @@ export default function AgentDemoPage({ translations }: { translations: DemoTran
   const [messages, setMessages] = useState([
     { from: "agent", text: t.greeting },
   ]);
-  const [input, setInput] = useState("");
   const [isThinking, setIsThinking] = useState(false);
   const [brainSteps, setBrainSteps] = useState<ThinkingStep[]>([]);
   const [isMobile, setIsMobile] = useState(false);
@@ -169,15 +168,14 @@ export default function AgentDemoPage({ translations }: { translations: DemoTran
     }
   }, [messages, isThinking]);
 
-  const sendMessage = (text: string, fromPrompt = false) => {
+  const sendMessage = (text: string) => {
     if (!text.trim() || isThinking) return;
     const userMsg = text.trim();
-    setInput("");
     setMessages((prev) => [...prev, { from: "user", text: userMsg }]);
 
     const key = getResponseKey(userMsg);
     trackMessage(key);
-    if (fromPrompt) trackPromptClick(userMsg);
+    trackPromptClick(userMsg);
     const steps = thinkingSteps[key] || thinkingSteps.default;
     setBrainSteps(steps);
     setIsThinking(true);
@@ -199,30 +197,6 @@ export default function AgentDemoPage({ translations }: { translations: DemoTran
         <h2 style={{ ...st.h1, fontSize: isMobile ? 24 : 32 }}>{t.heading}</h2>
         <p style={st.subtitle}>{t.subtitle}</p>
       </div>
-
-      <div style={{ ...st.pillsRow, display: isMobile ? "none" : "flex" }}>
-        <span style={{ fontSize: 11, color: "rgba(255,255,255,0.25)", marginRight: 8 }}>{t.tryAsking}</span>
-        {t.prompts.map((prompt, i) => (
-          <button
-            key={i}
-            onClick={() => sendMessage(prompt, true)}
-            style={st.pill}
-            disabled={isThinking}
-          >
-            {prompt}
-          </button>
-        ))}
-      </div>
-
-      {isMobile && (
-        <div style={{ display: "flex", gap: 6, flexWrap: "wrap", justifyContent: "center", marginBottom: 16 }}>
-          {t.prompts.slice(0, 3).map((prompt, i) => (
-            <button key={i} onClick={() => sendMessage(prompt, true)} style={{ ...st.pill, fontSize: 11, padding: "5px 10px" }} disabled={isThinking}>
-              {prompt}
-            </button>
-          ))}
-        </div>
-      )}
 
       <div style={{ ...st.demoContainer, flexDirection: isMobile ? "column" : "row", height: isMobile ? "auto" : 520 }}>
         <div style={{ ...st.chatPanel, minHeight: isMobile ? 400 : undefined }}>
@@ -267,22 +241,29 @@ export default function AgentDemoPage({ translations }: { translations: DemoTran
           </div>
 
           <div style={st.chatInput}>
-            <input
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              onKeyDown={(e) => e.key === "Enter" && sendMessage(input)}
-              placeholder={t.placeholder}
-              disabled={isThinking}
-              style={st.inputField}
-            />
-            <button
-              onClick={() => sendMessage(input)}
-              disabled={isThinking || !input.trim()}
-              style={{ ...st.sendBtn, opacity: input.trim() && !isThinking ? 1 : 0.4 }}
-            >
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="white"><path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" /></svg>
-            </button>
+            <div style={{ display: "flex", gap: 6, flexWrap: "wrap", flex: 1 }}>
+              {t.prompts.map((prompt, i) => (
+                <button
+                  key={i}
+                  onClick={() => sendMessage(prompt)}
+                  disabled={isThinking}
+                  style={{
+                    padding: isMobile ? "7px 10px" : "7px 14px",
+                    borderRadius: 20,
+                    border: "1px solid rgba(0,168,132,0.3)",
+                    background: "rgba(0,168,132,0.08)",
+                    color: isThinking ? "rgba(255,255,255,0.2)" : "#00a884",
+                    fontSize: isMobile ? 11 : 12,
+                    cursor: isThinking ? "not-allowed" : "pointer",
+                    fontFamily: "inherit",
+                    transition: "all 0.2s ease",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {prompt}
+                </button>
+              ))}
+            </div>
           </div>
         </div>
 
@@ -305,8 +286,6 @@ const css = `
     0%, 100% { opacity: 1; }
     50% { opacity: 0.5; }
   }
-  .agent-demo-input::placeholder { color: rgba(255,255,255,0.25); }
-  .agent-demo-input:focus { outline: none; }
 `;
 
 const st: Record<string, React.CSSProperties> = {
@@ -396,29 +375,6 @@ const st: Record<string, React.CSSProperties> = {
     padding: "12px 14px",
     borderTop: "1px solid rgba(255,255,255,0.06)",
     background: "rgba(255,255,255,0.02)",
-  },
-  inputField: {
-    flex: 1,
-    padding: "10px 14px",
-    borderRadius: 10,
-    border: "1px solid rgba(255,255,255,0.08)",
-    background: "rgba(255,255,255,0.03)",
-    color: "#e9edef",
-    fontSize: 13,
-    fontFamily: "inherit",
-  },
-  sendBtn: {
-    width: 40,
-    height: 40,
-    borderRadius: 10,
-    border: "none",
-    background: "#00a884",
-    cursor: "pointer",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    transition: "opacity 0.2s ease",
-    flexShrink: 0,
   },
   brainPanel: {
     flex: 0.8,

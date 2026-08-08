@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
 
@@ -278,46 +279,148 @@ export default function ServicesShowcase() {
   const locale = pathname.split("/")[1] || "en";
   const tSection = useTranslations("home.servicesSection");
   const tServices = useTranslations("home.services");
+  const [isMobile, setIsMobile] = useState(false);
+  const [activeSlide, setActiveSlide] = useState(0);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
+  const touchStartRef = useRef(0);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  const scrollToSlide = useCallback((index: number) => {
+    if (!scrollRef.current) return;
+    const container = scrollRef.current;
+    const cardWidth = container.offsetWidth;
+    container.scrollTo({ left: cardWidth * index, behavior: "smooth" });
+    setActiveSlide(index);
+  }, []);
+
+  useEffect(() => {
+    if (!isMobile) return;
+    timerRef.current = setInterval(() => {
+      setActiveSlide((prev) => {
+        const next = prev >= serviceKeys.length - 1 ? 0 : prev + 1;
+        scrollToSlide(next);
+        return next;
+      });
+    }, 3000);
+    return () => { if (timerRef.current) clearInterval(timerRef.current); };
+  }, [isMobile, scrollToSlide]);
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartRef.current = e.touches[0].clientX;
+    if (timerRef.current) clearInterval(timerRef.current);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    const diff = touchStartRef.current - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) {
+      const next = diff > 0
+        ? Math.min(activeSlide + 1, serviceKeys.length - 1)
+        : Math.max(activeSlide - 1, 0);
+      scrollToSlide(next);
+    }
+    timerRef.current = setInterval(() => {
+      setActiveSlide((prev) => {
+        const n = prev >= serviceKeys.length - 1 ? 0 : prev + 1;
+        scrollToSlide(n);
+        return n;
+      });
+    }, 3000);
+  };
+
+  const renderCard = (key: typeof serviceKeys[number], i: number) => {
+    const Demo = serviceDemos[i];
+    const href = serviceHrefs[i];
+    return (
+      <div
+        key={key}
+        className="mobile-tap"
+        style={{
+          ...s.card,
+          cursor: "pointer",
+          display: "flex",
+          flexDirection: "column",
+          ...(isMobile ? { minWidth: "100%", maxWidth: "100%", flex: "0 0 100%" } : {}),
+        }}
+        onClick={() => router.push(`/${locale}${href}`)}
+      >
+        <div style={s.demoArea}>
+          <Demo />
+        </div>
+        <div style={s.cardContent}>
+          <h3 style={s.cardTitle}>
+            {tServices(`${key}.title`)}
+            {key === "aiAgents" && (
+              <span style={{ marginInlineStart: 8, fontSize: 12, color: "#00a884", fontWeight: 500 }}>
+                {tSection("seeDemo")} &#x2192;
+              </span>
+            )}
+          </h3>
+          <p style={s.cardDesc}>{tServices(`${key}.description`)}</p>
+        </div>
+      </div>
+    );
+  };
 
   return (
-    <div className="services-section" style={s.section}>
+    <div className="services-section" style={{ ...s.section, ...(isMobile ? { padding: "60px 16px" } : {}) }}>
       <style dangerouslySetInnerHTML={{ __html: keyframes }} />
 
-      <div style={s.header}>
+      <div style={{ ...s.header, ...(isMobile ? { marginBottom: 24 } : {}) }}>
         <span style={s.eyebrow}>{tSection("eyebrow")}</span>
-        <h2 style={s.h2}>{tSection("heading")}</h2>
+        <h2 style={{ ...s.h2, ...(isMobile ? { fontSize: 28 } : {}) }}>{tSection("heading")}</h2>
       </div>
 
-      <div className="services-grid" style={s.grid}>
-        {serviceKeys.map((key, i) => {
-          const Demo = serviceDemos[i];
-          const href = serviceHrefs[i];
-          return (
+      {isMobile ? (
+        <>
+          <div
+            ref={scrollRef}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+            style={{
+              display: "flex",
+              overflowX: "hidden",
+              scrollSnapType: "x mandatory",
+              WebkitOverflowScrolling: "touch",
+              borderRadius: 16,
+            }}
+          >
+            {serviceKeys.map((key, i) => renderCard(key, i))}
+          </div>
+          <div style={{ display: "flex", justifyContent: "center", gap: 8, marginTop: 16 }}>
+            {serviceKeys.map((_, i) => (
+              <button
+                key={i}
+                onClick={() => { scrollToSlide(i); }}
+                style={{
+                  width: activeSlide === i ? 24 : 8,
+                  height: 8,
+                  borderRadius: 4,
+                  border: "none",
+                  background: activeSlide === i ? "#00a884" : "rgba(255,255,255,0.15)",
+                  cursor: "pointer",
+                  transition: "all 0.3s ease",
+                  padding: 0,
+                }}
+              />
+            ))}
+          </div>
+        </>
+      ) : (
+        <div className="services-grid" style={s.grid}>
+          {serviceKeys.map((key, i) => (
             <div key={key} style={{ flex: 1, display: "flex" }}>
-              <div
-                className="mobile-tap"
-                style={{ ...s.card, cursor: "pointer", display: "flex", flexDirection: "column" }}
-                onClick={() => router.push(`/${locale}${href}`)}
-              >
-                <div style={s.demoArea}>
-                  <Demo />
-                </div>
-                <div style={s.cardContent}>
-                  <h3 style={s.cardTitle}>
-                    {tServices(`${key}.title`)}
-                    {key === "aiAgents" && (
-                      <span style={{ marginInlineStart: 8, fontSize: 12, color: "#00a884", fontWeight: 500 }}>
-                        {tSection("seeDemo")} &#x2192;
-                      </span>
-                    )}
-                  </h3>
-                  <p style={s.cardDesc}>{tServices(`${key}.description`)}</p>
-                </div>
-              </div>
+              {renderCard(key, i)}
             </div>
-          );
-        })}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
