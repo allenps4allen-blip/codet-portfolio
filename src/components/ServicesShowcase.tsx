@@ -164,7 +164,7 @@ function AgentDemo() {
             <animate attributeName="opacity" values="0;0;1;1;1;0" dur="9s" begin="4.4s" repeatCount="indefinite" keyTimes="0;0.01;0.05;0.7;0.88;1" />
             <rect x="16" y="182" width="280" height="52" rx="12" fill="rgba(255,255,255,0.06)" />
             <text x="28" y="204" fill="rgba(255,255,255,0.85)" fontSize="10" fontFamily="system-ui">✅ Done! See you at 10 AM.</text>
-            <text x="28" y="222" fill="rgba(255,255,255,0.5)" fontSize="9" fontFamily="system-ui">I've sent a calendar invite to your email.</text>
+            <text x="28" y="222" fill="rgba(255,255,255,0.5)" fontSize="9" fontFamily="system-ui">I&apos;ve sent a calendar invite to your email.</text>
           </g>
 
           {/* Resolved badge */}
