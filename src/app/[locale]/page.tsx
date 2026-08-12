@@ -13,6 +13,7 @@ import ROICalculator from "@/components/ROICalculator";
 import StatsAndCTA from "@/components/StatsAndCTA";
 import LogoMarquee from "@/components/LogoMarquee";
 import Testimonials from "@/components/Testimonials";
+import DesignPlayground from "@/components/DesignPlayground";
 
 export default function HomePage() {
   const t = useTranslations("home");
@@ -78,6 +79,9 @@ export default function HomePage() {
 
       {/* ROI Calculator — Interactive sliders */}
       <ROICalculator />
+
+      {/* Design Playground — Theme picker */}
+      <DesignPlayground />
 
       {/* Portfolio Preview */}
       <section className="section-gradient-down relative overflow-hidden py-24 sm:py-32">

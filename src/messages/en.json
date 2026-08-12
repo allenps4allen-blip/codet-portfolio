@@ -568,5 +568,40 @@
     "section6Text": "We reserve the right to update these terms at any time. Continued use of the website after changes constitutes acceptance of the updated terms.",
     "section7Title": "Contact",
     "section7Text": "For questions about these terms, email us at codet.kuwait@gmail.com."
+  },
+  "designPlayground": {
+    "eyebrow": "Design",
+    "heading": "See your style come to life",
+    "subtitle": "Pick a vibe and watch the preview transform instantly. This is what we build for you.",
+    "styles": {
+      "minimal": { "name": "Minimal dark", "desc": "Clean, modern" },
+      "warm": { "name": "Warm earth", "desc": "Organic, cozy" },
+      "bold": { "name": "Bold neon", "desc": "Energetic, vibrant" },
+      "corporate": { "name": "Corporate", "desc": "Professional, trusted" }
+    },
+    "preview": {
+      "url": "yourcompany.com",
+      "navHome": "Home",
+      "navAbout": "About",
+      "navServices": "Services",
+      "navContact": "Contact",
+      "headingLine1": "Build something",
+      "sub": "We craft digital experiences that make your brand unforgettable.",
+      "btn": "Get started",
+      "feat1": "Fast",
+      "feat1Desc": "Lightning speed",
+      "feat2": "Beautiful",
+      "feat2Desc": "Pixel perfect",
+      "feat3": "Secure",
+      "feat3Desc": "Enterprise grade"
+    },
+    "accentWords": {
+      "minimal": "extraordinary",
+      "warm": "memorable",
+      "bold": "electrifying",
+      "corporate": "professional"
+    },
+    "cta": "Like what you see?",
+    "ctaButton": "Let's build yours"
   }
 }
