@@ -577,7 +577,8 @@
       "minimal": { "name": "Minimal dark", "desc": "Clean, modern" },
       "warm": { "name": "Warm earth", "desc": "Organic, cozy" },
       "bold": { "name": "Bold neon", "desc": "Energetic, vibrant" },
-      "corporate": { "name": "Corporate", "desc": "Professional, trusted" }
+      "corporate": { "name": "Corporate", "desc": "Professional, trusted" },
+      "custom": { "name": "Custom", "desc": "Build your own" }
     },
     "preview": {
       "url": "yourcompany.com",
@@ -599,7 +600,33 @@
       "minimal": "extraordinary",
       "warm": "memorable",
       "bold": "electrifying",
-      "corporate": "professional"
+      "corporate": "professional",
+      "custom": "unique"
+    },
+    "custom": {
+      "title": "Customize everything",
+      "accent": "Accent color",
+      "customColor": "Custom color",
+      "background": "Background",
+      "bg_dark": "Dark",
+      "bg_warm": "Warm",
+      "bg_neon": "Neon",
+      "bg_light": "Light",
+      "layout": "Hero layout",
+      "centered": "Centered",
+      "leftAligned": "Left-aligned",
+      "button": "Button style",
+      "btn_filled": "Filled",
+      "btn_outline": "Outline",
+      "btn_glow": "Glow",
+      "icons": "Icon shape",
+      "icon_circle": "Circle",
+      "icon_square": "Square",
+      "icon_diamond": "Diamond",
+      "icon_rounded": "Rounded",
+      "columns": "Card columns",
+      "roundness": "Button roundness",
+      "cardRadius": "Card roundness"
     },
     "cta": "Like what you see?",
     "ctaButton": "Let's build yours"

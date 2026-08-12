@@ -577,7 +577,8 @@
       "minimal": { "name": "داكن بسيط", "desc": "نظيف، عصري" },
       "warm": { "name": "دافئ طبيعي", "desc": "عضوي، مريح" },
       "bold": { "name": "نيون جريء", "desc": "حيوي، نابض" },
-      "corporate": { "name": "مؤسسي", "desc": "احترافي، موثوق" }
+      "corporate": { "name": "مؤسسي", "desc": "احترافي، موثوق" },
+      "custom": { "name": "مخصّص", "desc": "صمّم بنفسك" }
     },
     "preview": {
       "url": "yourcompany.com",
@@ -599,7 +600,33 @@
       "minimal": "استثنائياً",
       "warm": "لا يُنسى",
       "bold": "مذهلاً",
-      "corporate": "احترافياً"
+      "corporate": "احترافياً",
+      "custom": "فريداً"
+    },
+    "custom": {
+      "title": "خصّص كل شيء",
+      "accent": "اللون الأساسي",
+      "customColor": "لون مخصّص",
+      "background": "الخلفية",
+      "bg_dark": "داكن",
+      "bg_warm": "دافئ",
+      "bg_neon": "نيون",
+      "bg_light": "فاتح",
+      "layout": "تنسيق الواجهة",
+      "centered": "وسط",
+      "leftAligned": "محاذاة لليسار",
+      "button": "شكل الزر",
+      "btn_filled": "ممتلئ",
+      "btn_outline": "إطار",
+      "btn_glow": "متوهّج",
+      "icons": "شكل الأيقونة",
+      "icon_circle": "دائرة",
+      "icon_square": "مربع",
+      "icon_diamond": "معيّن",
+      "icon_rounded": "مستدير",
+      "columns": "أعمدة البطاقات",
+      "roundness": "استدارة الزر",
+      "cardRadius": "استدارة البطاقة"
     },
     "cta": "عجبك اللي شفته؟",
     "ctaButton": "خلنا نبنيه لك"
