@@ -276,13 +276,24 @@ export default function DesignPlayground() {
     custom: renderCustomPreview,
   };
 
+  const sliderCSS = `
+    .dp-slider { -webkit-appearance: none; appearance: none; width: 100%; height: 6px; border-radius: 3px; outline: none; cursor: pointer; }
+    .dp-slider::-webkit-slider-runnable-track { height: 6px; border-radius: 3px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1); }
+    .dp-slider::-moz-range-track { height: 6px; border-radius: 3px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.1); }
+    .dp-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--dp-accent); background: var(--dp-accent); margin-top: -7px; box-shadow: 0 0 8px var(--dp-accent-glow); cursor: pointer; transition: transform 0.15s ease; }
+    .dp-slider::-moz-range-thumb { width: 18px; height: 18px; border-radius: 50%; border: 2px solid var(--dp-accent); background: var(--dp-accent); box-shadow: 0 0 8px var(--dp-accent-glow); cursor: pointer; transition: transform 0.15s ease; }
+    .dp-slider::-webkit-slider-thumb:hover { transform: scale(1.2); }
+    .dp-slider::-moz-range-thumb:hover { transform: scale(1.2); }
+  `;
+
   const controlLabel: React.CSSProperties = { fontSize: 11, fontWeight: 600, color: "rgba(255,255,255,0.5)", letterSpacing: 0.5, marginBottom: 6 };
   const pillBtn = (isActive: boolean, accent?: string): React.CSSProperties => ({
     padding: "6px 12px", borderRadius: 8, fontSize: 11, fontWeight: 500, cursor: "pointer", transition: "all 0.2s ease", border: isActive ? `1px solid ${accent || customAccent}` : "1px solid rgba(255,255,255,0.08)", background: isActive ? `${accent || customAccent}15` : "rgba(255,255,255,0.02)", color: isActive ? (accent || customAccent) : "rgba(255,255,255,0.5)", whiteSpace: "nowrap" as const,
   });
 
   const renderControls = () => (
-    <div style={{ marginTop: isMobile ? 12 : 16, padding: isMobile ? "16px" : "20px 24px", borderRadius: 14, background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)" }}>
+    <div style={{ marginTop: isMobile ? 12 : 16, padding: isMobile ? "16px" : "20px 24px", borderRadius: 14, background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.06)", ["--dp-accent" as string]: customAccent, ["--dp-accent-glow" as string]: `${customAccent}60` }}>
+      <style dangerouslySetInnerHTML={{ __html: sliderCSS }} />
       <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: isMobile ? 14 : 18 }}>
         <div style={{ width: 18, height: 18, borderRadius: 4, background: `${customAccent}20`, display: "flex", alignItems: "center", justifyContent: "center" }}>
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke={customAccent} strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M10.5 6h9.75M10.5 6a1.5 1.5 0 1 1-3 0m3 0a1.5 1.5 0 1 0-3 0M3.75 6H7.5m3 12h9.75m-9.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-3.75 0H7.5m9-6h3.75m-3.75 0a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m-9.75 0h9.75" /></svg>
@@ -357,7 +368,10 @@ export default function DesignPlayground() {
         <div>
           <div style={controlLabel}>{t("custom.roundness")}</div>
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <input type="range" min={0} max={24} value={customBtnRadius} onChange={(e) => setCustomBtnRadius(Number(e.target.value))} style={{ flex: 1, accentColor: customAccent }} />
+            <div style={{ flex: 1, position: "relative" }}>
+              <div style={{ position: "absolute", top: "50%", left: 0, height: 6, borderRadius: 3, background: customAccent, width: `${(customBtnRadius / 24) * 100}%`, transform: "translateY(-50%)", pointerEvents: "none", opacity: 0.5, transition: "width 0.1s ease" }} />
+              <input type="range" min={0} max={24} value={customBtnRadius} onChange={(e) => setCustomBtnRadius(Number(e.target.value))} className="dp-slider" style={{ background: "transparent" }} />
+            </div>
             <span style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", minWidth: 28 }}>{customBtnRadius}px</span>
           </div>
         </div>
@@ -366,7 +380,10 @@ export default function DesignPlayground() {
         <div>
           <div style={controlLabel}>{t("custom.cardRadius")}</div>
           <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <input type="range" min={0} max={20} value={customCardRadius} onChange={(e) => setCustomCardRadius(Number(e.target.value))} style={{ flex: 1, accentColor: customAccent }} />
+            <div style={{ flex: 1, position: "relative" }}>
+              <div style={{ position: "absolute", top: "50%", left: 0, height: 6, borderRadius: 3, background: customAccent, width: `${(customCardRadius / 20) * 100}%`, transform: "translateY(-50%)", pointerEvents: "none", opacity: 0.5, transition: "width 0.1s ease" }} />
+              <input type="range" min={0} max={20} value={customCardRadius} onChange={(e) => setCustomCardRadius(Number(e.target.value))} className="dp-slider" style={{ background: "transparent" }} />
+            </div>
             <span style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", minWidth: 28 }}>{customCardRadius}px</span>
           </div>
         </div>
