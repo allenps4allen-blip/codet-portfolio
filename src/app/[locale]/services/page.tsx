@@ -124,7 +124,7 @@ export default function ServicesPage() {
                     <div className="flex items-center gap-3 flex-shrink-0">
                       {hasPrice ? (
                         <span className="rounded-full bg-white/[0.06] px-3 py-1.5 text-sm font-semibold" style={{ border: "0.5px solid rgba(255,255,255,0.1)" }}>
-                          {t(`${key}.price`)} <span className="text-xs text-foreground/50">{t(`${key}.priceLabel`)}</span>
+                          <span className="text-xs text-foreground/50">{t("startingFrom")} </span>{t(`${key}.price`)} <span className="text-xs text-foreground/50">{t(`${key}.priceLabel`)}</span>
                         </span>
                       ) : (
                         <span className="text-sm font-medium text-foreground/50">
