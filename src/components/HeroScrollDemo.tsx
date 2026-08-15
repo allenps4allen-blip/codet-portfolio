@@ -210,9 +210,6 @@ export default function HeroScrollDemo() {
     agentChatRef.current?.scrollTo({ top: agentChatRef.current.scrollHeight, behavior: "smooth" });
   }, [visibleAgentCount]);
 
-  useEffect(() => {
-    leftChatRef.current?.scrollTo({ top: leftChatRef.current.scrollHeight, behavior: "smooth" });
-  }, [leftMsgCount, waitMinutes]);
 
   return (
     <div ref={containerRef} style={{ position: "relative", padding: isMobile ? "40px 0" : "60px 0" }}>
