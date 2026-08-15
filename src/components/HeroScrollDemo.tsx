@@ -34,22 +34,21 @@ function SeenReceipt({ label }: { label: string }) {
   );
 }
 
-function WaitingClock({ elapsed, waitingText, queueText }: { elapsed: number; waitingText: string; queueText: string }) {
+function WaitingClock({ elapsed, waitingText }: { elapsed: number; waitingText: string }) {
   const urgent = elapsed > 20;
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "28px 16px 14px", gap: 10, animation: "fadeSlideIn 0.5s ease-out" }}>
-      <div style={{ position: "relative", width: 56, height: 56 }}>
-        <svg width="56" height="56" viewBox="0 0 56 56">
+    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", padding: "12px 16px 6px", gap: 6, animation: "fadeSlideIn 0.5s ease-out" }}>
+      <div style={{ position: "relative", width: 40, height: 40 }}>
+        <svg width="40" height="40" viewBox="0 0 56 56">
           <circle cx="28" cy="28" r="24" fill="none" stroke="rgba(255,255,255,0.08)" strokeWidth="2.5" />
           <circle cx="28" cy="28" r="24" fill="none" stroke={urgent ? "rgba(255,70,70,0.6)" : "rgba(255,100,100,0.35)"} strokeWidth="3" strokeDasharray="151" strokeDashoffset={151 - (Math.min(elapsed, 50) / 50) * 151} strokeLinecap="round" style={{ transition: "stroke-dashoffset 0.4s ease, stroke 0.4s ease", transform: "rotate(-90deg)", transformOrigin: "center" }} />
         </svg>
         <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
-          <svg width="22" height="22" viewBox="0 0 24 24" fill={urgent ? "rgba(255,70,70,0.8)" : "rgba(255,100,100,0.5)"}><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z" /></svg>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill={urgent ? "rgba(255,70,70,0.8)" : "rgba(255,100,100,0.5)"}><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z" /></svg>
         </div>
       </div>
-      <span style={{ fontSize: 13, color: "rgba(255,255,255,0.3)", fontWeight: 500 }}>{waitingText}</span>
-      <span style={{ fontSize: 28, color: urgent ? "rgba(255,70,70,0.85)" : "rgba(255,100,100,0.65)", fontWeight: 700, fontVariantNumeric: "tabular-nums", transition: "color 0.4s ease" }}>{elapsed} min</span>
-      {urgent && <span style={{ fontSize: 12, color: "rgba(255,70,70,0.45)", marginTop: -2 }}>{queueText}</span>}
+      <span style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", fontWeight: 500 }}>{waitingText}</span>
+      <span style={{ fontSize: 22, color: urgent ? "rgba(255,70,70,0.85)" : "rgba(255,100,100,0.65)", fontWeight: 700, fontVariantNumeric: "tabular-nums", transition: "color 0.4s ease" }}>{elapsed} min</span>
     </div>
   );
 }
@@ -195,7 +194,7 @@ export default function HeroScrollDemo() {
   const rightScale = 1;
 
   // Left phone (no agent) — messages + waiting
-  const leftMsgCount = progress < 0.08 ? 0 : progress < 0.2 ? 1 : progress < 0.35 ? 2 : progress < 0.6 ? 3 : 4;
+  const leftMsgCount = progress < 0.08 ? 0 : progress < 0.15 ? 1 : progress < 0.25 ? 2 : progress < 0.4 ? 3 : 4;
   const visibleLeftMessages = noAgentConversation.slice(0, leftMsgCount);
   const showSeen = leftMsgCount >= 1;
   const showWaiting = progress > 0.4;
@@ -207,9 +206,23 @@ export default function HeroScrollDemo() {
   const leftScale = 1;
 
   useEffect(() => {
-    agentChatRef.current?.scrollTo({ top: agentChatRef.current.scrollHeight, behavior: "smooth" });
+    const el = agentChatRef.current;
+    if (!el) return;
+    const target = el.scrollHeight - el.clientHeight;
+    if (target <= 0) return;
+    let frame: number;
+    const step = () => {
+      const diff = target - el.scrollTop;
+      if (diff > 1) {
+        el.scrollTop += diff * 0.04;
+        frame = requestAnimationFrame(step);
+      } else {
+        el.scrollTop = target;
+      }
+    };
+    frame = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(frame);
   }, [visibleAgentCount]);
-
 
   return (
     <div ref={containerRef} style={{ position: "relative", padding: isMobile ? "40px 0" : "60px 0" }}>
@@ -265,13 +278,7 @@ export default function HeroScrollDemo() {
                     </div>
                   ))}
 
-                  {showWaiting && <WaitingClock elapsed={waitMinutes} waitingText={t("waiting")} queueText={t("queuePosition")} />}
-
-                  {waitMinutes > 30 && (
-                    <div style={{ textAlign: "center" as const, padding: "14px 20px 0", animation: "fadeSlideIn 0.5s ease-out" }}>
-                      <span style={{ fontSize: 10.5, color: "rgba(255,70,70,0.4)", fontStyle: "italic" }}>{t("customerLeft")}</span>
-                    </div>
-                  )}
+                  {showWaiting && <WaitingClock elapsed={waitMinutes} waitingText={t("waiting")} />}
                 </div>
               </div>
             </PhoneFrame>
@@ -449,13 +456,13 @@ const s: Record<string, React.CSSProperties> = {
     alignItems: "center",
     justifyContent: "center",
     gap: 6,
-    padding: "12px 16px 4px",
-    fontSize: 9.5,
+    padding: "8px 16px 2px",
+    fontSize: 9,
     color: "rgba(255,255,255,0.25)",
   },
   dateChip: {
     textAlign: "center",
-    margin: "8px auto 4px",
+    margin: "4px auto 2px",
     fontSize: 10,
     color: "rgba(255,255,255,0.45)",
     background: "rgba(255,255,255,0.05)",
