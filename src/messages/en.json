@@ -16,7 +16,7 @@
   "home": {
     "title": "Home",
     "heading": "We digitalize your business",
-    "subtext": "We build high-performance websites, intelligent AI agents, seamless automations, and optimized workflows that transform how your business operates.",
+    "subtext": "Websites that load fast and convert. AI agents that answer your customers on WhatsApp at 3am. Automations that replace the spreadsheet your team dreads every Sunday.",
     "cta": "Book a Free Consultation",
     "whatWeDo": "What We Do",
     "services": {
@@ -30,7 +30,7 @@
       },
       "automations": {
         "title": "Automations",
-        "description": "End-to-end workflow automations that eliminate repetitive tasks, reduce errors, and free your team to focus on what matters."
+        "description": "Connect your tools, kill the copy-paste, and stop losing data between systems. We build automations that handle invoicing, reporting, and follow-ups on their own."
       }
     },
     "portfolio": {
@@ -47,28 +47,28 @@
     },
     "process": {
       "eyebrow": "Process",
-      "heading": "How we bring your project to life",
+      "heading": "How a project works with us",
       "inProgress": "In Progress",
       "steps": {
         "1": {
-          "title": "Discovery",
-          "desc": "We learn your business inside out — goals, pain points, and what success looks like for you.",
-          "detail": "Stakeholder interviews · Competitor audit · Technical assessment"
+          "title": "Scope Call",
+          "desc": "A 30-minute call where we figure out what you actually need — not what sounds good in a pitch deck.",
+          "detail": "30-min call · Scope document · Timeline estimate"
         },
         "2": {
-          "title": "Design & Plan",
-          "desc": "We architect the solution, design every screen, and align on scope before writing a single line of code.",
-          "detail": "Wireframes · System architecture · Project timeline"
+          "title": "Design & Quote",
+          "desc": "You get wireframes and a clear scope document. We agree on what's included, what it costs, and when it ships.",
+          "detail": "Figma mockups · Scope agreement · Fixed quote"
         },
         "3": {
-          "title": "Build & Test",
-          "desc": "Clean code, weekly demos, and relentless testing. You see progress every step of the way.",
-          "detail": "Agile sprints · QA automation · Staging previews"
+          "title": "Build & Preview",
+          "desc": "We build in 1–2 week sprints with a live preview link. You can check progress anytime — no waiting for a big reveal.",
+          "detail": "Live preview link · Weekly updates · Device testing"
         },
         "4": {
-          "title": "Launch & Support",
-          "desc": "We deploy, monitor, and stay with you. Your growth is our growth.",
-          "detail": "Zero-downtime deploy · Performance monitoring · 24/7 support"
+          "title": "Ship & Maintain",
+          "desc": "We handle deployment, DNS, and hosting. Something breaks at midnight? We fix it — that's what the support plan covers.",
+          "detail": "Hosting setup · SSL & DNS · Ongoing maintenance"
         }
       }
     },
@@ -97,8 +97,8 @@
     "ctaSection": {
       "eyebrow": "Ready?",
       "headingLine1": "Let's build something",
-      "headingLine2": "your competitors can't ignore",
-      "description": "Free consultation. No commitments. Just a conversation about what's possible.",
+      "headingLine2": "that actually works",
+      "description": "30-minute call. We'll tell you exactly what it takes, what it costs, and how long.",
       "button": "Start Your Project",
       "trust1": "Free consultation",
       "trust2": "48hr response",
@@ -113,7 +113,7 @@
   "services": {
     "title": "Services",
     "heading": "Our Services",
-    "subheading": "Tailored digital solutions to grow your business",
+    "subheading": "Three things we're good at — pick what your business needs",
     "cta": "Book Free Consultation",
     "startingFrom": "Starting from",
     "perMonth": "/month",
@@ -250,7 +250,7 @@
     },
     "cta": {
       "heading": "Have a project in mind?",
-      "subtext": "Let's build something great together.",
+      "subtext": "Tell us what you're working on — we'll show you what we can do.",
       "button": "Start a Conversation"
     },
     "portfolio": {
@@ -268,26 +268,26 @@
     "subheading": "We're a digital agency based in the Gulf, helping businesses modernize through technology.",
     "story": {
       "title": "Our Story",
-      "p1": "CODET was founded with a simple belief: every business deserves access to modern digital tools. We saw companies struggling with outdated processes, manual workflows, and generic websites that didn't convert.",
-      "p2": "So we built a team that bridges the gap between business needs and technical solutions — delivering websites, AI agents, and automations that actually move the needle."
+      "p1": "We started CODET because we kept seeing the same thing: businesses in Kuwait paying too much for websites that look like templates, chatbots that don't understand Arabic, and \"automations\" that still need someone pressing buttons.",
+      "p2": "We're a small team — developers, designers, and AI specialists who'd rather ship something that works than pitch something that sounds impressive."
     },
     "values": {
-      "title": "What Drives Us",
+      "title": "How We Work",
       "1": {
-        "title": "Results First",
-        "description": "We measure success by your ROI, not by lines of code. Every project starts with your business goals."
+        "title": "We Ship Fast",
+        "description": "Most projects go live within two weeks. We don't pad timelines with unnecessary phases — you get working software, not a slide deck."
       },
       "2": {
-        "title": "Built to Last",
-        "description": "Clean architecture, modern frameworks, and scalable infrastructure — so your investment keeps paying off."
+        "title": "We Own the Stack",
+        "description": "We build with Next.js, Python, and cloud infrastructure we manage ourselves. No white-labeling, no outsourcing, no mystery code."
       },
       "3": {
-        "title": "Transparent Process",
-        "description": "No black boxes. You'll always know what we're building, why, and what's next."
+        "title": "You See Everything",
+        "description": "Live preview links from day one. Shared Figma files. A WhatsApp group where you can message us anytime."
       },
       "4": {
-        "title": "Continuous Support",
-        "description": "We don't disappear after launch. Ongoing maintenance, updates, and optimization are part of the deal."
+        "title": "We Don't Ghost",
+        "description": "Every project includes a maintenance window. Updates, bug fixes, hosting — we handle it after launch, not just before."
       }
     },
     "stats": {
@@ -313,18 +313,18 @@
         },
         "2": {
           "date": "2025 Q4",
-          "title": "First 10 clients",
-          "desc": "Delivered websites, automations, and AI agents for our first batch of clients."
+          "title": "First clients shipped",
+          "desc": "Delivered our first set of websites and WhatsApp AI agents for local businesses in Kuwait."
         },
         "3": {
           "date": "2026 Q1",
-          "title": "Launched AI Agent platform",
-          "desc": "Released our custom AI agent builder with multi-channel deployment."
+          "title": "AI agent framework",
+          "desc": "Built a reusable agent system so we could deploy custom Arabic/English chatbots faster."
         },
         "4": {
           "date": "2026 Q2",
-          "title": "50+ projects delivered",
-          "desc": "Crossed the 50-project milestone across websites, AI, and automations."
+          "title": "Added automations",
+          "desc": "Expanded into workflow automation after clients kept asking us to connect their tools."
         }
       }
     }
@@ -332,7 +332,7 @@
   "contact": {
     "title": "Contact",
     "heading": "Get in Touch",
-    "subheading": "Have a project in mind? We'd love to hear about it.",
+    "subheading": "Tell us what you need — we respond within a day.",
     "form": {
       "name": "Full Name",
       "email": "Email Address",
@@ -506,7 +506,7 @@
   },
   "blog": {
     "title": "Blog",
-    "subtitle": "Insights, guides, and case studies on AI, web development, and business automation.",
+    "subtitle": "What we've learned building websites, AI agents, and automations for businesses in Kuwait.",
     "all": "All",
     "minRead": "min read",
     "noPosts": "No posts published yet. Check back soon!",
@@ -587,7 +587,7 @@
       "navServices": "Services",
       "navContact": "Contact",
       "headingLine1": "Build something",
-      "sub": "We craft digital experiences that make your brand unforgettable.",
+      "sub": "Your website, designed to match your brand — not a template.",
       "btn": "Get started",
       "feat1": "Fast",
       "feat1Desc": "Lightning speed",
