@@ -1,5 +1,7 @@
 <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="32" height="32" rx="8" fill="#0a0a0a"/>
-  <path d="M11 12c-2.5 0-4.5 1.8-4.5 4s2 4 4.5 4c1.8 0 3.2-1 5-4-1.8-3-3.2-4-5-4z" stroke="#fafafa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-  <path d="M21 12c2.5 0 4.5 1.8 4.5 4s-2 4-4.5 4c-1.8 0-3.2-1-5-4 1.8-3 3.2-4 5-4z" stroke="#fafafa" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <rect width="32" height="32" rx="7" fill="#333333"/>
+  <!-- C shape: filled arc, open ~100° on the right -->
+  <path d="M15.5 10.64 A7 7 0 1 0 15.5 21.36 L13.25 18.68 A3.5 3.5 0 1 1 13.25 13.32 Z" fill="white"/>
+  <!-- O shape: filled ring -->
+  <path d="M21 9 A7 7 0 1 1 21 23 A7 7 0 1 1 21 9 Z M21 12.5 A3.5 3.5 0 1 0 21 19.5 A3.5 3.5 0 1 0 21 12.5 Z" fill="white" fill-rule="evenodd"/>
 </svg>
